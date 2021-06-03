@@ -86,9 +86,9 @@ Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|PLANEACION|editar
 
 Route::get('/asignar', function () {
 
-    $fecha_actual = date("Y-m-d");
-//sumo 1 día
-   echo date("Y-m-d",strtotime($fecha_actual."+ 30 days")); 
+//     $fecha_actual = date("Y-m-d");
+// //sumo 1 día
+//    echo date("Y-m-d",strtotime($fecha_actual."+ 30 days")); 
 
 //     $users= User::whereHas('roles',function($q){
 //         $q->whereIn('name',  ['SUPER-ADMIN', 'ADMIN']);  }
