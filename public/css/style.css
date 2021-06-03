@@ -1,0 +1,54 @@
+.circle_uno {
+    background: #3366cc;
+    border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    color: #ffffff;
+    display: inline-block;
+    line-height: 1.1em;
+    margin-right: 2px;
+    text-align: center;
+    width: 1.1em;
+    font-size: 0.9rem;
+}
+
+.circle_dos {
+    background: transparent;
+    border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    display: inline-block;
+    line-height: 1.1em;
+    margin-right: 2px;
+    color: #4b4b4b;
+    text-align: center;
+    width: 1.1em;
+    font-size: 0.9rem;
+    border: 1px solid #4b4b4b;
+}
+
+@media (max-width: 500px) {
+    .img-fluid {
+        max-width: 100% !important;
+        padding-bottom: 15px !important;
+    }
+    * {
+        font-size: 0.7rem;
+    }
+
+    p#barra_progreso {
+        font-size: 0.65rem !important;
+    }
+
+    .govco-icon-shortr-arrow::before {
+        content: "\e91c";
+    }
+}
+
+.btn-examinar{
+  
+    background-color: #3366CC!important;
+    color: white!important;
+
+}
+
