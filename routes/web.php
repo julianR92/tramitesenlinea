@@ -84,55 +84,6 @@ Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|PLANEACION|editar
 
 
 
-Route::get('/asignar', function () {
-
-//     $fecha_actual = date("Y-m-d");
-// //sumo 1 día
-//    echo date("Y-m-d",strtotime($fecha_actual."+ 30 days")); 
-
-//     $users= User::whereHas('roles',function($q){
-//         $q->whereIn('name',  ['SUPER-ADMIN', 'ADMIN']);  }
-// )->get();
-//     return $users;
-     
-
-    // $permisos= Permission::all();
-     
-    // $filter = $permisos->whereIn('name',['ver-tramites','editar-tramite']);
-    // return $filter;
-    // $permisos = [];
-    //  $user= User::findOrFail(1);
-    //  $user->getAllPermissions();
-    //  $arrayPermisos= $user['permissions'];
-    // //  return $arrayPermisos;
-    // foreach($arrayPermisos as $permiso){
-    //   $permisos[] = $permiso->id;
-    //   }
-    //   print_r($permisos);
-
-    // return $user;
-
-    // $usuarios_role = [];
-    // // $users= User::with('roles')->get();
-
-    // $users= User::where('id', 1)->with('roles')->get();
-    // return $users;
-
-
-    // $ArrayUser = $users[0]['roles'];
-    // foreach ($ArrayUser as $usuarios){ // todos los roles por un solo usuario
-    //     $usuarios_role[] = $usuarios->id;
-    //  }
-    // $roles = Role::all();
-   
-    
-    
-    
-
-
-    //return $user;
-    
-});
 
 
 
