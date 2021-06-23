@@ -27,7 +27,11 @@ Route::post('/login', 'LoginController@login')->name('login');
 Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard.index');
 Route::get('/logout/{user}', 'LoginController@logout')->name('logout');
 
+// RUTAS INHUMACIONES
 
+Route::get('/inhumaciones', 'InhumacionesController@index')->name('inhumaciones.index');
+Route::post('/inhumaciones/search', 'InhumacionesController@search')->name('inhumaciones.search');
+Route::post('/inhumaciones/experiencia', 'InhumacionesController@experiencia')->name('inhumaciones.experiencia');
 
 
 Route::group(['middleware' => ['role:SUPER-ADMIN']], function () {

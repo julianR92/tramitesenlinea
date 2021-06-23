@@ -1,23 +1,21 @@
 // FUNCIONES DE CAJA DE TEXTO.
 /** Esta funcion me permite controlar los caracteres que se van a diguitar en el campo numero de documento **/
-function NumDoc(n){
+function NumDoc(e){
 
-    key = n.keyCode || n.which;
-    tecla = String.fromCharCode(key).toLowerCase();
-    numeros = "";
-    especiales = [11,32,35,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,
-    84,85,86,87,88,89,90,97,98,99,100,101,102,103,104,105,106,107,108,109,
-    110,111,112,113,114,115,116,117,118,119,120,121,122];
-    tecla_especial = false
-        for(var i in especiales){
-            if(key == especiales[i]){
-              tecla_especial = true;
-            break;
-              } 
-          }
-                         
-        if(numeros.indexOf(tecla)==-1 && !tecla_especial)
-          return false;
+  key = e.keyCode || e.which;
+  tecla = String.fromCharCode(key).toLowerCase();
+  letras = "0123456789-";
+  especiales = [8,37];
+  tecla_especial = false
+      for(var i in especiales){
+          if(key == especiales[i]){
+            tecla_especial = true;
+          break;
+            } 
+        }
+                       
+      if(letras.indexOf(tecla)==-1 && !tecla_especial)
+        return false;
 }
 
 

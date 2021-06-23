@@ -21,18 +21,25 @@ $(document).ready(function () {
                 id = "name_validate"        maxlength =20
     ============================================================================*/
 
-    $("#name_validate").change(function () {
-        var input1 = document.getElementById("name_validate").value;
-        var ValInput1 = input1.match(
-            /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ ]{3,20}$/
-        );
-        if (ValInput1 == null) {
-            alert(
-                "No se permiten números, caracteres especiales, espacios o menos de tres(3) letras ni más de quince(20) letras"
+    $(".name_validate").change(function () {
+        $(this).each(function(){
+
+            var input1 = $(this).val();
+            var ValInput1 = input1.match(
+                /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ ]{3,20}$/
             );
-            $("#name_validate").focus();
-            $("#name_validate").val("");
-        }
+            if (ValInput1 == null) {
+                alert(
+                    "No se permiten números, caracteres especiales, espacios o menos de tres(3) letras ni más de quince(20) letras"
+                );
+                $(this).focus();
+                $(this).val("");
+            }
+
+
+
+        })
+      
     });
 
     /*============================================================================
@@ -59,16 +66,18 @@ $(document).ready(function () {
                 id = "document_validate"        maxlength =15
     ============================================================================*/
 
-    $("#document_validate").change(function () {
-        var input1 = document.getElementById("document_validate").value;
+    $(".document_validate").change(function () {
+        $(this).each(function(){
+        var input1 = $(this).val();
         var ValInput1 = input1.match(/^[a-zA-Z0-9\-]{5,15}$/);
         if (ValInput1 == null) {
             alert(
                 "No se permiten espacios, solo se permite el carácter especial (-)"
             );
-            $("#document_validate").focus();
-            $("#document_validate").val("");
+            $(this).focus();
+            $(this).val("");
         }
+      })
     });
 
     /*============================================================================
@@ -93,16 +102,18 @@ $(document).ready(function () {
                 id = "email_validate"        maxlength =50
     ============================================================================*/
 
-    $("#email_validate").change(function () {
-        var input10 = document.getElementById("email_validate").value;
+    $(".email_validate").change(function () {
+        $(this).each(function(){
+        var input10 = $(this).val();
         var ValInput10 = input10.match(
             /^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{4,}[.][a-zA-Z0-9\.]{2,12}$/
         );
         if (ValInput10 == null) {
             alert("Correo no valido, por favor revise");
-            $("#email_validate").focus();
-            $("#email_validate").val("");
+            $(this).focus();
+            $(this).val("");
         }
+      })
     });
 
     /*============================================================================
@@ -674,7 +685,8 @@ $(document).ready(function () {
 
     // FUNCION DE EXPERIENCIA BOTON FACIL
 
-    $("#Facil").click(function () {
+    $(".btn-facil").click(function () {
+        
         var facil = $("#Facil").val();
         var textArea = $("#text-area").val();
 
@@ -686,7 +698,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "/solicitud/experiencia",
+            url: "/inhumaciones/experiencia",
             dataType: "json",
             data: {
                 valor: facil,
@@ -720,7 +732,7 @@ $(document).ready(function () {
 
     // FUNCION DE EXPERIENCIA BOTON DIFICIL
 
-    $("#Dificil").click(function () {
+    $(".btn-dificil").click(function () {
         var Dificil = $("#Dificil").val();
         var textArea = $("#text-area").val();
 
@@ -732,7 +744,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "/solicitud/experiencia",
+            url: "/inhumaciones/experiencia",
             dataType: "json",
             data: {
                 valor: Dificil,
