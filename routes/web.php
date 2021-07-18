@@ -27,12 +27,26 @@ Route::post('/login', 'LoginController@login')->name('login');
 Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard.index');
 Route::get('/logout/{user}', 'LoginController@logout')->name('logout');
 
+// experiencia globally
+
+Route::post('/experiencia/tramites', 'HomeController@experienciaTramites')->name('experiencia.tramites');
+
+
 // RUTAS INHUMACIONES
 
 Route::get('/inhumaciones', 'InhumacionesController@index')->name('inhumaciones.index');
 Route::post('/inhumaciones/search', 'InhumacionesController@search')->name('inhumaciones.search');
 Route::post('/inhumaciones/experiencia', 'InhumacionesController@experiencia')->name('inhumaciones.experiencia');
 
+// RUTAS CATEGORIZACION DE PARQUEADEROS
+
+Route::get('/categorizacion-parqueaderos', 'ParqueaderosController@index')->name('parqueaderos.index');
+Route::post('/categorizacion-parqueaderos/store', 'ParqueaderosController@store')->name('parqueaderos.store');
+Route::get('/categorizacion-parqueaderos/confirmacion', 'ParqueaderosController@confirmacion')->name('parqueaderos.confirmacion');
+Route::get('/categorizacion-parqueaderos/finalizar', 'ParqueaderosController@end')->name('parqueaderos.finalizar');
+Route::post('/categorizacion-parqueaderos/consulta','ParqueaderosController@consulta')->name('parqueadero.consulta');
+Route::get('/categorizacion-parqueaderos/detalle/{id}', 'ParqueaderosController@detalle')->name('parqueadero.detalle');
+Route::post('/categorizacion-parqueaderos/updateDocs', 'ParqueaderosController@updateDocs')->name('parqueadero.updateDocs');
 
 Route::group(['middleware' => ['role:SUPER-ADMIN']], function () {
 
@@ -81,7 +95,32 @@ Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|PLANEACION|editar
     Route::get('/tramites/planeacion/espacio','PlaneacionController@espacioIndex')->name('espacio.index');
     Route::get('/tramites/planeacion/espacio/{id}', 'PlaneacionController@detalleSolicitud')->name('espacio.detalle');
     Route::post('/tramites/planeacion/espacio/update','PlaneacionController@updateSolicitud')->name('espacio.update');
+
+    // rutas tramite categorizacion de parqueaderos
+
+    Route::get('/tramites/planeacion/parqueaderos/', 'PlaneacionController@indexParqueaderos')->name('planeacion.parqueaderos.index');
+    Route::get('/tramites/planeacion/parqueadero/{id}','PlaneacionController@parqueaderoDetalle')->name('planeacion.parqueaderos.detalle');
+
+
 });
+
+// RUTAS DE INTERIOR VER TRAMITES
+Route::group(['middleware' => ['role:SUPER-ADMIN|SEC_GOBIERNO']], function () {
+    Route::get('/tramites/interior','InteriorController@index')->name('interior.index');
+});
+
+Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|SEC_GOBIERNO|editar-tramite']], function () { 
+    Route::get('/tramites/interior/parqueaderos','InteriorController@parqueaderoIndex')->name('interior.parqueaderos.index');
+    Route::get('/tramites/interior/parqueadero/{id}','InteriorController@parqueaderoDetalle')->name('interior.parqueaderos.detalle');
+    Route::post('tramites/interior/parqueaderos/update/', 'InteriorController@parqueaderoUpdate' )->name('interior.parqueaderos.update');
+
+});
+
+
+
+
+
+
 
 
 

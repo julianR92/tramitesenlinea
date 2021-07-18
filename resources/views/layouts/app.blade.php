@@ -28,7 +28,7 @@
    {{-- datatables--}}
    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
 
-    <title>{{ config('app.name', 'Tramites en linea') }}</title>
+    <title>@yield('title')</title>
 </head>
 <body>
 
@@ -149,15 +149,14 @@
    </footer>
 
 
-   
-    
+     
 
 
    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     {{-- DATATABLES --}}
     <!-- js jquery datatable -->
    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -172,7 +171,8 @@
     <!--- cdn  GOV.CO --->
     <script type="text/javascript"  src="{{ asset('js/funciones.js') }}"></script>
     <script type="text/javascript"  src="{{ asset('js/validate.js') }}"></script>
-   <script type="text/javascript"  src="https://cdn.www.gov.co/v2/assets/js/utils.js"></script>
+   <script type="text/javascript"  src="{{ asset('js/utils.js') }}"></script>
+   
 
     
 

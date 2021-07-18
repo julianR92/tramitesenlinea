@@ -121,16 +121,18 @@ $(document).ready(function () {
                 id = "number_validate"        maxlength =10
     ============================================================================*/
 
-    $("#number_validate").change(function () {
-        var input8 = document.getElementById("number_validate").value;
+    $(".number_validate").change(function () {
+        $(this).each(function(){
+        var input8 = $(this).val();
         var ValInput8 = input8.match(/^[0-9]{7,10}$/);
         if (ValInput8 == null) {
             alert(
                 "No se permiten letras, caracteres especiales o menos de siete(7) digitos ni más de diez(10) digitos"
             );
-            $("#number_validate").focus();
-            $("#number_validate").val("");
+            $(this).focus();
+            $(this).val("");
         }
+      })
     });
 
     /*============================================================================
@@ -199,10 +201,38 @@ $(document).ready(function () {
         width: "100%",
         placeholder: "Seleccione letra",
     });
+    // parqueaderos
+
+    $("#DD010").select2({
+        width: "100%",
+        placeholder: "Seleccione",
+    });
+
+    $("#DD030").select2({
+        width: "100%",
+        placeholder: "Seleccione letra",
+    });
+
+    $("#DD050").select2({
+        width: "100%",
+        placeholder: "Seleccione letra",
+    });
+    $("#DD070").select2({
+        width: "100%",
+        placeholder: "Seleccione letra",
+    });
+
+    $("#barrio_empresa").select2({
+        width: "100%",
+        placeholder: "Seleccione letra",
+    });
+    
     $("#barrio").select2({
         width: "100%",
         placeholder: "Seleccione Barrio..",
     });
+
+   
     $("#vereda").select2({
         width: "100%",
         placeholder: "Seleccione Vereda..",
@@ -216,41 +246,92 @@ $(document).ready(function () {
         
 
     });
+    // parqueaderos 
+    $("#barrio_solicitante").select2({
+        width: "100%",
+        placeholder: "Seleccione Barrio..",
+    });
 
     // renderizar direccion
 
-    // $(document).on("change", function () {
-    //     var dd01 = document.getElementById("DD01").value;
-    //     var dd02 = document.getElementById("DD02").value;
-    //     var dd03 = document.getElementById("DD03").value;
-    //     var dd04 = document.getElementById("DD04").value;
-    //     var dd05 = document.getElementById("DD05").value;
-    //     var dd06 = document.getElementById("DD06").value;
-    //     var dd07 = document.getElementById("DD07").value;
-    //     var dd08 = document.getElementById("DD08").value;
+    $(document).on("change", function () {
+        var dd01 = document.getElementById("DD01").value;
+        var dd02 = document.getElementById("DD02").value;
+        var dd03 = document.getElementById("DD03").value;
+        var dd04 = document.getElementById("DD04").value;
+        var dd05 = document.getElementById("DD05").value;
+        var dd06 = document.getElementById("DD06").value;
+        var dd07 = document.getElementById("DD07").value;
+        var dd08 = document.getElementById("DD08").value;
 
-    //     document.getElementById("DD00").value =
-    //         dd01 +
-    //         " " +
-    //         dd02 +
-    //         " " +
-    //         dd03 +
-    //         "# " +
-    //         dd04 +
-    //         dd05 +
-    //         "- " +
-    //         dd06 +
-    //         dd07 +
-    //         " " +
-    //         dd08;
-    // });
-
-    $("#btnDireccion").click(function () {
-        var direccion = $("#DD00").val();
-        $("#ModalDirecciones").modal("hide");
-        $("#direccion").val("");
-        $("#direccion").val(direccion);
+        document.getElementById("DD000").value =
+            dd01 +
+            " " +
+            dd02 +
+            " " +
+            dd03 +
+            "# " +
+            dd04 +
+            dd05 +
+            "- " +
+            dd06 +
+            dd07 +
+            " " +
+            dd08;
     });
+
+    // segundo modal
+    $(document).on("change", function () {
+        var dd01 = document.getElementById("DD010").value;
+        var dd02 = document.getElementById("DD020").value;
+        var dd03 = document.getElementById("DD030").value;
+        var dd04 = document.getElementById("DD040").value;
+        var dd05 = document.getElementById("DD050").value;
+        var dd06 = document.getElementById("DD060").value;
+        var dd07 = document.getElementById("DD070").value;
+        var dd08 = document.getElementById("DD080").value;
+
+        document.getElementById("DD0000").value =
+            dd01 +
+            " " +
+            dd02 +
+            " " +
+            dd03 +
+            "# " +
+            dd04 +
+            dd05 +
+            "- " +
+            dd06 +
+            dd07 +
+            " " +
+            dd08;
+    });
+
+    // $("#btnDireccion").click(function () {
+    //     var direccion = $("#DD00").val();
+    //     $("#ModalDirecciones").modal("hide");
+    //     $("#direccion").val("");
+    //     $("#direccion").val(direccion);
+    // });
+    
+    // parqueadero modal 1
+    $("#btnDireccion").click(function () {
+        
+         var direccion = $("#DD000").val();        
+        $("#ModalDirecciones").modal("hide");
+        $("#direccion_solicitante").val("");
+        $("#direccion_solicitante").val(direccion);
+    });
+
+    // parqueadero modal 2
+    $("#btnDireccionEmpresas").click(function () {
+        
+        var direccion = $("#DD0000").val();        
+       $("#ModalDireccionesEmpresas").modal("hide");
+       $("#direccion_empresa").val("");
+       $("#direccion_empresa").val(direccion);
+   });
+
 
     $("#matricula").change(function () {
         var input8 = document.getElementById("matricula").value;
@@ -434,41 +515,41 @@ $(document).ready(function () {
         }
     });
 
-    $("#email_responsable").change(function () {
-        var input10 = document.getElementById("email_responsable").value;
-        var ValInput10 = input10.match(
-            /^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{4,}[.][a-zA-Z0-9\.]{2,12}$/
-        );
-        if (ValInput10 == null) {
-            alert("Correo no valido, por favor revise");
-            $("#email_responsable").focus();
-            $("#email_responsable").val("");
-        }
-    });
+    // $("#email_responsable").change(function () {
+    //     var input10 = document.getElementById("email_responsable").value;
+    //     var ValInput10 = input10.match(
+    //         /^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{4,}[.][a-zA-Z0-9\.]{2,12}$/
+    //     );
+    //     if (ValInput10 == null) {
+    //         alert("Correo no valido, por favor revise");
+    //         $("#email_responsable").focus();
+    //         $("#email_responsable").val("");
+    //     }
+    // });
 
-    $("#email_responsable").change(function () {
-        var input10 = document.getElementById("email_responsable").value;
-        var ValInput10 = input10.match(
-            /^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{4,}[.][a-zA-Z0-9\.]{2,12}$/
-        );
-        if (ValInput10 == null) {
-            alert("Correo no valido, por favor revise");
-            $("#email_responsable").focus();
-            $("#email_responsable").val("");
-        }
-    });
+    // $("#email_responsable").change(function () {
+    //     var input10 = document.getElementById("email_responsable").value;
+    //     var ValInput10 = input10.match(
+    //         /^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{4,}[.][a-zA-Z0-9\.]{2,12}$/
+    //     );
+    //     if (ValInput10 == null) {
+    //         alert("Correo no valido, por favor revise");
+    //         $("#email_responsable").focus();
+    //         $("#email_responsable").val("");
+    //     }
+    // });
 
-    $("#email_confirmado").change(function () {
-        var input10 = document.getElementById("email_confirmado").value;
-        var ValInput10 = input10.match(
-            /^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{4,}[.][a-zA-Z0-9\.]{2,12}$/
-        );
-        if (ValInput10 == null) {
-            alert("Correo no valido, por favor revise");
-            $("#email_confirmado").focus();
-            $("#email_confirmado").val("");
-        }
-    });
+    // $("#email_confirmado").change(function () {
+    //     var input10 = document.getElementById("email_confirmado").value;
+    //     var ValInput10 = input10.match(
+    //         /^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{4,}[.][a-zA-Z0-9\.]{2,12}$/
+    //     );
+    //     if (ValInput10 == null) {
+    //         alert("Correo no valido, por favor revise");
+    //         $("#email_confirmado").focus();
+    //         $("#email_confirmado").val("");
+    //     }
+    // });
 
     $("#email_confirmado").change(function () {
         var email_confirmado =
@@ -549,6 +630,20 @@ $(document).ready(function () {
         overwriteInitial: true,
         maxFileSize: 10000,
     });
+
+    // file input parqueaderos
+
+    $(".documentos_adjuntos").fileinput({
+        theme: "fas",
+        language: "es",
+        browseClass: "btn btn-primary",
+        browseLabel: "Examinar",
+        removeClass: "btn btn-danger",
+        allowedFileExtensions: ["pdf"],
+        overwriteInitial: true,
+        maxFileSize: 10000,
+    });
+
 
     // DATATABLES
 
@@ -827,19 +922,166 @@ $(document).ready(function () {
 
 
         }
+    });
+
+    // select categorizacion de parqueaderos
+
+    $("#estado_solicitud_parqueaderos").change(function () {
+        var estado = document.getElementById("estado_solicitud_parqueaderos").value;        
+
+        if (estado == 'PENDIENTE') {
+          $('#documento_respuesta').attr('disabled', true); 
+          $('#documento_respuesta').attr('required', false); 
+                   
+            
+        }else if(estado == 'APROBADA'){
+            $('#documento_respuesta').attr('disabled', false);
+            $('#documento_respuesta').attr('required', true);
+
+        }else if(estado == 'RECHAZADA'){
+            $('#documento_respuesta').attr('disabled', true);
+            $('#documento_respuesta').attr('required', false);
+        }else{
+            $('#documento_respuesta').attr('disabled', true);
+            $('#documento_respuesta').attr('required', false);
+        }
+        $('#observaciones').focus();
+        
+    });
+
+    $('.myFormDefault').ready(function(){
+
+        var estado_actual = $('.estado_actual').val();
+        
+        if(estado_actual == 'ENVIADA'){
+
+            $("#estado_solicitud_parqueaderos option[value='APROBADA']").hide();
+            $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
+            
+        }else if(estado_actual== 'PENDIENTE'){
+
+            $("#estado_solicitud_parqueaderos option[value='APROBADA']").hide();
+            $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
+
+        }else if(estado_actual == 'RESPUESTA-PLANEACION'){
+
+            $("#estado_solicitud_parqueaderos option[value='PENDIENTE']").hide();
+            $("#estado_solicitud_parqueaderos option[value='REVISION-PLANEACION']").hide();
+
+        }else if(estado_actual == 'REVISION-PLANEACION'){
+
+            $('#myBtn').attr('disabled', true);
+            $('#estado_solicitud_parqueaderos').attr('disabled', true);
+            $('#observaciones').attr('disabled', true);
 
 
+        }else{
+
+            $('#myBtn').attr('disabled', true); 
+            $('#estado_solicitud_parqueaderos').attr('disabled', true);         
+            $('#observaciones').attr('disabled', true);
+
+        }
 
     });
 
-      
 
+        // FUNCION DE EXPERIENCIA GlOBAL BOTON FACIL
 
+    $(".btn-facil-global").click(function () {
+        
+        var facil = $("#btn-facil-global").val();
+        var textArea = $("#text-area").val();
+        var modulo = $('.modulo').val();
 
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
 
+        $.ajax({
+            type: "POST",
+            url: "/experiencia/tramites",
+            dataType: "json",
+            data: {
+                valor: facil,
+                sugerencias: textArea,
+                tramite: modulo
+            },
+            success: function (response) {
+                // console.log(response);
 
+                if (response.success) {
+                    $("#Texto_sugerencias").fadeToggle();
 
-       
+                    setTimeout(function () {
+                        $("#Texto_sugerencias").fadeToggle();
+                    }, 5000);
+
+                    $("#Facil").css("pointer-events", "none");
+                    $("#Dificil").css("pointer-events", "none");
+                    $("#facil").attr("disabled", true);
+                    $("#Dificil").attr("disabled", true);
+                    $("#btn-sugerencias").attr("disabled", true);
+                    $("#text-button").css("display", "none");
+                } else {
+                    alert("Ha ocurrido un error al realizar la encuesta");
+                }
+            },
+            error: function () {
+                alert("error de petición ajax");
+            },
+        });
+    });
+
+    // FUNCION DE EXPERIENCIA BOTON DIFICIL
+
+    $(".btn-dificil-global").click(function () {
+        var Dificil = $("#btn-dificil-global").val();
+        var textArea = $("#text-area").val();
+        var modulo = $('.modulo').val();
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/experiencia/tramites",
+            dataType: "json",
+            data: {
+                valor: Dificil,
+                sugerencias: textArea,
+                tramite:modulo
+            },
+            success: function (response) {
+                // console.log(response);
+
+                if (response.success) {
+                    $("#Texto_sugerencias").fadeToggle();
+
+                    setTimeout(function () {
+                        $("#Texto_sugerencias").fadeToggle();
+                    }, 5000);
+
+                    $("#Facil").css("pointer-events", "none");
+                    $("#Dificil").css("pointer-events", "none");
+                    $("#facil").attr("disabled", true);
+                    $("#Dificil").attr("disabled", true);
+                    $("#btn-sugerencias").attr("disabled", true);
+                    $("#text-button").css("display", "none");
+                } else {
+                    alert("Ha ocurrido un error al realizar la encuesta");
+                }
+            },
+            error: function () {
+                alert("error de petición ajax");
+            },
+        });
+    });      
     
       
 }); // FIN DOCUMENT READY

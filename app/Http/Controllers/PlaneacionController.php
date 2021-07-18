@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\EspacioPublico;
 use App\Auditoria;
+use App\Parqueadero;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EnvioNotificacion;
@@ -266,5 +267,23 @@ class PlaneacionController extends Controller
             }
 
         }
+    }
+
+    public function indexParqueaderos(){
+     
+        $sEnRevision = Parqueadero::where('estado_solicitud', 'REVISION-PLANEACION')->get();
+        
+        return view('tramites.planeacion.parqueaderos.index', compact('sEnRevision'));
+
+    }
+
+    public function parqueaderoDetalle($id){
+     
+    
+        $solicitud = Parqueadero::findOrFail($id);
+
+        return view('tramites.planeacion.parqueaderos.detalle', compact('solicitud'));
+
+
     }
 }

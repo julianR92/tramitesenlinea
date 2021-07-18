@@ -21,7 +21,7 @@
                             <div class="image-icon">
                                 <span class="breadcrumb govco-icon govco-icon-shortr-arrow" style="height: 22px;"></span>
                                 <p class="ml-3 ml-md-0 "><b style="color: #004fbf;text-transform: none;">
-                                        Planeacion
+                                        Interior
                                     </b></p>
                             </div>
                         </li>
@@ -31,22 +31,22 @@
         </div>
 
         <div class="col-md-12 pt-4" style="padding-left: 10px!important">
-            <h1 class="headline-xl-govco">Tramites Secretaria de Planeacion</h1>
+            <h1 class="headline-xl-govco">Tramites Secretaria de Interior</h1>
             <div class="row pt-5">
                   
                {{-- INICIO CARD  --}}
               <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-                <div class="card govco-card animate__animated animate__flipInX" style="max-height: 500px!important; height: 500px!important">
+                <div class="card govco-card animate__animated animate__flipInX" style="max-height: 500px!important">
                     <div class="card-header govco-card-header">
                         <h4>
-                        Licencia de ocupación de espacio público para la localización de equipamiento</h4> 
+                        Categorización de parqueaderos</h4> 
                     </div>
                     
                     <div class="card-body">
-                        <p style="text-align: justify">Es la autorización previa para ocupar o para intervenir bienes de uso público incluidos en el espacio público, de conformidad con las normas urbanísticas adoptadas en el Plan de Ordenamiento Territorial, en los instrumentos que lo desarrollen y complementen y demás normatividad vigente. </p>
+                        <p style="text-align: justify">El objetivo del tramite es clasificar y categorizar los parqueaderos públicos ubicados en el municipio de Bucaramanga, para su correcto funcionamiento. Inicia con la solicitud del ciudadano hasta la expedición de la resolución que otorga la categorización o modificación de categorización de los parqueaderos públicos ubicados en el municipio de Bucaramanga. </p>
                       </div>
                       <div class="card-footer govco-card-footer govco-center">
-                        <a class="btn-low-mix-govco align-column-govco" href="{{route('espacio.index')}}">
+                        <a class="btn-low-mix-govco align-column-govco" href="{{route('interior.parqueaderos.index')}}">
                           <span class="btn-mix-govco__title">Ver mas detalles</span>
                           <span class="btn-mix-govco__icon govco-icon govco-icon-simpled-arrow"></span>
                         </a>
@@ -54,34 +54,6 @@
                     </div>
                 </div>
                 {{-- </ FIN CARD --}}
-
-
-                {{-- inicio card --}}
-                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-                    <div class="card govco-card animate__animated animate__flipInX" style="max-height: 500px!important; height:500px!important">
-                        <div class="card-header govco-card-header">
-                            <h4>
-                            Categorización de parqueaderos</h4> 
-                        </div>
-                        
-                        <div class="card-body">
-                            <p style="text-align: justify">El objetivo del tramite es clasificar y categorizar los parqueaderos públicos ubicados en el municipio de Bucaramanga, para su correcto funcionamiento. Inicia con la solicitud del ciudadano hasta la expedición de la resolución que otorga la categorización o modificación de categorización de los parqueaderos públicos ubicados en el municipio de Bucaramanga. </p>
-                          </div>
-                          <div class="card-footer govco-card-footer govco-center">
-                            <a class="btn-low-mix-govco align-column-govco" href="{{route('planeacion.parqueaderos.index')}}">
-                              <span class="btn-mix-govco__title">Ver mas detalles</span>
-                              <span class="btn-mix-govco__icon govco-icon govco-icon-simpled-arrow"></span>
-                            </a>
-                          </div>                
-                        </div>
-                    </div>
-
-
-
-
-
-
-                {{-- fin del card --}}
 
 
             

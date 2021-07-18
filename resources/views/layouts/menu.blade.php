@@ -130,6 +130,11 @@
                   <a href="#" class="nav-link">ADMINISTRATIVA</a>
                  </li> 
                  @endrole
+                 @hasrole('SEC_GOBIERNO|SUPER-ADMIN')
+                 <li class="nav-item">
+                  <a href="{{route('interior.index')}}" class="nav-link">INTERIOR</a>
+                 </li> 
+                 @endrole
               </ul>
            </div>
         </div>
