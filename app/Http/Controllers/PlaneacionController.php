@@ -84,11 +84,14 @@ class PlaneacionController extends Controller
                 $auditoria = Auditoria::create([
                     'usuario' => $request->username,
                     'proceso_afectado'=> 'Radicado-'.$datos->radicado,
-                    'accion'=>'update estado '.$request->estado_solicitud
+                    'tramite' =>'LICENCIA DE INTERVENCION DE ESPACIO PUBLICO PARA LOCALIZACION DE EQUIPAMIENTO',
+                    'radicado' => $datos->radicado,
+                    'accion'=>'update a estado '.$request->estado_solicitud,
+                    'observacion'=>$request->observaciones_solicitud
 
                 ]);
 
-                Mail::to($datos->email_responsable)->queue(new EnvioNotificacion($detalleCorreo));
+                Mail::to($datos->email_responsable)->send(new EnvioNotificacion($detalleCorreo));
                 Alert::success('Operacion Exitosa', 'Se actualizado exitosamente el estado del tramite en el sistema');
                 return redirect()->route('espacio.index');
             } else {
@@ -130,11 +133,15 @@ class PlaneacionController extends Controller
                 $auditoria = Auditoria::create([
                     'usuario' => $request->username,
                     'proceso_afectado'=> 'Radicado-'.$datos->radicado,
-                    'accion'=>'update estado '.$request->estado_solicitud
+                    'tramite' =>'LICENCIA DE INTERVENCION DE ESPACIO PUBLICO PARA LOCALIZACION DE EQUIPAMIENTO',
+                    'radicado' => $datos->radicado,
+                    'accion'=>'update a estado '.$request->estado_solicitud,
+                    'observacion'=>$request->observaciones_solicitud
+                    
 
                 ]);
 
-                Mail::to($datos->email_responsable)->queue(new EnvioNotificacion($detalleCorreo));
+                Mail::to($datos->email_responsable)->send(new EnvioNotificacion($detalleCorreo));
                 Alert::success('Operacion Exitosa', 'Se actualizado exitosamente el estado del tramite en el sistema');
                 return redirect()->route('espacio.index');
             } else {
@@ -166,7 +173,7 @@ class PlaneacionController extends Controller
             ];
 
             //mover documento a storage
-            $adjunto1 = $request->file('documento_respuesta')->storeAs('public/Respuestas/' . $datos->radicado, 'Respuesta_Solicitud-' . $datos->radicado . '.pdf');
+            $adjunto1 = $request->file('documento_respuesta')->storeAs('Respuestas/' . $datos->radicado, 'Respuesta_Solicitud-' . $datos->radicado . '.pdf');
 
             //crear ruta de guardado
             $ruta_guardado = 'storage/Respuestas/' . $datos->radicado . '/Respuesta_Solicitud-' . $datos->radicado . '.pdf';
@@ -187,16 +194,19 @@ class PlaneacionController extends Controller
                     $auditoria = Auditoria::create([
                         'usuario' => $request->username,
                         'proceso_afectado'=> 'Radicado-'.$datos->radicado,
-                        'accion'=>'update estado '.$request->estado_solicitud
+                        'tramite' =>'LICENCIA DE INTERVENCION DE ESPACIO PUBLICO PARA LOCALIZACION DE EQUIPAMIENTO',
+                        'radicado' => $datos->radicado,
+                        'accion'=>'update a estado '.$request->estado_solicitud,
+                        'observacion'=>$request->observaciones_solicitud
     
                     ]);
 
-                    Mail::to($datos->email_responsable)->queue(new EnvioNotificacion($detalleCorreo));
+                    Mail::to($datos->email_responsable)->send(new EnvioNotificacion($detalleCorreo));
                     Alert::success('Operacion Exitosa', 'Se actualizado exitosamente el estado del tramite en el sistema');
                     return redirect()->route('espacio.index');
                 } else {
 
-                    Alert::error('Error', 'Ha ocurrido un erro al registrar la actualizacion de la solicitud');
+                    Alert::error('Error', 'Ha ocurrido un error al registrar la actualizacion de la solicitud');
                     return redirect()->route('espacio.index');
                 }
             } else {
@@ -228,7 +238,7 @@ class PlaneacionController extends Controller
             ];
 
             //mover documento a storage
-            $adjunto1 = $request->file('documento_respuesta')->storeAs('public/Respuestas/' . $datos->radicado, 'Respuesta_Solicitud-' . $datos->radicado . '.pdf');
+            $adjunto1 = $request->file('documento_respuesta')->storeAs('Respuestas/' . $datos->radicado, 'Respuesta_Solicitud-' . $datos->radicado . '.pdf');
 
             //crear ruta de guardado
             $ruta_guardado = 'storage/Respuestas/' . $datos->radicado . '/Respuesta_Solicitud-' . $datos->radicado . '.pdf';
@@ -248,11 +258,14 @@ class PlaneacionController extends Controller
                     $auditoria = Auditoria::create([
                         'usuario' => $request->username,
                         'proceso_afectado'=> 'Radicado-'.$datos->radicado,
-                        'accion'=>'update estado '.$request->estado_solicitud
+                        'tramite' =>'LICENCIA DE INTERVENCION DE ESPACIO PUBLICO PARA LOCALIZACION DE EQUIPAMIENTO',
+                        'radicado' => $datos->radicado,
+                        'accion'=>'update a estado '.$request->estado_solicitud,
+                        'observacion'=>$request->observaciones_solicitud
     
                     ]);
 
-                    Mail::to($datos->email_responsable)->queue(new EnvioNotificacion($detalleCorreo));
+                    Mail::to($datos->email_responsable)->send(new EnvioNotificacion($detalleCorreo));
                     Alert::success('Operacion Exitosa', 'Se actualizado exitosamente el estado del tramite en el sistema');
                     return redirect()->route('espacio.index');
                 } else {
@@ -268,7 +281,6 @@ class PlaneacionController extends Controller
 
         }
     }
-
     public function indexParqueaderos(){
      
         $sEnRevision = Parqueadero::where('estado_solicitud', 'REVISION-PLANEACION')->get();

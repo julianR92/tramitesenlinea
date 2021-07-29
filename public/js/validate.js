@@ -35,9 +35,6 @@ $(document).ready(function () {
                 $(this).focus();
                 $(this).val("");
             }
-
-
-
         })
       
     });
@@ -102,7 +99,7 @@ $(document).ready(function () {
                 id = "email_validate"        maxlength =50
     ============================================================================*/
 
-    $(".email_validate").change(function () {
+      $(".email_validate").change(function () {
         $(this).each(function(){
         var input10 = $(this).val();
         var ValInput10 = input10.match(
@@ -121,7 +118,7 @@ $(document).ready(function () {
                 id = "number_validate"        maxlength =10
     ============================================================================*/
 
-    $(".number_validate").change(function () {
+   $(".number_validate").change(function () {
         $(this).each(function(){
         var input8 = $(this).val();
         var ValInput8 = input8.match(/^[0-9]{7,10}$/);
@@ -201,7 +198,8 @@ $(document).ready(function () {
         width: "100%",
         placeholder: "Seleccione letra",
     });
-    // parqueaderos
+    
+     // parqueaderos
 
     $("#DD010").select2({
         width: "100%",
@@ -226,17 +224,17 @@ $(document).ready(function () {
         width: "100%",
         placeholder: "Seleccione letra",
     });
-    
+    //fin parqueaderos
+
     $("#barrio").select2({
         width: "100%",
         placeholder: "Seleccione Barrio..",
     });
-
-   
     $("#vereda").select2({
         width: "100%",
         placeholder: "Seleccione Vereda..",
     });
+    
 
     $('#selectRoles').select2({
         width: "100%",
@@ -246,7 +244,7 @@ $(document).ready(function () {
         
 
     });
-    // parqueaderos 
+
     $("#barrio_solicitante").select2({
         width: "100%",
         placeholder: "Seleccione Barrio..",
@@ -254,7 +252,7 @@ $(document).ready(function () {
 
     // renderizar direccion
 
-    $(document).on("change", function () {
+    $('.modal1').on("change", function () {
         var dd01 = document.getElementById("DD01").value;
         var dd02 = document.getElementById("DD02").value;
         var dd03 = document.getElementById("DD03").value;
@@ -264,24 +262,11 @@ $(document).ready(function () {
         var dd07 = document.getElementById("DD07").value;
         var dd08 = document.getElementById("DD08").value;
 
-        document.getElementById("DD000").value =
-            dd01 +
-            " " +
-            dd02 +
-            " " +
-            dd03 +
-            "# " +
-            dd04 +
-            dd05 +
-            "- " +
-            dd06 +
-            dd07 +
-            " " +
-            dd08;
+document.getElementById("DD000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+"- " +dd06+dd07 +" "+dd08;
     });
 
-    // segundo modal
-    $(document).on("change", function () {
+     // segundo modal
+    $('.modal2').on("change", function () {
         var dd01 = document.getElementById("DD010").value;
         var dd02 = document.getElementById("DD020").value;
         var dd03 = document.getElementById("DD030").value;
@@ -291,20 +276,8 @@ $(document).ready(function () {
         var dd07 = document.getElementById("DD070").value;
         var dd08 = document.getElementById("DD080").value;
 
-        document.getElementById("DD0000").value =
-            dd01 +
-            " " +
-            dd02 +
-            " " +
-            dd03 +
-            "# " +
-            dd04 +
-            dd05 +
-            "- " +
-            dd06 +
-            dd07 +
-            " " +
-            dd08;
+document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+"- " +dd06+dd07 +" "+dd08;
+            
     });
 
     // $("#btnDireccion").click(function () {
@@ -313,8 +286,8 @@ $(document).ready(function () {
     //     $("#direccion").val("");
     //     $("#direccion").val(direccion);
     // });
-    
-    // parqueadero modal 1
+
+     // parqueadero modal 1
     $("#btnDireccion").click(function () {
         
          var direccion = $("#DD000").val();        
@@ -323,7 +296,7 @@ $(document).ready(function () {
         $("#direccion_solicitante").val(direccion);
     });
 
-    // parqueadero modal 2
+     // parqueadero modal 2
     $("#btnDireccionEmpresas").click(function () {
         
         var direccion = $("#DD0000").val();        
@@ -331,7 +304,6 @@ $(document).ready(function () {
        $("#direccion_empresa").val("");
        $("#direccion_empresa").val(direccion);
    });
-
 
     $("#matricula").change(function () {
         var input8 = document.getElementById("matricula").value;
@@ -631,7 +603,7 @@ $(document).ready(function () {
         maxFileSize: 10000,
     });
 
-    // file input parqueaderos
+     // file input parqueaderos
 
     $(".documentos_adjuntos").fileinput({
         theme: "fas",
@@ -643,7 +615,6 @@ $(document).ready(function () {
         overwriteInitial: true,
         maxFileSize: 10000,
     });
-
 
     // DATATABLES
 
@@ -781,7 +752,7 @@ $(document).ready(function () {
     // FUNCION DE EXPERIENCIA BOTON FACIL
 
     $(".btn-facil").click(function () {
-        
+
         var facil = $("#Facil").val();
         var textArea = $("#text-area").val();
 
@@ -828,6 +799,7 @@ $(document).ready(function () {
     // FUNCION DE EXPERIENCIA BOTON DIFICIL
 
     $(".btn-dificil").click(function () {
+        
         var Dificil = $("#Dificil").val();
         var textArea = $("#text-area").val();
 
@@ -888,8 +860,9 @@ $(document).ready(function () {
         }
        });
 
-       $("#estado").change(function () {
-        var estado = document.getElementById("estado").value;        
+       $(".estado").change(function () {
+       
+        var estado = document.getElementById("estado").value;      
 
         if (estado == 'PENDIENTE') {
           $('#documento_respuesta').attr('disabled', true); 
@@ -907,24 +880,23 @@ $(document).ready(function () {
             $('#documento_respuesta').attr('disabled', true);
             $('#documento_respuesta').attr('required', false);
         }
-        $('#observaciones').focus();
+        $('#observaciones_espacio').focus();
         
     });
-    $('#myForm').ready(function(){
 
-        var estado_solicitud = $('#estado_sol').val();
+
+    $('#myForm1').ready(function(){
+
+        var estado_solicitud = $('#estado_sol_espacio').val();
         if(estado_solicitud == 'APROBADA' || estado_solicitud == 'RECHAZADA'){
-            $('#myBtn').attr('disabled', true);
+            $('#myBtnEspacio').attr('disabled', true);
             $('#estado').attr('disabled', true);
-            $('#observaciones').attr('disabled', true);
-            
-
-
-
+            $('#observaciones_espacio').attr('disabled', true);          
         }
+
     });
 
-    // select categorizacion de parqueaderos
+     // select categorizacion de parqueaderos
 
     $("#estado_solicitud_parqueaderos").change(function () {
         var estado = document.getElementById("estado_solicitud_parqueaderos").value;        
@@ -948,7 +920,8 @@ $(document).ready(function () {
         $('#observaciones').focus();
         
     });
-
+     
+     // parqueaderos
     $('.myFormDefault').ready(function(){
 
         var estado_actual = $('.estado_actual').val();
@@ -1081,7 +1054,9 @@ $(document).ready(function () {
                 alert("error de petición ajax");
             },
         });
-    });      
+    });
+   
+     
     
       
 }); // FIN DOCUMENT READY

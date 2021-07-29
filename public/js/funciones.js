@@ -40,6 +40,27 @@ function Letras(n){
         return false;
 }
 
+/** Esta funcion me permite controlar los caracteres que se van a diguitar en el campo Nombres y Apellidos **/
+function Observaciones(n){
+
+  key = n.keyCode || n.which;
+  tecla = String.fromCharCode(key).toLowerCase();
+  numeros = "ñÑ1234567890 -.,: ";
+  especiales = [14,15,32,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,
+  84,85,86,87,88,89,90,97,98,99,100,101,102,103,104,105,106,107,108,109,
+  110,111,112,113,114,115,116,117,118,119,120,121,122,130,160,161,162,163,164,165,239];
+  tecla_especial = false
+      for(var i in especiales){
+          if(key == especiales[i]){
+            tecla_especial = true;
+          break;
+            } 
+        }
+                       
+      if(numeros.indexOf(tecla)==-1 && !tecla_especial)
+        return false;
+}
+
 
 /**Esta funcion me permite convertir los textos digitados a mayusculas **/
 function aMayusculas(obj,id){

@@ -83,7 +83,10 @@ class InteriorController extends Controller
                 $auditoria = Auditoria::create([
                     'usuario' => $request->username,
                     'proceso_afectado' => 'Radicado-' . $datos->radicado,
-                    'accion' => 'update estado ' . $request->estado_solicitud . ' Tramite-Parqueaderos'
+                    'tramite'=>'CATEGORIZACION DE PARQUEADEROS',
+                    'radicado'=> $datos->radicado,
+                    'accion' => 'update estado ' . $request->estado_solicitud,
+                    'observacion'=>$request->observaciones_solicitud
 
                 ]);
 
@@ -126,7 +129,7 @@ class InteriorController extends Controller
             $datos->act_documentos = null;
             $datos->fecha_pendiente_planeacion = $date_planeacion;
 
-            $correo_responsable = 'ojrincon@bucaramanga.gov.co';
+            $correo_responsable = 'iabarraganj@bucaramanga.gov.co';
 
             if ($datos->save()) {
 
@@ -134,7 +137,10 @@ class InteriorController extends Controller
                 $auditoria = Auditoria::create([
                     'usuario' => $request->username,
                     'proceso_afectado' => 'Radicado-' . $datos->radicado,
-                    'accion' => 'update estado ' . $request->estado_solicitud . ' Tramite-Parqueaderos'
+                    'tramite'=>'CATEGORIZACION DE PARQUEADEROS',
+                    'radicado'=> $datos->radicado,
+                    'accion' => 'update a estado ' . $request->estado_solicitud,
+                    'observacion'=>$request->observaciones_solicitud
 
                 ]);
 
@@ -160,11 +166,11 @@ class InteriorController extends Controller
 
 
             //mover documento a storage
-            $adjunto1 = $request->file('documento_respuesta_planeacion')->storeAs('public/documentos_parqueaderos/' . $datos->radicado, 'Concepto_Tecnico-' . $datos->radicado . '.pdf');
+            $adjunto1 = $request->file('documento_respuesta_planeacion')->storeAs('documentos_parqueaderos/' . $datos->radicado, 'Concepto_Tecnico-' . $datos->radicado . '.pdf');
 
             //crear ruta de guardado
             $ruta_guardado = 'storage/documentos_parqueaderos/' . $datos->radicado . '/Concepto_Tecnico-' . $datos->radicado . '.pdf';
-            $correo_responsable = 'ojrincon@bucaramanga.gov.co';
+            $correo_responsable = 'cjguerrero@bucaramanga.gov.co';
 
             $detalleCorreo = [
                 'nombres' => '',
@@ -194,7 +200,10 @@ class InteriorController extends Controller
                     $auditoria = Auditoria::create([
                         'usuario' => $request->username,
                         'proceso_afectado' => 'Radicado-' . $datos->radicado,
-                        'accion' => 'update estado ' . $request->estado_solicitud . ' Tramite-Parqueaderos'
+                        'tramite'=>'CATEGORIZACION DE PARQUEADEROS',
+                        'radicado'=> $datos->radicado,
+                        'accion' => 'update a estado ' . $request->estado_solicitud,
+                        'observacion'=>$request->observaciones_solicitud
 
                     ]);
 
@@ -243,7 +252,10 @@ class InteriorController extends Controller
                 $auditoria = Auditoria::create([
                     'usuario' => $request->username,
                     'proceso_afectado' => 'Radicado-' . $datos->radicado,
-                    'accion' => 'update estado ' . $request->estado_solicitud . ' Tramite-Parqueaderos'
+                    'tramite'=>'CATEGORIZACION DE PARQUEADEROS',
+                    'radicado'=> $datos->radicado,
+                    'accion' => 'update estado ' . $request->estado_solicitud,
+                    'observacion'=>$request->observaciones_solicitud
 
                 ]);
 
@@ -267,7 +279,7 @@ class InteriorController extends Controller
             $date_30 = null;
 
             //mover documento a storage
-            $adjunto1 = $request->file('documento_respuesta')->storeAs('public/documentos_parqueaderos/' . $datos->radicado, 'Acto_Administrativo_solicitiud_No-' . $datos->radicado . '.pdf');
+            $adjunto1 = $request->file('documento_respuesta')->storeAs('documentos_parqueaderos/' . $datos->radicado, 'Acto_Administrativo_solicitiud_No-' . $datos->radicado . '.pdf');
 
             //crear ruta de guardado
             $ruta_guardado = 'storage/documentos_parqueaderos/' . $datos->radicado . '/Acto_Administrativo_solicitiud_No-' . $datos->radicado . '.pdf';
@@ -298,7 +310,10 @@ class InteriorController extends Controller
                     $auditoria = Auditoria::create([
                         'usuario' => $request->username,
                         'proceso_afectado' => 'Radicado-' . $datos->radicado,
-                        'accion' => 'update estado ' . $request->estado_solicitud . ' Tramite-Parqueaderos'
+                        'tramite'=>'CATEGORIZACION DE PARQUEADEROS',
+                         'radicado'=> $datos->radicado,
+                        'accion' => 'update estado ' . $request->estado_solicitud,
+                        'observacion'=>$request->observaciones_solicitud
 
                     ]);
 

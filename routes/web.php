@@ -48,6 +48,13 @@ Route::post('/categorizacion-parqueaderos/consulta','ParqueaderosController@cons
 Route::get('/categorizacion-parqueaderos/detalle/{id}', 'ParqueaderosController@detalle')->name('parqueadero.detalle');
 Route::post('/categorizacion-parqueaderos/updateDocs', 'ParqueaderosController@updateDocs')->name('parqueadero.updateDocs');
 
+// RUTAS EVENTOS PUBLICOS
+
+Route::get('/eventos-publicos', 'EventosController@index')->name('eventos.index');
+
+
+
+
 Route::group(['middleware' => ['role:SUPER-ADMIN']], function () {
 
     //RUTAS DE ROLES

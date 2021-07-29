@@ -12,7 +12,10 @@ class Auditoria extends Model
     protected $fillable=[
         "usuario",
         "proceso_afectado",
-        "accion"
+        "accion",
+        "tramite",
+        "radicado",
+        "observacion"
 
     ];
 }

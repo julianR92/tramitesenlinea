@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Categorización de Parqueaderos')
+@section('title', 'Eventos Publicos')
 @section('content')
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -24,7 +24,7 @@
                             <div class="image-icon">
                                 <span class="breadcrumb govco-icon govco-icon-shortr-arrow" style="height: 22px;"></span>
                                 <p class="ml-3 ml-md-0 "><b style="color: #004fbf;text-transform: none;">
-                                    Categorización Parqueaderos
+                                 Eventos Públicos
                                     </b></p>
                             </div>
                         </li>
@@ -61,11 +61,11 @@
                         </div>
                     </div>
 
-                    <form action="{{route('parqueaderos.store')}}" method="POST" id="myForm" enctype="multipart/form-data">
+                    <form action="" method="POST" id="myForm" enctype="multipart/form-data">
                         @csrf
                         <div class="card govco-card border-0 shadow-none" style="border-radius: 0px;">
 
-                            <h1 class="headline-xl-govco">Categorización de Parqueaderos</h1>
+                            <h1 class="headline-xl-govco">Permisos para eventos Públicos</h1>
 
                             <div class="alert-primary-govco alert alert-dismissible fade show mt-3"
                             aria-label="Alerta informativa">
@@ -75,12 +75,22 @@
                                 <span class="govco-icon govco-icon-bell-sound-p size-2x"></span>
                                 <span class="headline-l-govco">Importante</span>
                             </div>
-                            <p style="text-align: justify"> Este trámite tiene el objetivo de clasificar y categorizar mediante acto administrativo los parqueaderos públicos ubicados en el Municipio de Bucaramanga, ajustándose al procedimiento en sus diferentes etapas de legalización, en cumplimiento del Decreto 073 de 1985. </p>
+                            <p style="text-align: justify"> descripción del tramite. </p>
                         </div>
                         </div>
 
                         <h3 class="headline-l-govco mt-3 pl-0">1. Datos Generales de la Solicitud</h3>
 
+                        {{-- <div class="input-group clockpicker">
+                           <input type="text" class="form-control" value="09:30">
+                           <span class="input-group-addon">
+                               <span class="glyphicon glyphicon-time"></span>
+                           </span>
+                       </div> --}}
+
+                        
+
+                     {{-- 
                         <div class="row form-group mt-2">
                             <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="nom_solicitante" class="form-label">Nombres del Solicitante y/o Responsable * </label>
@@ -175,7 +185,7 @@
 
                             <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="email_confirmado" class="form-label">Confirme su correo* </label>
-                                <input type="mail" onpaste="return false;" class="form-control  @error('email_confirmado') is-invalid @enderror email_validate" name="email_confirmado" id="email_confirmado"  required onpaste="return false;">
+                                <input type="mail" class="form-control  @error('email_confirmado') is-invalid @enderror email_validate" name="email_confirmado" id="email_confirmado"  required onpaste="return false;">
                                 @error('email_confirmado')
                                 <span class="invalid-feedback" role="alert">
                                    <strong>{{ $message }}</strong>
@@ -258,7 +268,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div> --}}
+                            </div> 
                             </div>
 
                             <div class="col-md-6 pl-1 pr-1 pt-3">
@@ -290,7 +300,7 @@
                             </div>
                             </div>
 
-                            {{-- por definir cuarto documento --}}
+                            {{-- por definir cuarto documento -
                             <div class="col-md-12 pl-1 pt-3">
                                 <h4 class="headline-m-govco">Aviso de privacidad y autorización tratamiento de datos personales</h4>
 
@@ -342,7 +352,7 @@
                             <button style="font-size:15px;" type="submit" class="btn btn-round btn-middle" name="consultar" onclick="return confirm('¿Esta seguro de realizar esta solicitud ?')">Enviar Solicitud</button>
                          </div>
                         </div>
-                    </form>
+                    </form> --}}
                 </div>
                         
                             
@@ -490,7 +500,7 @@
 
      {{-- MODAL DIRECCIONES --}}
 
-     <div id="ModalDirecciones" class="modal fade center" role="dialog">
+     {{-- <div id="ModalDirecciones" class="modal fade center" role="dialog">
         <div class="modal-dialog modal-lg" style="max-width: 1000px!important;">
   
            <!-- Modal content-->
@@ -507,7 +517,7 @@
                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD01" style="font-family: 'Barlow', sans-serif;"> Calle - Carrera *</label>
-                             <select name="DD01" id="DD01" type="text" class="form-control input-md modal1" required="required" title="Selecciona el tipo de indicación inicial para la dirección que desea ingresar">
+                             <select name="DD01" id="DD01" type="text" class="form-control input-md" required="required" title="Selecciona el tipo de indicación inicial para la dirección que desea ingresar">
                                 <option value=""></option>
                                 @foreach ($Parametros2 as $parametro2)
                                 <option value="{{$parametro2->ParDes}}">{{$parametro2->ParDes}}</option>
@@ -521,14 +531,14 @@
                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD02" style="font-family: 'Barlow', sans-serif;">N° - Nombre * </label>
-                             <input id="DD02" name="DD02" type="text" class="form-control modal1" maxlength="20" required="required" title="En este campo se deberá digitar número o nombre según corresponda a la selección en el campo anterior, te recomendamos observar el campo de visualización que se encuentra al final de este módulo para organizar tu dirección correctamente." onkeypress="return NumDoc(event)" onchange="aMayusculas(this.value,this.id)" style="height: 29px!important;">
+                             <input id="DD02" name="DD02" type="text" class="form-control" maxlength="20" required="required" title="En este campo se deberá digitar número o nombre según corresponda a la selección en el campo anterior, te recomendamos observar el campo de visualización que se encuentra al final de este módulo para organizar tu dirección correctamente." onkeypress="return NumDoc(event)" onchange="aMayusculas(this.value,this.id)" style="height: 29px!important;">
                           </div>
                        </div>
   
                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD03" style="font-family: 'Barlow', sans-serif;">Letra </label>
-                             <select id="DD03" name="DD03" type="text" class="form-control input-md modal1" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
+                             <select id="DD03" name="DD03" type="text" class="form-control input-md" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
                                 <option value=""></option>
                                 @foreach ($Parametros1 as $parametro1)
                                 <option value="{{$parametro1->ParNom}}">{{$parametro1->ParNom}}</option>
@@ -541,14 +551,14 @@
                        <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD04" style="font-family: 'Barlow', sans-serif;">Numero* </label>
-                             <input id="DD04" name="DD04" type="text" class="form-control modal1" maxlength="4" title="Digita en este campo el primer número de tu dirección" onkeypress="return Numeros(event)" required="required" style="height: 29px!important;">
+                             <input id="DD04" name="DD04" type="text" class="form-control" maxlength="4" title="Digita en este campo el primer número de tu dirección" onkeypress="return Numeros(event)" required="required" style="height: 29px!important;">
                           </div>
                        </div>
   
                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD05" style="font-family: 'Barlow', sans-serif;">Letra </label>
-                             <select id="DD05" name="DD05" type="text" class="form-control input-md modal1" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
+                             <select id="DD05" name="DD05" type="text" class="form-control input-md" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
                                 <option value=""></option>
                                 @foreach ($Parametros1 as $parametro1)
                                 <option value="{{$parametro1->ParNom}}">{{$parametro1->ParNom}}</option>
@@ -560,14 +570,14 @@
                        <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD06" style="font-family: 'Barlow', sans-serif;">Numero* </label>
-                             <input id="DD06" name="DD06" type="text" class="form-control modal1" maxlength="4" title="Digita en este campo el primer número de tu dirección" onkeypress="return Numeros(event)" style="height: 29px!important;">
+                             <input id="DD06" name="DD06" type="text" class="form-control" maxlength="4" title="Digita en este campo el primer número de tu dirección" onkeypress="return Numeros(event)" style="height: 29px!important;">
                           </div>
                        </div>
   
                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD07" style="font-family: 'Barlow', sans-serif;">Letra </label>
-                             <select id="DD07" name="DD07" type="text" class="form-control input-md modal1" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
+                             <select id="DD07" name="DD07" type="text" class="form-control input-md" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
                                 <option value=""></option>
                                 @foreach ($Parametros1 as $parametro1)
                                 <option value="{{$parametro1->ParNom}}">{{$parametro1->ParNom}}</option>
@@ -580,7 +590,7 @@
                        <div class="col-lg-6 col-md-2 col-sm-12 col-xs-12 caja_ultima"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD08" style="font-family: 'Barlow', sans-serif;">Complemento </label>
-                             <input id="DD08" name="DD08" type="text" class="form-control " maxlength="80" title="Digita en este el complemento de tu direccion" onkeyup="aMayusculas(this.value,this.id)">
+                             <input id="DD08" name="DD08" type="text" class="form-control" maxlength="80" title="Digita en este el complemento de tu direccion" onkeyup="aMayusculas(this.value,this.id)">
                           </div>
                        </div>
   
@@ -602,9 +612,9 @@
               </form>
            </div>
         </div>
-     </div>
+     </div> --}}
 
-     <div id="ModalDireccionesEmpresas" class="modal fade center" role="dialog">
+     {{-- <div id="ModalDireccionesEmpresas" class="modal fade center" role="dialog">
         <div class="modal-dialog modal-lg" style="max-width: 1000px!important;">
   
            <!-- Modal content-->
@@ -621,7 +631,7 @@
                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD01" style="font-family: 'Barlow', sans-serif;"> Calle - Carrera *</label>
-                             <select name="DD01" id="DD010" type="text" class="form-control input-md modal2" required="required" title="Selecciona el tipo de indicación inicial para la dirección que desea ingresar">
+                             <select name="DD01" id="DD010" type="text" class="form-control input-md" required="required" title="Selecciona el tipo de indicación inicial para la dirección que desea ingresar">
                                 <option value=""></option>
                                 @foreach ($Parametros2 as $parametro2)
                                 <option value="{{$parametro2->ParDes}}">{{$parametro2->ParDes}}</option>
@@ -635,14 +645,14 @@
                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD02" style="font-family: 'Barlow', sans-serif;">N° - Nombre * </label>
-                             <input id="DD020" name="DD02" type="text" class="form-control modal2" maxlength="20" required="required" title="En este campo se deberá digitar número o nombre según corresponda a la selección en el campo anterior, te recomendamos observar el campo de visualización que se encuentra al final de este módulo para organizar tu dirección correctamente." onkeypress="return NumDoc(event)" onchange="aMayusculas(this.value,this.id)" style="height: 29px!important;">
+                             <input id="DD020" name="DD02" type="text" class="form-control" maxlength="20" required="required" title="En este campo se deberá digitar número o nombre según corresponda a la selección en el campo anterior, te recomendamos observar el campo de visualización que se encuentra al final de este módulo para organizar tu dirección correctamente." onkeypress="return NumDoc(event)" onchange="aMayusculas(this.value,this.id)" style="height: 29px!important;">
                           </div>
                        </div>
   
                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD03" style="font-family: 'Barlow', sans-serif;">Letra </label>
-                             <select id="DD030" name="DD03" type="text" class="form-control input-md modal2" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
+                             <select id="DD030" name="DD03" type="text" class="form-control input-md" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
                                 <option value=""></option>
                                 @foreach ($Parametros1 as $parametro1)
                                 <option value="{{$parametro1->ParNom}}">{{$parametro1->ParNom}}</option>
@@ -655,14 +665,14 @@
                        <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD04" style="font-family: 'Barlow', sans-serif;">Numero* </label>
-                             <input id="DD040" name="DD04" type="text" class="form-control modal2" maxlength="4" title="Digita en este campo el primer número de tu dirección" onkeypress="return Numeros(event)" required="required" style="height: 29px!important;">
+                             <input id="DD040" name="DD04" type="text" class="form-control" maxlength="4" title="Digita en este campo el primer número de tu dirección" onkeypress="return Numeros(event)" required="required" style="height: 29px!important;">
                           </div>
                        </div>
   
                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD05" style="font-family: 'Barlow', sans-serif;">Letra </label>
-                             <select id="DD050" name="DD050" type="text" class="form-control input-md modal2" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
+                             <select id="DD050" name="DD050" type="text" class="form-control input-md" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
                                 <option value=""></option>
                                 @foreach ($Parametros1 as $parametro1)
                                 <option value="{{$parametro1->ParNom}}">{{$parametro1->ParNom}}</option>
@@ -674,14 +684,14 @@
                        <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD06" style="font-family: 'Barlow', sans-serif;">Numero* </label>
-                             <input id="DD060" name="DD06" type="text" class="form-control modal2" maxlength="4" title="Digita en este campo el primer número de tu dirección" onkeypress="return Numeros(event)" style="height: 29px!important;">
+                             <input id="DD060" name="DD06" type="text" class="form-control" maxlength="4" title="Digita en este campo el primer número de tu dirección" onkeypress="return Numeros(event)" style="height: 29px!important;">
                           </div>
                        </div>
   
                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD07" style="font-family: 'Barlow', sans-serif;">Letra </label>
-                             <select id="DD070" name="DD070" type="text" class="form-control input-md modal2" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
+                             <select id="DD070" name="DD070" type="text" class="form-control input-md" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
                                 <option value=""></option>
                                 @foreach ($Parametros1 as $parametro1)
                                 <option value="{{$parametro1->ParNom}}">{{$parametro1->ParNom}}</option>
@@ -694,7 +704,7 @@
                        <div class="col-lg-6 col-md-2 col-sm-12 col-xs-12 caja_ultima"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD08" style="font-family: 'Barlow', sans-serif;">Complemento </label>
-                             <input id="DD080" name="DD08" type="text" class="form-control modal2" maxlength="80" title="Digita en este el complemento de tu direccion" onkeyup="aMayusculas(this.value,this.id)">
+                             <input id="DD080" name="DD08" type="text" class="form-control" maxlength="80" title="Digita en este el complemento de tu direccion" onkeyup="aMayusculas(this.value,this.id)">
                           </div>
                        </div>
   
@@ -716,7 +726,7 @@
               </form>
            </div>
         </div>
-     </div>
+     </div> --}}
 
      {{-- MODAL CONSULTAR SOLICITUD --}}
      

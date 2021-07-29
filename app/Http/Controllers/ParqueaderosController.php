@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Parametro;
 use App\Barrio;
 use App\Parqueadero;
+use App\Auditoria;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotificacionParqueaderos;
@@ -73,12 +74,12 @@ class ParqueaderosController extends Controller
      $radicado = date("Ymd") . $request->identificacion_solicitante . $idRadicado; // numero radicado
     
 
-     $adjunto1 = $request->file('archivo_camara_rut')->storeAs('public/documentos_parqueaderos/' . $radicado, 'camara_comercio_RUT-' . $radicado . '.pdf');
+     $adjunto1 = $request->file('archivo_camara_rut')->storeAs('documentos_parqueaderos/' . $radicado, 'camara_comercio_RUT-' . $radicado . '.pdf');
 
 
-     $adjunto3 = $request->file('archivo_planos')->storeAs('public/documentos_parqueaderos/' . $radicado, 'planos_aprobados-' . $radicado . '.pdf');
+     $adjunto3 = $request->file('archivo_planos')->storeAs('documentos_parqueaderos/' . $radicado, 'planos_aprobados-' . $radicado . '.pdf');
 
-     $adjunto4 = $request->file('archivo_licencia')->storeAs('public/documentos_parqueaderos/' . $radicado, 'licencia_construccion-' . $radicado . '.pdf');
+     $adjunto4 = $request->file('archivo_licencia')->storeAs('documentos_parqueaderos/' . $radicado, 'licencia_construccion-' . $radicado . '.pdf');
 
      if ($adjunto1 && $adjunto3 && $adjunto4) {
 
@@ -114,6 +115,17 @@ class ParqueaderosController extends Controller
         $saveSolicitud = Parqueadero::create($solicitud);
 
         if ($saveSolicitud) {
+
+            //auditoria
+            $auditoria = Auditoria::create([
+                'usuario' => $request->identificacion_solicitante,
+                'proceso_afectado'=> 'Radicado-'.$radicado,
+                'tramite'=> 'CATEGORIZACION DE PARQUEADEROS',
+                'radicado'=> $radicado,
+                'accion'=>'update a estado ENVIADO',
+                'observacion'=> 'El ciudadano '.$request->nom_solicitante.' '.$request->ape_solicitante. 'realiza una solicitud de categorización de parqueaderos'
+
+            ]);
 
             // envio de correo                
             Mail::to($request->email_responsable)->queue(new NotificacionParqueaderos($detalleCorreo));
@@ -168,21 +180,21 @@ class ParqueaderosController extends Controller
         
 
         if($request->archivo_camara_rut){
-            $adjunto1 = $request->file('archivo_camara_rut')->storeAs('public/documentos_parqueaderos/' . $solicitud->radicado, 'camara_comercio_RUT-' . $solicitud->radicado . '.pdf');
+            $adjunto1 = $request->file('archivo_camara_rut')->storeAs('documentos_parqueaderos/' . $solicitud->radicado, 'camara_comercio_RUT-' . $solicitud->radicado . '.pdf');
             $contador++;
         }else{
             $adjunto1 = false;
         }        
 
         if($request->archivo_planos){
-            $adjunto3 = $request->file('archivo_planos')->storeAs('public/documentos_parqueaderos/' . $solicitud->radicado, 'planos_aprobados-' . $solicitud->radicado . '.pdf');
+            $adjunto3 = $request->file('archivo_planos')->storeAs('documentos_parqueaderos/' . $solicitud->radicado, 'planos_aprobados-' . $solicitud->radicado . '.pdf');
             $contador++;
         }else{
             $adjunto3 = false;
         }
 
         if($request->archivo_licencia){
-            $adjunto4 = $request->file('archivo_licencia')->storeAs('public/documentos_parqueaderos/' . $solicitud->radicado, 'licencia_construccion-' . $solicitud->radicado . '.pdf');
+            $adjunto4 = $request->file('archivo_licencia')->storeAs('documentos_parqueaderos/' . $solicitud->radicado, 'licencia_construccion-' . $solicitud->radicado . '.pdf');
             $contador++;
 
         }else{
@@ -190,6 +202,17 @@ class ParqueaderosController extends Controller
         }
 
         if($adjunto1 || $adjunto3 || $adjunto4){
+
+              //auditoria
+              $auditoria = Auditoria::create([
+                'usuario' => $solicitud->identificacion_solicitante,
+                'proceso_afectado'=> 'Radicado-'.$solicitud->radicado,
+                'tramite'=> 'CATEGORIZACION DE PARQUEADEROS',
+                'radicado'=> $solicitud->radicado,
+                'accion'=>'update de documentos',
+                'observacion'=> 'El ciudadano '.$solicitud->nom_solicitante.' '.$solicitud->ape_solicitante. 'realiza actulización de documentos dentro de las fechas permitidas'
+
+            ]);
 
             $solicitud->act_documentos = "SI";
             $solicitud->save();            
