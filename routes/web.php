@@ -30,7 +30,7 @@ Route::get('/logout/{user}', 'LoginController@logout')->name('logout');
 // experiencia globally
 
 Route::post('/experiencia/tramites', 'HomeController@experienciaTramites')->name('experiencia.tramites');
-
+Route::get('/tramites/trazabilidad/{radicado}/{tramite}', 'HomeController@trazabilidadTramites')->name('tramite.trazabilidad');
 
 // RUTAS INHUMACIONES
 

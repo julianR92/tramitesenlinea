@@ -2,6 +2,14 @@
 
 @section('dashboard')
 
+<style>
+    th.sorting_desc::after, th.sorting_asc::after{
+      right: -16px!important;
+   }
+</style>
+
+<?php $tramite= 'LICENCIA DE INTERVENCION DE ESPACIO PUBLICO PARA LOCALIZACION DE EQUIPAMIENTO'?>
+
     <div class="container mt-3 mb-4 m-xs-x-3">
 
         <div class="row pl-4">
@@ -94,6 +102,10 @@
                                                         <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('espacio.detalle', $solicitudesE->id)}}">
                                                             <span class="govco-icon govco-icon-attached-n"></span>
                                                             <span class="btn-govco-text">Detalles</span></a>
+
+                                                            <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesE->radicado , 'tramite' => $tramite] )}}">
+                                                                <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                                <span class="btn-govco-text text-sm">Trazabilidad</span></a>
                                                                                                       
                                                     
                                                     </div>
@@ -145,6 +157,12 @@
                                                         <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('espacio.detalle', $solicitudesPr->id)}}">
                                                             <span class="govco-icon govco-icon-attached-n"></span>
                                                             <span class="btn-govco-text">Detalles</span></a>
+
+                                                            <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesPr->radicado , 'tramite' => $tramite] )}}">
+                                                                <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                                <span class="btn-govco-text text-sm">Trazabilidad</span></a>
+
+                                                        
                                                                                                       
                                                     
                                                     </div>
@@ -205,7 +223,11 @@
                                                 <div class="btn-group" role="group">
                                                     <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('espacio.detalle', $solicitudesPE->id)}}">
                                                         <span class="govco-icon govco-icon-attached-n"></span>
-                                                        <span class="btn-govco-text">Detalles</span></a>
+                                                        <span class="btn-govco-text">Detalles</span></a>                                                       
+                                                        <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesPE->radicado , 'tramite' => $tramite] )}}">
+                                                            <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                            <span class="btn-govco-text text-sm">Trazabilidad</span></a>
+    
 
                                                 
                                                 </div>
@@ -256,7 +278,11 @@
                                                 <div class="btn-group" role="group">
                                                     <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('espacio.detalle', $solicitudesAP->id)}}">
                                                         <span class="govco-icon govco-icon-attached-n"></span>
-                                                        <span class="btn-govco-text">Detalles</span></a>                                                                                                 
+                                                        <span class="btn-govco-text">Detalles</span></a>
+                                                        
+                                                        <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesAP->radicado , 'tramite' => $tramite] )}}">
+                                                            <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                            <span class="btn-govco-text text-sm">Trazabilidad</span></a>
                                                 
                                                 </div>
                                             </td>
@@ -305,7 +331,11 @@
                                                 <div class="btn-group" role="group">
                                                     <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('espacio.detalle', $solicitudesRE->id)}}">
                                                         <span class="govco-icon govco-icon-attached-n"></span>
-                                                        <span class="btn-govco-text">Detalles</span></a>                                                                                                 
+                                                        <span class="btn-govco-text">Detalles</span></a>
+                                                        
+                                                        <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesRE->radicado , 'tramite' => $tramite] )}}">
+                                                            <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                            <span class="btn-govco-text text-sms">Trazabilidad</span></a>
                                                 
                                                 </div>
                                             </td>

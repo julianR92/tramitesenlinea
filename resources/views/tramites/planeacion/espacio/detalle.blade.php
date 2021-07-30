@@ -5,7 +5,7 @@
     <div class="container mt-3 mb-4 m-xs-x-3">
 
         <div class="row pl-4">
-            <div class="px-0 col-md-9">
+            <div class="px-0 col-md-11">
                 <nav aria-label="Miga de pan" style="max-height: 20px;">
                     <ol class="breadcrumb" style="background-color: #FFFFFF;">
                         <li class="breadcrumb-item ml-3 ml-md-0">
@@ -28,7 +28,7 @@
                             <div class="image-icon">
                                 <span class="breadcrumb govco-icon govco-icon-shortr-arrow" style="height: 22px;"></span>
                                 <p class="ml-3 ml-md-0 "><b style="color: #004fbf;text-transform: none;">
-                                        Intervencion del Espacio Publico
+                                        Intervención del Espacio Publico para Localización de Equipamiento
                                     </b></p>
                             </div>
                         </li>
@@ -72,10 +72,22 @@
 
                     <tr>
                     <td><strong>Matricula:</strong><br>
-                        {{$solicitud->matricula}}
+
+                        @if($solicitud->matricula == null || $solicitud->matricula == '' )
+                            <small>No hay # de matricula.</small>
+                           @else
+                           {{$solicitud->matricula}}
+                        @endif
+
+                        
                     </td>
                     <td><strong>Identificación Catrastal:</strong><br>
-                        {{$solicitud->identificacion_catastral}}
+                        @if($solicitud->identificacion_catastral == null || $solicitud->identificacion_catastral == '' )
+                            <small>No hay # de matricula.</small>
+                           @else
+                           {{$solicitud->identificacion_catastral}}
+                        @endif
+                        
                     </td>
                     <td><strong>Nombres del Titular:</strong><br>
                         {{$solicitud->nom_titular}} {{$solicitud->ape_titular}}
@@ -136,18 +148,18 @@
 
                     <tr>
                         <td><strong>Documento de Identidad Solicitante:</strong><br>
-                            <a href="http://espaciopublico.test:8080/{{$solicitud->archivo_documento}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                            <a href="http://espaciopublico.test/{{$solicitud->archivo_documento}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
                         </td>
                         <td><strong>Poder especial:</strong><br>
-                            <a href="http://espaciopublico.test:8080/{{$solicitud->archivo_poder}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                            <a href="http://espaciopublico.test/{{$solicitud->archivo_poder}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
                         </td>
                         <td><strong>Descripción del proyecto:</strong><br>
-                            <a href="http://espaciopublico.test:8080/{{$solicitud->archivo_descripcion}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                            <a href="http://espaciopublico.test/{{$solicitud->archivo_descripcion}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="3"><strong>Planos del proyecto:</strong><br>
-                            <a href="http://espaciopublico.test:8080/{{$solicitud->archivo_planos}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                            <a href="http://espaciopublico.test/{{$solicitud->archivo_planos}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
                         </td>
 
                     </tr>
@@ -196,7 +208,7 @@
                         <td>
                             @if($solicitud->documento_respuesta != null)
                             <strong>Documento de respuesta:</strong><br>
-                            <a href="http://tramitesenlinea.test:8080/{{$solicitud->documento_respuesta}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>                                                         
+                            <a href="http://tramitesenlinea.test/{{$solicitud->documento_respuesta}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>                                                         
                             @else                                
                             @endif
                         
@@ -207,13 +219,13 @@
                     </tr>
                     
                     {{-- aqui va el form --}}
-                    <form method="POST" action="{{route('espacio.update')}}"  enctype="multipart/form-data" id="myForm">
+                    <form method="POST" action="{{route('espacio.update')}}"  enctype="multipart/form-data" id="myForm1">
                         @csrf
                     <tr>
                         <td>
                             <div class="form-group">
                                 <label for="estado">Cambiar Estado de la solicitud*</label>
-                                <select class="form-control  @error('estado_solicitud') is-invalid @enderror" name="estado_solicitud" id="estado" required>
+                                <select class="form-control  @error('estado_solicitud') is-invalid @enderror estado" name="estado_solicitud" id="estado" required>
                                     <option value="">Seleccione</option>
                                     <option value="PENDIENTE">PENDIENTE</option>
                                     <option value="EN PROGRESO">EN PROGRESO</option>
@@ -230,7 +242,7 @@
                         <td colspan="2">
                             <div class="form-group">
                              <label for="observaciones">Observaciones*</label>
-                                 <textarea name="observaciones_solicitud" id="observaciones" onkeypress="return Direccion(event)"  maxlength="500" class="form-control  @error('observaciones_solicitud') is-invalid @enderror" id="observaciones" cols="2" rows="3" required></textarea>
+                                 <textarea name="observaciones_solicitud" id="observaciones_espacio" onkeypress="return Observaciones(event)"  maxlength="500" class="form-control  @error('observaciones_solicitud') is-invalid @enderror" id="observaciones" cols="2" rows="3" required></textarea>
                                  @error('observaciones_solicitud')
                                 <span class="invalid-feedback" role="alert">
                                     <strong class="text-danger">{{ $message }}</strong>
@@ -257,10 +269,10 @@
                         </td>
                         <td colspan="2">
                             <div class="form-group">
-                                <input type="hidden" id="estado_sol" value="{{$solicitud->estado_solicitud}}">
+                                <input type="hidden" id="estado_sol_espacio" value="{{$solicitud->estado_solicitud}}">
                                 <input type="hidden" name="username" value="{{auth()->user()->username}}">
                                 <input type="hidden" name="id" value="{{$solicitud->id}}">
-                                <button type="submit"  onclick="return confirm('¿Esta seguro de generar esta respuesta ?')"  id="myBtn" class="btn btn-round btn-middle btn-outline-info"  id="Boton">Actualizar estado</button>
+                                <button type="submit"  onclick="return confirm('¿Esta seguro de generar esta respuesta ?')"  id="myBtnEspacio" class="btn btn-round btn-middle btn-outline-info"  id="Boton">Actualizar estado</button>
                                 <a href="{{url('/tramites/planeacion/espacio')}}" class="btn btn-round btn-high">Volver</a>
 
 

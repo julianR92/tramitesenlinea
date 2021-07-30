@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ExperienciaGlobal;
+use App\Auditoria;
 
 class HomeController extends Controller
 {
     public function __construct()
 
   {
-      $this->middleware('auth', ['only' => ['dashboard']]);
+      $this->middleware('auth', ['only' => ['dashboard', 'trazabilidadTramites']]);
   }
 
     public function dashboard(){
@@ -36,6 +37,16 @@ class HomeController extends Controller
         }
 
 
+
+
+    }
+
+    public function trazabilidadTramites($radicado, $tramite){
+
+        $traza = Auditoria::where('radicado',$radicado)->where('tramite','LIKE', $tramite)->get();
+        return view('tramites.trazabilidad', compact('traza'));
+        
+     
 
 
     }

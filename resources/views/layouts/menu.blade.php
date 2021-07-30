@@ -45,6 +45,16 @@
    <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
    <script src="https://cdn.datatables.net/fixedcolumns/3.3.2/js/dataTables.fixedColumns.min.js"></script>
 
+   {{-- buttons datatable --}}
+   <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+   <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+   <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+  
+ 
+
 
     {{-- LIBRARY INPUT FILE --}}
     <script src="{{asset('library/BoostrapFile/js/plugins/piexif.js')}}" type="text/javascript"></script>
@@ -58,6 +68,8 @@
     <script type="text/javascript"  src="{{ asset('js/funciones.js') }}"></script>
     <script type="text/javascript"  src="{{ asset('js/validate.js') }}"></script>
    <script type="text/javascript"  src="https://cdn.www.gov.co/v2/assets/js/utils.js"></script>
+
+
    
     <title>{{ config('app.name', 'Tramites en linea') }}</title>
 </head>
