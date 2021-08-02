@@ -2,6 +2,16 @@
 
 @section('dashboard')
 
+<style>
+    th.sorting_desc::after, th.sorting_asc::after{
+      right: 0!important;
+      content: ""!important;
+   }
+</style>
+
+<?php $tramite= 'CATEGORIZACION DE PARQUEADEROS';?>
+
+
     <div class="container mt-3 mb-4 m-xs-x-3">
 
         <div class="row pl-4">
@@ -96,7 +106,11 @@
                                                     <div class="btn-group" role="group">
                                                         <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('interior.parqueaderos.detalle', $solicitudesE->id)}}">
                                                             <span class="govco-icon govco-icon-attached-n"></span>
-                                                            <span class="btn-govco-text">Detalles</span></a>                                               
+                                                            <span class="btn-govco-text">Detalles</span></a>   
+                                                            
+                                                            <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesE->radicado , 'tramite' => $tramite] )}}">
+                                                                <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                                <span class="btn-govco-text text-sm">Trazabilidad</span></a>
                                                     
                                                     </div>
                                                 </td>
@@ -157,7 +171,10 @@
                                                 <div class="btn-group" role="group">
                                                     <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('interior.parqueaderos.detalle', $solicitudesPe->id)}}">
                                                         <span class="govco-icon govco-icon-attached-n"></span>
-                                                        <span class="btn-govco-text">Detalles</span></a>                                               
+                                                        <span class="btn-govco-text">Detalles</span></a>
+                                                        <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesPe->radicado , 'tramite' => $tramite] )}}">
+                                                            <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                            <span class="btn-govco-text text-sm">Trazabilidad</span></a>                                               
                                                 
                                                 </div>
                                             </td>
@@ -209,7 +226,11 @@
                                                 <div class="btn-group" role="group">
                                                     <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('interior.parqueaderos.detalle', $solicitudesEnRe->id)}}">
                                                         <span class="govco-icon govco-icon-attached-n"></span>
-                                                        <span class="btn-govco-text">Detalles</span></a>                                               
+                                                        <span class="btn-govco-text">Detalles</span></a>
+                                                        
+                                                        <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesEnRe->radicado , 'tramite' => $tramite] )}}">
+                                                            <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                            <span class="btn-govco-text text-sm">Trazabilidad</span></a>    
                                                 
                                                 </div>
                                             </td>
@@ -258,7 +279,11 @@
                                             <div class="btn-group" role="group">
                                                 <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('interior.parqueaderos.detalle', $solicitudesRe->id)}}">
                                                     <span class="govco-icon govco-icon-attached-n"></span>
-                                                    <span class="btn-govco-text">Detalles</span></a>                                               
+                                                    <span class="btn-govco-text">Detalles</span></a> 
+                                                    
+                                                    <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesRe->radicado , 'tramite' => $tramite] )}}">
+                                                        <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                        <span class="btn-govco-text text-sm">Trazabilidad</span></a>  
                                             
                                             </div>
                                         </td>
@@ -308,7 +333,11 @@
                                             <div class="btn-group" role="group">
                                                 <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('interior.parqueaderos.detalle', $solicitudesAP->id)}}">
                                                     <span class="govco-icon govco-icon-attached-n"></span>
-                                                    <span class="btn-govco-text">Detalles</span></a>                                               
+                                                    <span class="btn-govco-text">Detalles</span></a> 
+                                                    
+                                                    <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesAP->radicado , 'tramite' => $tramite] )}}">
+                                                        <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                        <span class="btn-govco-text text-sm">Trazabilidad</span></a> 
                                             
                                             </div>
                                         </td>
@@ -357,7 +386,11 @@
                                             <div class="btn-group" role="group">
                                                 <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('interior.parqueaderos.detalle', $solicitudesRecha->id)}}">
                                                     <span class="govco-icon govco-icon-attached-n"></span>
-                                                    <span class="btn-govco-text">Detalles</span></a>                                               
+                                                    <span class="btn-govco-text">Detalles</span></a>  
+                                                    
+                                                    <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesRecha->radicado , 'tramite' => $tramite] )}}">
+                                                        <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                        <span class="btn-govco-text text-sm">Trazabilidad</span></a> 
                                             
                                             </div>
                                         </td>
