@@ -51,6 +51,14 @@ Route::post('/categorizacion-parqueaderos/updateDocs', 'ParqueaderosController@u
 // RUTAS EVENTOS PUBLICOS
 
 Route::get('/eventos-publicos', 'EventosController@index')->name('eventos.index');
+Route::post('/eventos-publicos/store', 'EventosController@store')->name('eventos.store');
+Route::get('/eventos-publicos/confirmacion', 'EventosController@confirmacion')->name('eventos.confirmacion');
+Route::get('/eventos-publicos/finalizar', 'EventosController@end')->name('eventos.finalizar');
+Route::post('/eventos-publicos/consulta','EventosController@consulta')->name('eventos.consulta');
+Route::get('/eventos-publicos/detalle/{id}', 'EventosController@detalle')->name('eventos.detalle');
+Route::post('/eventos-publicos/updateDocs', 'EventosController@updateDocs')->name('eventos.updateDocs');
+
+
 
 
 
@@ -120,7 +128,13 @@ Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|SEC_GOBIERNO|edit
     Route::get('/tramites/interior/parqueaderos','InteriorController@parqueaderoIndex')->name('interior.parqueaderos.index');
     Route::get('/tramites/interior/parqueadero/{id}','InteriorController@parqueaderoDetalle')->name('interior.parqueaderos.detalle');
     Route::post('tramites/interior/parqueaderos/update/', 'InteriorController@parqueaderoUpdate' )->name('interior.parqueaderos.update');
-
+    
+    // tramite de eventos
+    Route::get('/tramites/interior/eventos','InteriorController@eventosIndex')->name('interior.eventos.index');
+    Route::get('/tramites/interior/evento/{id}','InteriorController@eventoDetalle')->name('interior.eventos.detalle');
+    Route::post('tramites/interior/eventos/update/', 'InteriorController@eventosUpdate' )->name('interior.eventos.update');
+    
+    
 });
 
 

@@ -23,7 +23,7 @@
                         <div class="image-icon">
                             <span class="breadcrumb govco-icon govco-icon-shortr-arrow" style="height: 22px;"></span>
                             <p class="ml-3 ml-md-0 "><b style="color: #004fbf;text-transform: none;">
-                                Categorización de parqueaderos
+                                Permisos para Espectáculos Públicos
                                 </b></p>
                         </div>
                     </li>
@@ -73,7 +73,7 @@
 
             </div>
             <div class="col-md-4">
-                <button style="font-size:15px;" type="button" class="btn btn-round btn-middle" name="consultar"><a href="{{URL::route('parqueaderos.finalizar')}}">Finalizar</a></button>
+                <button style="font-size:15px;" type="button" class="btn btn-round btn-middle" name="consultar"><a href="{{URL::route('eventos.finalizar')}}">Finalizar</a></button>
 
 
             </div>
@@ -83,13 +83,13 @@
 </div>
 <script>
     setTimeout(function() {
-      window.location.href = '/categorizacion-parqueaderos/finalizar';
+      window.location.href = '/eventos-publicos/finalizar';
    }, 120000);
 </script>
 @else
 
 <script>
-    window.location = '/categorizacion-parqueaderos';
+    window.location = '/eventos-publicos';
 </script>
 
 

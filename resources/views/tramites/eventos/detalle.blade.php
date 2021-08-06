@@ -21,7 +21,7 @@
                                 <div class="image-icon">
                                     <span class="breadcrumb govco-icon govco-icon-shortr-arrow" style="height: 22px;"></span>
                                     <p class="ml-3 ml-md-0 "><b style="color: #004fbf;text-transform: none;">
-                                        Categorización de parqueaderos
+                                        Permisos para Espectáculos Públicos
                                         </b></p>
                                 </div>
                             </li>
@@ -34,7 +34,7 @@
                     <h1 class="headline-xl-govco">Detalle de solicitudes</h1>
                     <div class="row pt-5">
                     <div class="col-md-12 justify-content-center">
-                  <form method="POST" action="{{route('parqueadero.updateDocs')}}"  enctype="multipart/form-data" id="myForm">
+                  <form method="POST" action="{{route('eventos.updateDocs')}}"  enctype="multipart/form-data" id="myForm">
                      @csrf
                      <input type="hidden" name="id" value="{{$solicitud->id}}">
                     <div class="card govco-card animate__animated animate__bounceInRight">
@@ -47,8 +47,8 @@
                         <div class="row">
                          <div class="col-md-6">  
                         <div class="form-group">
-                        <label>Nombre del solicitante</label>
-                         <input type="text" class="form-control" value="{{$solicitud->nom_solicitante}} {{$solicitud->ape_solicitante}}" readonly>
+                        <label>Nombre del Responsable</label>
+                         <input type="text" class="form-control" value="{{$responsable}}" readonly>
                        </div>
                        </div>
 
@@ -62,7 +62,7 @@
                        <div class="col-md-6">  
                         <div class="form-group">
                         <label>Observaciones de la solicitud</label>
-                        <textarea rows="4" class="form-control" disabled>{{$solicitud->observaciones_solicitud}}</textarea>
+                        <textarea rows="6" class="form-control" disabled>{{$solicitud->observaciones_solicitud}}</textarea>
                         
                        </div>
                        </div>
@@ -73,17 +73,6 @@
                          <input type="text" class="form-control" value="{{$solicitud->fecha_actuacion}}" readonly>
                        </div>
                        </div>
-
-                       @if($solicitud->estado_solicitud == 'RECHAZADA')
-                       
-                       <div class="col-md-6">  
-                        <div class="form-group">
-                        <h5>Viabilidad Técnica</h5>
-                          <a href="http://tramitesenlinea.test/{{$solicitud->adjunto_resPlaneacion}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
-                       </div>
-                       </div>
-
-                       @endif
 
                        @if($solicitud->estado_solicitud == 'APROBADA')
                        
@@ -101,49 +90,256 @@
                        @if($solicitud->estado_solicitud == 'PENDIENTE')                        
                         
                        <div class="col-md-12">
-                           <h5>Cargue sus archivos pendientes <small>Faltan {{$diff}} dia(s) para el vencimiento del plazo</small></h5>
-
-                        
+                         <h5>Cargue sus archivos pendientes <small>Faltan {{$diff}} dia(s) para el vencimiento del plazo</small></h5>                        
                        </div>
 
-                        <div class="col-md-8">  
+                       <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_cedulaRes_arch" class="form-label">Documento de identificación</label> &nbsp;
+                        <small style="font-size: 11px!important; text-align:justify!important;"><em
+                                style="font-size: 11px!important; text-align:justify!important;">Adjunto cédula de
+                                ciudadanía (persona natural sea el responsable del evento) o certificado existencia
+                                y representación legal (responsable del evento sea una persona jurídica)</em>
+                        </small></label>
                         <div class="form-group">
-                            <label for="archivo_camara_rut" class="form-label">Camara de Comercio &nbsp; <small style="font-size: 10px!important"><em style="font-size: 10px!important">(Mínimo  3 meses de antigüedad)</em> </small> &nbsp; y/o RUT </label>                        
                             <div class="file-loading">
-                            <input class="documentos_adjuntos" id="archivo_camara_rut" accept="application/pdf" name="archivo_camara_rut" type="file" data-overwrite-initial="true" >    
-                         </div>
-                       </div>
+                                <input class=" @error('adj_cedulaRes_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_cedulaRes_arch" accept="application/pdf" name="adj_cedulaRes_arch" type="file"
+                                    data-overwrite-initial="true">
+                               
+                            </div>
+                        </div>
                     </div>
 
-                       <div class="col-md-4">  
-                        {{-- <div class="form-group">
-                            <label for="archivo_rut" class="form-label">RUT* </label>
-                        <div class="file-loading">
-                            <input class=" documentos_adjuntos" id="archivo_rut" accept="application/pdf" name="archivo_rut" type="file" data-overwrite-initial="true">
-                        </div>                         
-                       </div> --}}
-                       </div>
-
-                       <div class="col-md-6">  
+                    <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_logisticaEvento_arch" class="form-label">Logistica del Evento &nbsp; <small
+                                style="font-size: 11px!important;text-align:justify!important;"><em
+                                    style="font-size: 11px!important"> Adjuntar un oficio donde describa o
+                                    manifieste el medio de transporte a usar y lo identifique plenamente (placa,
+                                    modelo, color).</em> <br> </small></label><br>
                         <div class="form-group">
-                            <label for="archivo_planos" class="form-label">Planos Aprobados* </label>
-                        <div class="file-loading">
-                            <input class=" documentos_adjuntos" id="archivo_planos" accept="application/pdf" name="archivo_planos" type="file" data-overwrite-initial="true">
-                        </div>                         
-                       </div>
-                       </div>
-                      
+                            <div class="file-loading">
+                                <input
+                                    class=" @error('adj_logisticaEvento_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_logisticaEvento_arch" accept="application/pdf" name="adj_logisticaEvento_arch"
+                                    type="file" data-overwrite-initial="true">
+                                
+                            </div>
+                        </div>
+                    </div>
 
-                        <div class="col-md-6">  
+                    <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_autorizacionTra_arch" class="form-label">Autorización de Transito &nbsp; <small
+                                style="font-size: 11px!important"><em style="font-size: 11px!important"> Adjuntar
+                                    autorización de la Direccion de transito de Bucaramanga si el evento lo requiere
+                                    (depende del sitio)</em></small></label><br><br>
                         <div class="form-group">
-                            <label for="archivo_licencia" class="form-label">Licencia de construcción* </label>
-                        <div class="file-loading">
-                            <input class="documentos_adjuntos" id="archivo_licencia" accept="application/pdf" name="archivo_licencia" type="file" data-overwrite-initial="true"> 
-                        </div>                         
-                       </div>
-                       </div>
+                            <div class="file-loading">
+                                <input
+                                    class=" @error('adj_autorizacionTra_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_autorizacionTra_arch" accept="application/pdf" name="adj_autorizacionTra_arch"
+                                    type="file" data-overwrite-initial="true">
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_contratoArr_arch" class="form-label">Contrato de arrendamiento &nbsp; <small
+                                style="font-size: 11!important;" aling="justify"><em
+                                    style="font-size: 10px!important" aling="justify"> Autorización escrita o
+                                    contrato de arrendamiento suscrito por el propietario, administrador, arrendador
+                                    o poseedor legal del inmueble destinado para desarrollar el evento. Si el evento
+                                    es en espacio público: Viabilidad escrita por la Oficina de Parque y Zonas
+                                    Verdes de la Secretaria de Infraestructura.</em></small> </label><br><br>
+                        <div class="form-group">
+                            <div class="file-loading">
+                                <input class=" @error('adj_contratoArr_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_contratoArr_arch" accept="application/pdf" name="adj_contratoArr_arch" type="file"
+                                    data-overwrite-initial="true">
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_conceptoCMGRD_arch" class="form-label">Concepto del Comité de Gestion del Riesgo
+                            &nbsp; <small style="font-size: 11!important;" aling="justify"><em
+                                    style="font-size: 11px!important" aling="justify">Concepto técnico emitido por
+                                    CMGRD, del plan de emergencia y contingencia, que deberá constar por escrito
+                                    incluyendo las recomendaciones. (No continuar con el trámite de los demás
+                                    requisitos sin haber obtenido primero la certificación favorable emitida por el
+                                    Comité).</em></small> </label>
+                        <div class="form-group">
+                            <div class="file-loading">
+                                <input class=" @error('adj_conceptoCMGRD_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_conceptoCMGRD_arch" accept="application/pdf" name="adj_conceptoCMGRD_arch"
+                                    type="file" data-overwrite-initial="true">
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_conceptoTecAmb_arch" class="form-label">Concepto Tecnico Sanitario y Ambiental
+                            &nbsp; <small style="font-size: 11!important;" aling="justify"><em
+                                    style="font-size: 11px!important" aling="justify"> Adjuntar Concepto técnico
+                                    sanitario y ambiental, emitido por la Subsecretaria de Medio Ambiente de la
+                                    Secretaria de Salud Municipal. (Calle 35 # 10-43 Fase I Piso 2).</em></small>
+                        </label><br><br><br>
+                        <div class="form-group">
+                            <div class="file-loading">
+                                <input
+                                    class=" @error('adj_conceptoTecAmb_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_conceptoTecAmb_arch" accept="application/pdf" name="adj_conceptoTecAmb_arch"
+                                    type="file" data-overwrite-initial="true" >
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_certificadoPONAL_arch" class="form-label">Certificado MEBUC*&nbsp; <small
+                                style="font-size: 11!important;" aling="justify"><em
+                                    style="font-size: 11px!important" aling="justify"> Adjuntar Certificado de
+                                    conocimiento del Evento por parte del Comando Operativo de Seguridad Ciudadana
+                                    de la Policía Metropolitana.</em></small> </label><br><br>
+                        <div class="form-group">
+                            <div class="file-loading">
+                                <input
+                                    class=" @error('adj_certificadoPONAL_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_certificadoPONAL_arch" accept="application/pdf" name="adj_certificadoPONAL_arch"
+                                    type="file" data-overwrite-initial="true">
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_certificadoBomberos_arch" class="form-label">Aprobación Bomberos
+                            Bucaramanga&nbsp; <small style="font-size: 11!important;" aling="justify"><em
+                                    style="font-size: 11px!important" aling="justify"> Adjuntar Oficio que acredite
+                                    el cumplimiento de las condiciones de seguridad de acuerdo al protocolo
+                                    establecido por el Cuerpo de Bomberos de Bucaramanga.</em></small> </label><br>
+                        <div class="form-group">
+                            <div class="file-loading">
+                                <input
+                                    class=" @error('adj_certificadoBomberos_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_certificadoBomberos_arch" accept="application/pdf"
+                                    name="adj_certificadoBomberos_arch" type="file" data-overwrite-initial="true"
+                                    >
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_hospitalaria_arch" class="form-label">Prestación de Servicio Pre
+                            Hospitalaria&nbsp; <small style="font-size: 11!important;" aling="justify"><em
+                                    style="font-size: 11px!important" aling="justify"> Adjuntar constancia del
+                                    servicio de prestación pre hospitalaria con un organismo de socorro, Defensa
+                                    Civil o Cruz Roja</em></small> </label><br><br>
+                        <div class="form-group">
+                            <div class="file-loading">
+                                <input class=" @error('adj_hospitalaria_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_hospitalaria_arch" accept="application/pdf" name="adj_hospitalaria_arch"
+                                    type="file" data-overwrite-initial="true">
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_poliza_arch" class="form-label">Póliza de responsabilidad civil&nbsp; <small
+                                style="font-size: 11!important;" aling="justify"><em
+                                    style="font-size: 11px!important" aling="justify"> Adjuntar Póliza de
+                                    Responsabilidad Civil Extracontractual que ampare los riesgos que el evento
+                                    conlleva, debe ser adquirida por el organizador con empresa aseguradora de su
+                                    elección, a favor del Municipio de Bucaramanga, especificando lugar, fecha del
+                                    evento. </em></small> </label><br><br>
+                        <div class="form-group">
+                            <div class="file-loading">
+                                <input class=" @error('adj_poliza_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_poliza_arch" accept="application/pdf" name="adj_poliza_arch" type="file"
+                                    data-overwrite-initial="true">
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_publicidad_arch" class="form-label">Soporte de Pago Publicidad Exterior*&nbsp;
+                            <small style="font-size: 11!important;" aling="justify"><em
+                                    style="font-size: 11px!important" aling="justify"> Adjuntar Pago de impuesto
+                                    publicidad exterior visual o paz y salvo de publicidad exterior visual de que no
+                                    van a exhibir ningún tipo de publicidad. (Oficina de publicidad exterior visual-
+                                    Secretaria del Interior) (Calle 35 No. 10 – 43 Edificio Fase I Piso 3).
+                                </em></small> </label><br>
+                        <div class="form-group">
+                            <div class="file-loading">
+                                <input class=" @error('adj_publicidad_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_publicidad_arch" accept="application/pdf" name="adj_publicidad_arch" type="file"
+                                    data-overwrite-initial="true">
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_certVigilancia_arch" class="form-label">Certificado de Vigilancia&nbsp; <small
+                                style="font-size: 11!important;" aling="justify"><em
+                                    style="font-size: 11px!important" aling="justify"> Adjuntar certificación
+                                    expedida por Empresa de Vigilancia y Seguridad Privada y/o Empresa de Logística
+                                    legalmente constituida, que garantice la prestación del servicio de seguridad y
+                                    vigilancia del evento.</em></small> </label><br><br><br>
+                        <div class="form-group">
+                            <div class="file-loading">
+                                <input
+                                    class=" @error('adj_certVigilancia_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_certVigilancia_arch" accept="application/pdf" name="adj_certVigilancia_arch"
+                                    type="file" data-overwrite-initial="true">
+                              
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_certificadoEMAB_arch" class="form-label">Certificado de Aseo&nbsp; <small
+                                style="font-size: 11!important;" aling="justify"><em
+                                    style="font-size: 11px!important" aling="justify"> Adjuntar Certificado de
+                                    servicio de aseo emitido por la EMAB. En relación con las áreas aledañas al
+                                    sitio del evento (Anexar recibo de pago original).</em></small> </label><br><br>
+                        <div class="form-group">
+                            <div class="file-loading">
+                                <input
+                                    class=" @error('adj_certificadoEMAB_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_certificadoEMAB_arch" accept="application/pdf" name="adj_certificadoEMAB_arch"
+                                    type="file" data-overwrite-initial="true">
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 pl-1 pr-1 pt-3">
+                        <label for="adj_derAutor_arch" class="form-label">Autorización derechos de Autor&nbsp; <small
+                                style="font-size: 11!important;" aling="justify"><em
+                                    style="font-size: 11px!important" aling="justify"> Adjuntar certificado que
+                                    acredite Los derechos de autor previstos en la ley y presentar su respectiva
+                                    autorización, si en el evento público se ejecutaran obras causantes de dichos
+                                    pagos.</em></small> </label><br>
+                        <div class="form-group">
+                            <div class="file-loading">
+                                <input class=" @error('adj_derAutor_arch') is-invalid @enderror documentos_adjuntos"
+                                    id="adj_derAutor_arch" accept="application/pdf" name="adj_derAutor_arch" type="file"
+                                    data-overwrite-initial="true">
+                               
+                            </div>
+                        </div>
+                    </div>               
+                
+
+                       
                        @if($solicitud->act_documentos == null)     
-                       <div class="col-md-4">
+                       <div class="col-md-12">
                            <div class="form-group">
                                <button type="submit"  onclick="return confirm('¿Esta seguro de actualizar los documentos ?')"  class="btn btn-round btn-middle btn-outline-info"  id="Boton">Actualizar documentos</button>
                            </div>

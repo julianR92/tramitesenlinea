@@ -14,7 +14,7 @@ class TableTipoEventoTramites extends Migration
     public function up()
     {
         Schema::create('tipo_evento', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('descripcion_tramite', 400)->comment('Descripcion de la modalidad del permiso a otorgar');
             $table->string('estado')->nullable();
             $table->timestamps();

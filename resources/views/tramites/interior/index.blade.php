@@ -55,6 +55,29 @@
                 </div>
                 {{-- </ FIN CARD --}}
 
+                {{-- INICIO CARD  --}}
+              <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                <div class="card govco-card animate__animated animate__flipInX" style="max-height: 500px!important">
+                    <div class="card-header govco-card-header">
+                        <h4>
+                        Permisos para Espectáculos Públicos</h4> 
+                    </div>
+                    
+                    <div class="card-body">
+                        <p style="text-align: justify">El objetivo del tramite es Otorgar el permiso a eventos que involucren aglomeraciones de público complejas, las cuales se miden en variables como: aforo, tipo de evento, clasificación de edad, lugar donde se desarrolla, infraestructura a utilizar, entorno de lugar, caracteristicas del pulicos, frecuencia entre otros, lo cual genere una alta afectación de la dinamica normal del municipio.</p>
+                      </div>
+                      <div class="card-footer govco-card-footer govco-center">
+                        <a class="btn-low-mix-govco align-column-govco" href="{{route('interior.eventos.index')}}">
+                          <span class="btn-mix-govco__title">Ver mas detalles</span>
+                          <span class="btn-mix-govco__icon govco-icon govco-icon-simpled-arrow"></span>
+                        </a>
+                      </div>                
+                    </div>
+                </div>
+                {{-- </ FIN CARD --}}
+
+                
+
 
             
             </div>

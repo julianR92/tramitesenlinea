@@ -173,7 +173,8 @@
 
     {{-- clockpikcer--}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/jquery-clockpicker.min.js" integrity="sha512-x0qixPCOQbS3xAQw8BL9qjhAh185N7JSw39hzE/ff71BXg7P1fkynTqcLYMlNmwRDtgdoYgURIvos+NJ6g0rNg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    {{-- moment js --}}
+    <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
     <!--- cdn  GOV.CO --->
     <script type="text/javascript"  src="{{ asset('js/funciones.js') }}"></script>
     <script type="text/javascript"  src="{{ asset('js/validate.js') }}"></script>

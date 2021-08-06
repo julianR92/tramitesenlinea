@@ -169,6 +169,26 @@ $(document).ready(function () {
         }
     });
 
+      /*============================================================================
+    =            input de  direccion
+                id = "address_validate"        maxlength =100
+    ============================================================================*/
+
+    $(".razon_social").change(function () {
+        $(this).each(function(){
+            var input8 = $(this).val();
+            var ValInput8 = input8.match(/^[a-zA-Z0-9\-.,\s]{5,100}$/);
+            if (ValInput8 == null) {
+                alert(
+                    "Solo se permiten los caracteres especiales (.)(,)(-) o menos de 5 digitos"
+                );
+                $(this).focus();
+                $(this).val("");
+            }
+          })
+    });
+
+
     $("#btn-sugerencias").click(function () {
         $("#text-button").fadeToggle("slow", "swing");
         $("#text-area").focus();
@@ -1114,6 +1134,112 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
             },
         });
     });
+
+    // scripts para eventos publicos
+
+    $('#tipo_persona').change(function () {
+      var tipo = $(this).val();
+      if(tipo == 1){
+          $('.caja_razon').addClass('d-none');
+          $('.caja_nombres').removeClass('d-none');
+          $('#nom_responsable').attr('required', true);          
+          $('#ape_responsable').attr('required', true);
+          $('#razon_responsable').attr('required', false);
+          $('#razon_responsable').val('');
+      }else{
+        $('.caja_razon').removeClass('d-none');
+        $('.caja_nombres').addClass('d-none');
+        $('#nom_responsable').attr('required', false);        
+        $('#ape_responsable').attr('required', false);
+        $('#nom_responsable').val('');        
+        $('#ape_responsable').val('');
+        $('#razon_responsable').attr('required', true);
+      }
+        
+
+
+    });
+
+    //modal 1
+    $("#btnDireccionEventos").click(function () {
+        
+        var direccion = $("#DD000").val();        
+       $("#ModalDireccionesEventos").modal("hide");
+       $("#dir_responsable_sol").val("");
+       $("#dir_responsable_sol").val(direccion);
+   });
+
+     // modal 2
+     $("#btnModalUbicacionEvento").click(function () {         
+        
+        var direccion_evento = $("#DD0000").val();        
+       $("#ModalUbicacion").modal("hide");
+       $("#ubicacion_evento").val("");
+       $("#ubicacion_evento").val(direccion_evento);
+   });
+
+   jQuery(function($) {
+
+   $('#fecha_evento').ready(function () {
+     var date = moment().add(15, "days").format('YYYY-MM-DD');
+    //  $('#fecha_evento').val(date);
+     $('#fecha_evento').attr("min", date);   
+
+   });
+
+   $('.clockpicker').clockpicker({
+    placement: 'top',
+	align: 'left',    
+    twelvehour: true,
+	donetext: 'Aceptar'
+
+   });
+
+  })
+
+   $(".barrios").select2({
+    width: "100%",
+    placeholder: "Seleccione Barrio.."
+  });
+
+  $("#estado_solicitud_eventos").change(function () {
+
+    
+       
+    var estado = document.getElementById("estado_solicitud_eventos").value;      
+
+    if (estado == 'PENDIENTE') {
+      $('#documento_respuesta_eventos').attr('disabled', true); 
+      $('#documento_respuesta_eventos').attr('required', false); 
+               
+        
+    }else if(estado == 'APROBADA'){
+        $('#documento_respuesta_eventos').attr('disabled', false);
+        $('#documento_respuesta_eventos').attr('required', true);
+
+    }else if(estado == 'RECHAZADA'){
+        $('#documento_respuesta_eventos').attr('disabled', true);
+        $('#documento_respuesta_eventos').attr('required', false);
+    }else{
+        $('#documento_respuesta_eventos').attr('disabled', true);
+        $('#documento_respuesta_eventos').attr('required', false);
+    }
+    $('#observaciones_eventos').focus();
+    
+});
+
+
+$('#myForm_eventos').ready(function(){
+
+    var estado_solicitud = $('.estado_actual').val();
+    if(estado_solicitud == 'APROBADA' || estado_solicitud == 'RECHAZADA'){
+        $('#myBtn_eventos').attr('disabled', true);
+        $('#estado_solicitud_eventos').attr('disabled', true);
+        $('#observaciones_eventos').attr('disabled', true);          
+    }
+
+});
+   
    
      
     

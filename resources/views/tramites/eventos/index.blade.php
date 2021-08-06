@@ -3,10 +3,20 @@
 @section('title', 'Eventos Publicos')
 @section('content')
 
-<meta name="csrf-token" content="{{ csrf_token() }}">
 
 
-    <div class="container mt-3 mb-4 m-xs-x-3">
+    <style>
+        .clockpicker-button {
+            background-color: #3366CC !important;
+            color: white !important;
+        }
+
+    </style>
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+    <div class="container mt-3 mb-4 m-xs-x-3" id="body_eventos">
         <div class="row pl-4">
             <div class="px-0 col-md-9 col-xs-12 col-sm-12">
                 <nav aria-label="Miga de pan" style="max-height: 20px;">
@@ -24,7 +34,7 @@
                             <div class="image-icon">
                                 <span class="breadcrumb govco-icon govco-icon-shortr-arrow" style="height: 22px;"></span>
                                 <p class="ml-3 ml-md-0 "><b style="color: #004fbf;text-transform: none;">
-                                 Eventos Públicos
+                                        Permisos para Espectáculos Públicos
                                     </b></p>
                             </div>
                         </li>
@@ -61,307 +71,653 @@
                         </div>
                     </div>
 
-                    <form action="" method="POST" id="myForm" enctype="multipart/form-data">
+                    <form action="{{route('eventos.store')}}" method="POST" id="myForm" enctype="multipart/form-data">
                         @csrf
                         <div class="card govco-card border-0 shadow-none" style="border-radius: 0px;">
 
-                            <h1 class="headline-xl-govco">Permisos para eventos Públicos</h1>
+                            <h1 class="headline-xl-govco">Permisos para Espectáculos Públicos</h1>
 
                             <div class="alert-primary-govco alert alert-dismissible fade show mt-3"
-                            aria-label="Alerta informativa">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"
-                                title="Cerrar">&times;</button>
-                            <div class="alert-heading">
-                                <span class="govco-icon govco-icon-bell-sound-p size-2x"></span>
-                                <span class="headline-l-govco">Importante</span>
+                                aria-label="Alerta informativa">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"
+                                    title="Cerrar">&times;</button>
+                                <div class="alert-heading">
+                                    <span class="govco-icon govco-icon-bell-sound-p size-2x"></span>
+                                    <span class="headline-l-govco">Importante</span>
+                                </div>
+                                <p style="text-align: justify"> descripción del tramite. </p>
                             </div>
-                            <p style="text-align: justify"> descripción del tramite. </p>
-                        </div>
                         </div>
 
                         <h3 class="headline-l-govco mt-3 pl-0">1. Datos Generales de la Solicitud</h3>
 
-                        {{-- <div class="input-group clockpicker">
-                           <input type="text" class="form-control" value="09:30">
-                           <span class="input-group-addon">
-                               <span class="glyphicon glyphicon-time"></span>
-                           </span>
-                       </div> --}}
+                        {{-- @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif --}}
 
-                        
-
-                     {{-- 
                         <div class="row form-group mt-2">
+
                             <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="nom_solicitante" class="form-label">Nombres del Solicitante y/o Responsable * </label>
-                                <input value="{{old('nom_solicitante')}}" type="text" class="form-control name_validate  @error('nom_solicitante') is-invalid @enderror" name="nom_solicitante" id="nom_solicitante"  maxlength="25" minlength="4" required onkeypress="return Letras(event)" onkeyup="aMayusculas(this.value,this.id)">
-                                @error('nom_solicitante')
-                                <span class="invalid-feedback" role="alert">
-                                   <strong class="text-danger">{{ $message }}</strong>
+                                <label for="tipo_persona" class="form-label">Tipo de persona * </label>
+                                <select class="form-control  @error('tipo_persona') is-invalid @enderror"
+                                    name="tipo_persona" id="tipo_persona" required>
+                                    <option value="">Seleccione</option>
+                                    <option value="1">Natural</option>
+                                    <option value="2">Juridica</option>
+                                </select>
+                                @error('tipo_persona')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
 
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="ape_solicitante" class="form-label">Apellidos del Solicitante y/o Responsable * </label>
-                                <input value="{{old('ape_solicitante')}}" type="text" class="form-control name_validate  @error('ape_solicitante') is-invalid @enderror" name="ape_solicitante" id="ape_solicitante"  maxlength="25" minlength="4" required onkeypress="return Letras(event)" onkeyup="aMayusculas(this.value,this.id)" >
-                                @error('ape_solicitante')
-                                <span class="invalid-feedback" role="alert">
-                                   <strong class="text-danger">{{ $message }}</strong>
+                            <div class="col-md-6 pl-1 pr-1 pt-3"></div>
+
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3 caja_nombres d-none">
+                                <label for="nom_responsable" class="form-label">Nombres del Solicitante y/o Responsable *
+                                </label>
+                                <input value="{{ old('nom_responsable') }}" type="text"
+                                    class="form-control name_validate  @error('nom_solicitante') is-invalid @enderror"
+                                    name="nom_responsable" id="nom_responsable" maxlength="25" minlength="4"
+                                    onkeypress="return Letras(event)" onkeyup="aMayusculas(this.value,this.id)">
+                                @error('nom_responsable')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
 
+                            <div class="col-md-6 pl-1 pr-1 pt-3 caja_nombres d-none">
+                                <label for="ape_responsable" class="form-label">Apellidos del Solicitante y/o Responsable *
+                                </label>
+                                <input value="{{ old('ape_responsable') }}" type="text"
+                                    class="form-control name_validate  @error('ape_responsable') is-invalid @enderror"
+                                    name="ape_responsable" id="ape_responsable" maxlength="25" minlength="4"
+                                    onkeypress="return Letras(event)" onkeyup="aMayusculas(this.value,this.id)">
+                                @error('ape_responsable')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12 pl-1 pr-1 pt-3 d-none caja_razon">
+                                <label for="razon_social" class="form-label">Razon Social y/o Responsable * </label>
+                                <input type="text"
+                                    class="form-control   @error('razon_social') is-invalid @enderror "
+                                    name="razon_social" id="razon_social" maxlength="100" minlength="4"
+                                    onkeypress="return Observaciones(event)" onkeyup="aMayusculas(this.value,this.id)">
+                                @error('razon_social')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                             <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="tipo_documento" class="form-label">Tipo de Documento * </label>
-                                <select class="form-control  @error('tipo_documento') is-invalid @enderror" name="tipo_documento" id="tipo_documento" required>
+                                <select class="form-control  @error('tipo_documento') is-invalid @enderror"
+                                    name="tipo_documento" id="tipo_documento" required>
                                     <option value="">Seleccione</option>
-                                    <option value="T.I.">Tarjeta de Identidad</option>
                                     <option value="C.C.">Cedula de Ciudadanía</option>
                                     <option value="C.E.">Cedula de Extranjería</option>
-                                    <option value="P.P.">Pasaporte</option>
+                                    <option value="NIT">NIT</option>
                                 </select>
-                                @error('ape_solicitante')
-                                <span class="invalid-feedback" role="alert">
-                                   <strong class="text-danger">{{ $message }}</strong>
+                                @error('tipo_documento')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
                             <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="identificacion_solicitante" class="form-label">Numero de Identificacion* </label>
-                                <input value="{{old('identificacion_solicitante')}}" type="text" class="form-control document_validate  @error('identificacion_solicitante') is-invalid @enderror" name="identificacion_solicitante" id="identificacion_solicitante"  maxlength="15" minlength="4" required onkeypress="return Numeros(event)" >
-                                @error('identificacion_solicitante')
-                                <span class="invalid-feedback" role="alert">
-                                   <strong class="text-danger">{{ $message }}</strong>
+                                <label for="ide_responsable" class="form-label">Número de Identificación* </label>
+                                <input value="{{ old('ide_responsable') }}" type="text"
+                                    class="form-control number_validate  @error('ide_responsable') is-invalid @enderror"
+                                    name="ide_responsable" id="ide_responsable" maxlength="15" minlength="4" required
+                                    onkeypress="return Numeros(event)">
+                                @error('ide_responsable')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
+
                             <div class="col-md-12 pl-1 pt-3">
 
-                                <label for="direccion_solicitante" class="form-label">Dirección o Nomenclatura del Responsable* </label><button type="button" class="btn btn-link"><span style="text-transform: lowercase; font-size: 12px;" class="text-primary" data-toggle="modal" data-target="#ModalDirecciones">(Clic para insertar direccion)</span></button>
-                                <input type="text" value="{{old('direccion_solicitante')}}" class="form-control  @error('direccion_solicitante') is-invalid @enderror" name="direccion_solicitante" id="direccion_solicitante"  maxlength="120" required readonly>
-                                @error('direccion_solicitante')
-                                <span class="invalid-feedback" role="alert">
-                                   <strong class="text-danger">{{ $message }}</strong>
+                                <label for="dir_responsable_sol" class="form-label">Dirección o Nomenclatura del Responsable*
+                                </label><button type="button" class="btn btn-link"><span
+                                        style="text-transform: lowercase; font-size: 12px;" class="text-primary"
+                                        data-toggle="modal" data-target="#ModalDireccionesEventos">(Clic para insertar
+                                        direccion)</span></button>
+                                <input type="text" value="{{ old('dir_responsable_sol') }}"
+                                    class="form-control  @error('dir_responsable_sol') is-invalid @enderror"
+                                    name="dir_responsable_sol" id="dir_responsable_sol" maxlength="120" required readonly>
+                                @error('dir_responsable_sol')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
 
                             <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="barrio_solicitante" class="form-label">Barrio* </label>
-                               <select name="barrio_solicitante" id="barrio_solicitante" class="form-control @error('barrio_solicitante') is-invalid @enderror" required>
-                                   <option value=""></option>
-                                   @foreach ($Barrios as $barrio)
-                                   <option value="{{$barrio->nombre}}">{{$barrio->nombre}}</option>
-                                       
-                                   @endforeach
-                               </select>
-                                @error('barrio_solicitante')
-                                <span class="invalid-feedback" role="alert">
-                                   <strong class="text-danger">{{ $message }}</strong>
+                                <label for="barrio_responsable_sol" class="form-label">Barrio* </label>
+                                <select name="barrio_responsable_sol" id="barrio_responsable_sol"
+                                    class="form-control @error('barrio_responsable_sol') is-invalid @enderror barrios" required>
+                                    <option value=""></option>
+                                    @foreach ($Barrios as $barrio)
+                                        <option {{ old('barrio_responsable_sol') == $barrio->nombre ? "selected" : "" }}  value="{{ $barrio->nombre }}">{{ $barrio->nombre }}</option>
+
+                                    @endforeach
+                                </select>
+                                @error('barrio_responsable_sol')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
 
                             <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="tel_solicitante" class="form-label">Teléfono / Celular * </label>
-                                <input value="{{old('tel_solicitante')}}" type="text" class="form-control  @error('tel_solicitante') is-invalid @enderror number_validate" name="tel_solicitante" id="tel_solicitante"  maxlength="10" minlength="7" required onkeypress="return Numeros(event)" >
-                                @error('tel_solicitante')
-                                <span class="invalid-feedback" role="alert">
-                                   <strong class="text-danger">{{ $message }}</strong>
+                                <label for="tel_responsable" class="form-label">Teléfono / Celular Responsable* </label>
+                                <input value="{{ old('tel_responsable') }}" type="text"
+                                    class="form-control  @error('tel_responsable') is-invalid @enderror number_validate"
+                                    name="tel_responsable" id="tel_responsable" maxlength="10" minlength="7" required
+                                    onkeypress="return Numeros(event)">
+                                @error('tel_responsable')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
 
                             <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="email_responsable" class="form-label">Correo Electronico Responsable * </label>
-                                <input value="{{old('email_responsable')}}" type="mail" class="form-control  @error('email_responsable') is-invalid @enderror email_validate" name="email_responsable" id="email_responsable"  required>
+                                <input value="{{ old('email_responsable') }}" type="mail"
+                                    class="form-control  @error('email_responsable') is-invalid @enderror email_validate"
+                                    name="email_responsable" id="email_responsable" required>
                                 @error('email_responsable')
-                                <span class="invalid-feedback" role="alert">
-                                   <strong class="text-danger">{{ $message }}</strong>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
 
                             <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="email_confirmado" class="form-label">Confirme su correo* </label>
-                                <input type="mail" class="form-control  @error('email_confirmado') is-invalid @enderror email_validate" name="email_confirmado" id="email_confirmado"  required onpaste="return false;">
+                                <input type="mail"
+                                    class="form-control  @error('email_confirmado') is-invalid @enderror email_validate"
+                                    name="email_confirmado" id="email_confirmado" required onpaste="return false;">
                                 @error('email_confirmado')
-                                <span class="invalid-feedback" role="alert">
-                                   <strong>{{ $message }}</strong>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="fecha_evento" class="form-label">Fecha del evento* </label>
+                                <input type="date" class="form-control  @error('fecha_evento') is-invalid @enderror "
+                                    name="fecha_evento" value="{{old('fecha_evento')}} "id="fecha_evento" data-toggle="tooltip" data-placement="bottom"
+                                    title="15 días  habiles con antelación a la realización del evento." required>
+                                @error('email_confirmado')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-3 pl-1 pr-1 pt-3">
+                                <label for="hora_inicio" class="form-label">Hora de inicio* </label>
+                                <div class="input-group clockpicker">
+                                    <input type="text" value="{{old('hora_inicio')}}" class="form-control @error('hora_inicio') is-invalid @enderror "
+                                        value="00:00" name="hora_inicio" id="hora_inicio" required>
+                                </div>
+                                @error('hora_inicio')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-3 pl-1 pr-1 pt-3">
+                                <label for="hora_fin" class="form-label">Hora fin* </label>
+                                <div class="input-group clockpicker">
+                                    <input type="text" value="{{old('hora_fin')}}" class="form-control @error('hora_fin') is-invalid @enderror "
+                                        value="00:00" name="hora_fin" id="hora_fin" required>
+                                </div>
+                                @error('hora_fin')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
 
                             <div class="col-md-12 pl-1 pt-3">
 
-                                <label for="nombre_empresa" class="form-label">Nombre del parqueadero a categorizar* </label>
-                                <input type="text" value="{{old('nombre_empresa')}}" class="form-control  @error('nombre_empresa') is-invalid @enderror" name="nombre_empresa" id="nombre_empresa"  maxlength="120" required onkeypress="return Direccion(event)" onkeyup="aMayusculas(this.value,this.id)" >
-                                @error('nombre_empresa')
-                                <span class="invalid-feedback" role="alert">
-                                   <strong class="text-danger">{{ $message }}</strong>
+                                <label for="ubicacion_evento" class="form-label">Ubicación del evento </label><button
+                                    type="button" class="btn btn-link"><span
+                                        style="text-transform: lowercase; font-size: 12px;" class="text-primary"
+                                        data-toggle="modal" data-target="#ModalUbicacion">(Clic para insertar
+                                        direccion)</span></button>
+                                <input type="text" value="{{ old('ubicacion_evento') }}"
+                                    class="form-control  @error('ubicacion_evento') is-invalid @enderror"
+                                    name="ubicacion_evento" id="ubicacion_evento" maxlength="120" required readonly>
+                                @error('ubicacion_evento')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="barrio_evento" class="form-label">Barrio* </label>
+                                <select name="barrio_evento" id="barrio_evento"
+                                    class="form-control @error('barrio_evento') is-invalid @enderror barrios" required>
+                                    <option value=""></option>
+                                    @foreach ($Barrios as $barrio)
+                                        <option {{ old('barrio_evento') == $barrio->nombre ? "selected" : "" }}  value="{{ $barrio->nombre }}">{{ $barrio->nombre }}</option>
+
+                                    @endforeach
+                                </select>
+                                @error('barrio_evento')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6 col-lg-6 col-sm-none col-xs-none"></div>
+
+
+                            <div class="col-md-12 pl-1 pr-1 pt-3">
+                                <label for="descripcion_evento" class="form-label">Descripción del evento* </label>
+                                <textarea rows="3" class="form-control" name="descripcion_evento" id="descripcion_evento"
+                                    required maxlength="400" onkeypress="return Observaciones(event)"
+                                    onkeyup="aMayusculas(this.value,this.id)">{{{ old('descripcion_evento') }}}</textarea>
+                                @error('descripcion_evento')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12 pl-1 pr-1 pt-3">
+                                <h3 class="headline-l-govco mt-3 pl-0">2. Documentos Adjuntos de la Solicitud</h3>
+                            </div>
+
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_cedulaRes_arch" class="form-label">Documento de identificación*</label> &nbsp;
+                                <small style="font-size: 11px!important; text-align:justify!important;"><em
+                                        style="font-size: 11px!important; text-align:justify!important;">Adjunto cédula de
+                                        ciudadanía (persona natural sea el responsable del evento) o certificado existencia
+                                        y representación legal (responsable del evento sea una persona jurídica)</em>
+                                </small></label>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input class=" @error('adj_cedulaRes_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_cedulaRes_arch" accept="application/pdf" name="adj_cedulaRes_arch" type="file"
+                                            data-overwrite-initial="true" required>
+                                        @error('adj_cedulaRes_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_logisticaEvento_arch" class="form-label">Logistica del Evento &nbsp; <small
+                                        style="font-size: 11px!important;text-align:justify!important;"><em
+                                            style="font-size: 11px!important"> Adjuntar un oficio donde describa o
+                                            manifieste el medio de transporte a usar y lo identifique plenamente (placa,
+                                            modelo, color).</em> <br> </small></label><br>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input
+                                            class=" @error('adj_logisticaEvento_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_logisticaEvento_arch" accept="application/pdf" name="adj_logisticaEvento_arch"
+                                            type="file" data-overwrite-initial="true">
+                                        @error('adj_logisticaEvento_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_autorizacionTra_arch" class="form-label">Autorización de Transito &nbsp; <small
+                                        style="font-size: 11px!important"><em style="font-size: 11px!important"> Adjuntar
+                                            autorización de la Direccion de transito de Bucaramanga si el evento lo requiere
+                                            (depende del sitio)</em></small></label><br><br><br>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input
+                                            class=" @error('adj_autorizacionTra_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_autorizacionTra_arch" accept="application/pdf" name="adj_autorizacionTra_arch"
+                                            type="file" data-overwrite-initial="true">
+                                        @error('adj_autorizacionTra_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_contratoArr_arch" class="form-label">Contrato de arrendamiento* &nbsp; <small
+                                        style="font-size: 11!important;" aling="justify"><em
+                                            style="font-size: 10px!important" aling="justify"> Autorización escrita o
+                                            contrato de arrendamiento suscrito por el propietario, administrador, arrendador
+                                            o poseedor legal del inmueble destinado para desarrollar el evento. Si el evento
+                                            es en espacio público: Viabilidad escrita por la Oficina de Parque y Zonas
+                                            Verdes de la Secretaria de Infraestructura.</em></small> </label>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input class=" @error('adj_contratoArr_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_contratoArr_arch" accept="application/pdf" name="adj_contratoArr_arch" type="file"
+                                            data-overwrite-initial="true" required>
+                                        @error('adj_contratoArr_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_conceptoCMGRD_arch" class="form-label">Concepto del Comité de Gestion del Riesgo
+                                    *&nbsp; <small style="font-size: 11!important;" aling="justify"><em
+                                            style="font-size: 11px!important" aling="justify">Concepto técnico emitido por
+                                            CMGRD, del plan de emergencia y contingencia, que deberá constar por escrito
+                                            incluyendo las recomendaciones. (No continuar con el trámite de los demás
+                                            requisitos sin haber obtenido primero la certificación favorable emitida por el
+                                            Comité).</em></small> </label>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input class=" @error('adj_conceptoCMGRD_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_conceptoCMGRD_arch" accept="application/pdf" name="adj_conceptoCMGRD_arch"
+                                            type="file" data-overwrite-initial="true" required>
+                                        @error('adj_conceptoCMGRD_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_conceptoTecAmb_arch" class="form-label">Concepto Tecnico Sanitario y Ambiental
+                                    *&nbsp; <small style="font-size: 11!important;" aling="justify"><em
+                                            style="font-size: 11px!important" aling="justify"> Adjuntar Concepto técnico
+                                            sanitario y ambiental, emitido por la Subsecretaria de Medio Ambiente de la
+                                            Secretaria de Salud Municipal. (Calle 35 # 10-43 Fase I Piso 2).</em></small>
+                                </label><br><br><br>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input
+                                            class=" @error('adj_conceptoTecAmb_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_conceptoTecAmb_arch" accept="application/pdf" name="adj_conceptoTecAmb_arch"
+                                            type="file" data-overwrite-initial="true" required>
+                                        @error('adj_conceptoTecAmb_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_certificadoPONAL_arch" class="form-label">Certificado MEBUC*&nbsp; <small
+                                        style="font-size: 11!important;" aling="justify"><em
+                                            style="font-size: 11px!important" aling="justify"> Adjuntar Certificado de
+                                            conocimiento del Evento por parte del Comando Operativo de Seguridad Ciudadana
+                                            de la Policía Metropolitana.</em></small> </label><br><br>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input
+                                            class=" @error('adj_certificadoPONAL_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_certificadoPONAL_arch" accept="application/pdf" name="adj_certificadoPONAL_arch"
+                                            type="file" data-overwrite-initial="true" required>
+                                        @error('adj_certificadoPONAL_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_certificadoBomberos_arch" class="form-label">Aprobación Bomberos
+                                    Bucaramanga*&nbsp; <small style="font-size: 11!important;" aling="justify"><em
+                                            style="font-size: 11px!important" aling="justify"> Adjuntar Oficio que acredite
+                                            el cumplimiento de las condiciones de seguridad de acuerdo al protocolo
+                                            establecido por el Cuerpo de Bomberos de Bucaramanga.</em></small> </label><br>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input
+                                            class=" @error('adj_certificadoBomberos_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_certificadoBomberos_arch" accept="application/pdf"
+                                            name="adj_certificadoBomberos_arch" type="file" data-overwrite-initial="true"
+                                            required>
+                                        @error('adj_certificadoBomberos_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_hospitalaria_arch" class="form-label">Prestación de Servicio Pre
+                                    Hospitalaria*&nbsp; <small style="font-size: 11!important;" aling="justify"><em
+                                            style="font-size: 11px!important" aling="justify"> Adjuntar constancia del
+                                            servicio de prestación pre hospitalaria con un organismo de socorro, Defensa
+                                            Civil o Cruz Roja</em></small> </label><br><br><br>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input class=" @error('adj_hospitalaria_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_hospitalaria_arch" accept="application/pdf" name="adj_hospitalaria_arch"
+                                            type="file" data-overwrite-initial="true" required>
+                                        @error('adj_hospitalaria_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_poliza_arch" class="form-label">Póliza de responsabilidad civil*&nbsp; <small
+                                        style="font-size: 11!important;" aling="justify"><em
+                                            style="font-size: 11px!important" aling="justify"> Adjuntar Póliza de
+                                            Responsabilidad Civil Extracontractual que ampare los riesgos que el evento
+                                            conlleva, debe ser adquirida por el organizador con empresa aseguradora de su
+                                            elección, a favor del Municipio de Bucaramanga, especificando lugar, fecha del
+                                            evento. </em></small> </label><br>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input class=" @error('adj_poliza_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_poliza_arch" accept="application/pdf" name="adj_poliza_arch" type="file"
+                                            data-overwrite-initial="true" required>
+                                        @error('adj_poliza_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_publicidad_arch" class="form-label">Soporte de Pago Publicidad Exterior*&nbsp;
+                                    <small style="font-size: 11!important;" aling="justify"><em
+                                            style="font-size: 11px!important" aling="justify"> Adjuntar Pago de impuesto
+                                            publicidad exterior visual o paz y salvo de publicidad exterior visual de que no
+                                            van a exhibir ningún tipo de publicidad. (Oficina de publicidad exterior visual-
+                                            Secretaria del Interior) (Calle 35 No. 10 – 43 Edificio Fase I Piso 3).
+                                        </em></small> </label><br>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input class=" @error('adj_publicidad_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_publicidad_arch" accept="application/pdf" name="adj_publicidad_arch" type="file"
+                                            data-overwrite-initial="true" required>
+                                        @error('adj_publicidad_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_certVigilancia_arch" class="form-label">Certificado de Vigilancia*&nbsp; <small
+                                        style="font-size: 11!important;" aling="justify"><em
+                                            style="font-size: 11px!important" aling="justify"> Adjuntar certificación
+                                            expedida por Empresa de Vigilancia y Seguridad Privada y/o Empresa de Logística
+                                            legalmente constituida, que garantice la prestación del servicio de seguridad y
+                                            vigilancia del evento.</em></small> </label><br><br>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input
+                                            class=" @error('adj_certVigilancia_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_certVigilancia_arch" accept="application/pdf" name="adj_certVigilancia_arch"
+                                            type="file" data-overwrite-initial="true" required>
+                                        @error('adj_certVigilancia_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_certificadoEMAB_arch" class="form-label">Certificado de Aseo*&nbsp; <small
+                                        style="font-size: 11!important;" aling="justify"><em
+                                            style="font-size: 11px!important" aling="justify"> Adjuntar Certificado de
+                                            servicio de aseo emitido por la EMAB. En relación con las áreas aledañas al
+                                            sitio del evento (Anexar recibo de pago original).</em></small> </label><br><br>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input
+                                            class=" @error('adj_certificadoEMAB_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_certificadoEMAB_arch" accept="application/pdf" name="adj_certificadoEMAB_arch"
+                                            type="file" data-overwrite-initial="true" required>
+                                        @error('adj_certificadoEMAB_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="adj_derAutor_arch" class="form-label">Autorización derechos de Autor*&nbsp; <small
+                                        style="font-size: 11!important;" aling="justify"><em
+                                            style="font-size: 11px!important" aling="justify"> Adjuntar certificado que
+                                            acredite Los derechos de autor previstos en la ley y presentar su respectiva
+                                            autorización, si en el evento público se ejecutaran obras causantes de dichos
+                                            pagos.</em></small> </label><br>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input class=" @error('adj_derAutor_arch') is-invalid @enderror documentos_adjuntos"
+                                            id="adj_derAutor_arch" accept="application/pdf" name="adj_derAutor_arch" type="file"
+                                            data-overwrite-initial="true" required>
+                                        @error('adj_derAutor_arch')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+
 
                             <div class="col-md-12 pl-1 pt-3">
+                                <h4 class="headline-m-govco">Aviso de privacidad y autorización tratamiento de datos
+                                    personales</h4>
 
-                                <label for="direccion_empresa" class="form-label">Dirección de parqueadero a categorizar. * </label><button type="button" class="btn btn-link"><span style="text-transform: lowercase; font-size: 12px;" class="text-primary" data-toggle="modal" data-target="#ModalDireccionesEmpresas">(Clic para insertar direccion)</span></button>
-                                <input type="text" value="{{old('direccion_empresa')}}" class="form-control  @error('direccion_empresa') is-invalid @enderror" name="direccion_empresa" id="direccion_empresa"  maxlength="120" required readonly>
-                                @error('direccion_empresa')
-                                <span class="invalid-feedback" role="alert">
-                                   <strong class="text-danger">{{ $message }}</strong>
+                                <a class="btn btn-low px-0"
+                                    href="https://www.bucaramanga.gov.co/Inicio/autorizacion-de-tratamiento-de-datos-personales/"
+                                    target="_blank">Autorizo el tratamiento de datos personales</a>
+                                <label class="checkbox-govco d-inline">
+                                    <input type="checkbox" id="AT00" name="tratamiento_datos" checked value="SI" />
+                                    <label for="AT00"> </label>
+                                </label><br>
+
+                                <a class="btn btn-low px-0"
+                                    href="https://www.bucaramanga.gov.co/Inicio/autorizacion-de-tratamiento-de-datos-personales/"
+                                    target="_blank">Acepto términos y condiciones</a>
+                                <label class="checkbox-govco d-inline">
+                                    <input type="checkbox" id="AT01" name="acepto_terminos" checked value="SI" />
+                                    <label for="AT01"> </label>
+                                </label>
+                                <p class="text-justify">Confirmo que soy mayor de edad y con plena capacidad para
+                                    diligenciar el presente formulario.
+                                    Así mismo declaro que la información aquí suministrada corresponde a la verdad.
+                                    Declaro que he leído, entiendo y acepto las políticas de tratamiento de los datos que
+                                    suministro,
+                                    de conformidad con la Ley 1581 de 2012 y demás normas concordantes
+                                    <label class="checkbox-govco d-inline">
+                                        <input type="checkbox" id="AT02" name="confirmo_mayorEdad" checked value="SI" />
+                                        <label for="AT02"> </label>
+                                    </label>
+                                </p>
+                            </div>
+                            <div class="col-md-11 pl-1 pr-1 pt-3">
+                                <p>Acepto que la información aquí registrada sea compartida con otras entidades y/o
+                                    terceros vinculados a la Alcaldía de Bucaramanga</p>
+                                @error('compartir_informacion')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
-
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="barrio_empresa" class="form-label">Barrio* </label>
-                               <select name="barrio_empresa" id="barrio_empresa" class="form-control @error('barrio_empresa') is-invalid @enderror" required>
-                                   <option value=""></option>
-                                   @foreach ($Barrios as $barrio)
-                                   <option value="{{$barrio->nombre}}">{{$barrio->nombre}}</option>
-                                       
-                                   @endforeach
-                               </select>
-                                @error('barrio_empresa')
-                                <span class="invalid-feedback" role="alert">
-                                   <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="tel_empresa" class="form-label">Teléfono/Celular * </label>
-                                <input value="{{old('tel_empresa')}}" type="text" class="form-control  @error('tel_empresa') is-invalid @enderror number_validate" name="tel_empresa" id="tel_empresa"  maxlength="10" minlength="7" required onkeypress="return Numeros(event)" >
-                                @error('tel_empresa')
-                                <span class="invalid-feedback" role="alert">
-                                   <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <h3 class="headline-l-govco mt-3 pl-0">2. Documentos Adjuntos de la Solicitud</h3>
-                            
-                            <div class="col-md-8 pl-1 pr-1 pt-3">
-                                <label for="archivo_camara_rut" class="form-label">Camara de Comercio &nbsp; <small style="font-size: 10px!important"><em style="font-size: 10px!important">(Mínimo  3 meses de antigüedad)</em> </small> &nbsp; y/o RUT </label>
-                            <div class="form-group">
-                                <div class="file-loading">
-                                    <input class=" @error('archivo_camara_rut') is-invalid @enderror documentos_adjuntos" id="archivo_camara_rut" accept="application/pdf" name="archivo_camara_rut" type="file" data-overwrite-initial="true" required>
-                                    @error('archivo_camara_rut')
-                                    <span class="invalid-feedback" role="alert">
-                                       <strong class="text-danger">{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                <div class="form-check-inline">
+                                    <label class="radiolist-govco radiobutton-govco">
+                                        <input type="radio" name="compartir_informacion" id="rb_si" value="SI" required />
+                                        <label for="rb_si">SI</label>
+                                    </label>
                                 </div>
-                            </div>
-                            </div>
-
-                            <div class="col-md-4 pl-1 pr-1 pt-3">
-                                {{-- <label for="archivo_rut" class="form-label">RUT* </label>
-                            <div class="form-group">
-                                <div class="file-loading">
-                                    <input class=" @error('archivo_rut') is-invalid @enderror documentos_adjuntos" id="archivo_rut" accept="application/pdf" name="archivo_rut" type="file" data-overwrite-initial="true" required>
-                                    @error('archivo_rut')
-                                    <span class="invalid-feedback" role="alert">
-                                       <strong class="text-danger">{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                <div class="form-check-inline">
+                                    <label class="radiolist-govco radiobutton-govco">
+                                        <input type="radio" name="compartir_informacion" id="rb_no" value="NO" />
+                                        <label for="rb_no">NO</label>
+                                    </label>
                                 </div>
-                            </div> 
+
                             </div>
 
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="archivo_planos" class="form-label">Planos Aprobados* </label>
-                            <div class="form-group">
-                                <div class="file-loading">
-                                    <input class=" @error('archivo_planos') is-invalid @enderror documentos_adjuntos" id="archivo_planos" accept="application/pdf" name="archivo_planos" type="file" data-overwrite-initial="true" required>
-                                    @error('archivo_planos')
-                                    <span class="invalid-feedback" role="alert">
-                                       <strong class="text-danger">{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                            <div class="col-md-12  pl-1 pr-1 pt-3 text-left mt-4" style="padding-left: 0px!important">
+                                
+                                <button style="font-size:15px;" type="submit" class="btn btn-round btn-middle"
+                                     onclick="return confirm('¿Esta seguro de realizar esta solicitud ?, ¿ Revisó bien los anexos?, si esta seguro oprima aceptar')">Enviar Solicitud</button>
                             </div>
-                            </div>
-
-                            
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="archivo_licencia" class="form-label">Licencia de construcción* </label>
-                            <div class="form-group">
-                                <div class="file-loading">
-                                    <input class=" @error('archivo_licencia') is-invalid @enderror documentos_adjuntos" id="archivo_licencia" accept="application/pdf" name="archivo_licencia" type="file" data-overwrite-initial="true" required>
-                                    @error('archivo_licencia')
-                                    <span class="invalid-feedback" role="alert">
-                                       <strong class="text-danger">{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            </div>
-
-                            {{-- por definir cuarto documento -
-                            <div class="col-md-12 pl-1 pt-3">
-                                <h4 class="headline-m-govco">Aviso de privacidad y autorización tratamiento de datos personales</h4>
-
-                            <a class="btn btn-low px-0" href="https://www.bucaramanga.gov.co/Inicio/autorizacion-de-tratamiento-de-datos-personales/" target="_blank">Autorizo el tratamiento de datos personales</a>
-                            <label class="checkbox-govco d-inline">
-                               <input type="checkbox" id="AT00" name="tratamiento_datos" checked value="SI" />
-                               <label for="AT00"> </label>
-                            </label><br>
-
-                            <a class="btn btn-low px-0" href="https://www.bucaramanga.gov.co/Inicio/autorizacion-de-tratamiento-de-datos-personales/" target="_blank">Acepto términos y condiciones</a>
-                            <label class="checkbox-govco d-inline">
-                               <input type="checkbox" id="AT01" name="acepto_terminos" checked value="SI" />
-                               <label for="AT01"> </label>
-                            </label>
-                            <p class="text-justify">Confirmo que soy mayor de edad y con plena capacidad para diligenciar el presente formulario.
-                               Así mismo declaro que la información aquí suministrada corresponde a la verdad.
-                               Declaro que he leído, entiendo y acepto las políticas de tratamiento de los datos que suministro,
-                               de conformidad con la Ley 1581 de 2012 y demás normas concordantes
-                               <label class="checkbox-govco d-inline">
-                                  <input type="checkbox" id="AT02" name="confirmo_mayorEdad" checked  value="SI"/>
-                                  <label for="AT02"> </label>
-                               </label>
-                            </p>
-                         </div>
-                         <div class="col-md-11 pl-1 pr-1 pt-3">
-                            <p>Acepto que la información aquí registrada sea compartida con otras entidades y/o
-                               terceros vinculados a la Alcaldía de Bucaramanga</p>
-                               @error('compartir_informacion')
-                               <span class="invalid-feedback" role="alert">
-                                  <strong class="text-danger">{{ $message }}</strong>
-                                   </span>
-                               @enderror
-                            <div class="form-check-inline">
-                               <label class="radiolist-govco radiobutton-govco">
-                                  <input type="radio" name="compartir_informacion" id="rb_si" value="SI" required/>
-                                  <label for="rb_si">SI</label>
-                               </label>
-                            </div>
-                            <div class="form-check-inline">
-                               <label class="radiolist-govco radiobutton-govco">
-                                  <input type="radio" name="compartir_informacion" id="rb_no" value="NO"/>
-                                  <label for="rb_no">NO</label>
-                               </label>
-                            </div>
-                           
-                         </div>
-
-                         <div class="col-md-12  pl-1 pr-1 pt-3 text-left mt-4" style="padding-left: 0px!important">
-                            <button style="font-size:15px;" type="submit" class="btn btn-round btn-middle" name="consultar" onclick="return confirm('¿Esta seguro de realizar esta solicitud ?')">Enviar Solicitud</button>
-                         </div>
                         </div>
-                    </form> --}}
+                    </form>
                 </div>
-                        
-                            
-                            
 
 
-                       
 
-                   
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <!---contenido de cajas -->
 
@@ -416,7 +772,8 @@
                                 <div class="card-body bg-color-selago">
                                     <div class="row justify-content-center spacer no-gutters">
                                         <div class="col-3 pl-3 pt-2">
-                                            <button type="button" id="btn-facil-global" class="btn-symbolic-govco align-column-govco btn-facil-global"
+                                            <button type="button" id="btn-facil-global"
+                                                class="btn-symbolic-govco align-column-govco btn-facil-global"
                                                 value="FACIL">
                                                 <span class="govco-icon govco-icon-check-cn size-3x"></span>
                                                 <span class="btn-govco-text">Facil</span>
@@ -424,7 +781,8 @@
                                         </div>
 
                                         <div class="col-3 pl-3 pt-2">
-                                            <button type="button" id="btn-dificil-global" class="btn-symbolic-govco align-column-govco btn-dificil-global"
+                                            <button type="button" id="btn-dificil-global"
+                                                class="btn-symbolic-govco align-column-govco btn-dificil-global"
                                                 value="DIFICIL">
                                                 <span class="govco-icon govco-icon-x-cn size-3x"></span>
                                                 <span class="btn-govco-text">Dificil</span>
@@ -432,7 +790,8 @@
                                         </div>
                                     </div>
                                     {{-- modulo tramites --}}
-                                    <input id="modulo" type="hidden" class="form-control modulo" value="CATEGORIZACION DE PARQUEADEROS">
+                                    <input id="modulo" type="hidden" class="form-control modulo"
+                                        value="PERMISOS PARA ESPECTACULOS PUBLICOS">
 
 
                                     <div class="container text-center">
@@ -451,7 +810,7 @@
                                                 placeholder="Queremos conocer tu experiencia, sugerencias y consejos"
                                                 id="text-area" maxlength="300" onkeypress="return Direccion(event)"
                                                 onkeyup="aMayusculas(this.value,this.id)"></textarea>
-                                               
+
                                         </div>
 
                                     </div>
@@ -459,319 +818,389 @@
                             </div>
                         </div>
 
-                    </div>  
-                    
+                    </div>
+
                     {{-- tercer acordion --}}
 
                     <div class="accordion accordion-govco pt-0" id="acc3">
                         <div class="card">
-                           <div class="card-header row no-gutters" id="c3">
-                              <button class="btn-link row no-gutters collapsed" type="button" data-toggle="collapse" data-target="#coll3" aria-expanded="false" aria-controls="coll3">
-                                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                                    <span class="title">Consulto mi Solicitud</span>
-                                 </div>
-                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                    <div class="btn-icon-close">
-                                       <span class="govco-icon govco-icon-minus"></span>
-                                       <span class="govco-icon govco-icon-simpled-arrow"></span>
+                            <div class="card-header row no-gutters" id="c3">
+                                <button class="btn-link row no-gutters collapsed" type="button" data-toggle="collapse"
+                                    data-target="#coll3" aria-expanded="false" aria-controls="coll3">
+                                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                                        <span class="title">Consulto mi Solicitud</span>
                                     </div>
-                                 </div>
-                              </button>
-                           </div>
-                           <div id="coll3" class="collapse" aria-labelledby="c3" data-parent="#acc3">
-                              <div class="card-body bg-color-selago">
-                                 <div class="container text-center">
-                                    <button data-toggle="modal" data-target="#ModalConsulta" type="button" class="btn btn-round btn-middle">CONSULTE AQUÍ
-                                    </button>
-                                 </div>
-                              </div>
-                           </div>
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                        <div class="btn-icon-close">
+                                            <span class="govco-icon govco-icon-minus"></span>
+                                            <span class="govco-icon govco-icon-simpled-arrow"></span>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                            <div id="coll3" class="collapse" aria-labelledby="c3" data-parent="#acc3">
+                                <div class="card-body bg-color-selago">
+                                    <div class="container text-center">
+                                        <button data-toggle="modal" data-target="#ModalConsulta" type="button"
+                                            class="btn btn-round btn-middle">CONSULTE AQUÍ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                     </div>
-                    
+                    </div>
+
                 </div>
             </div>
-        </div>              
+        </div>
 
-        
+
 
     </div>
-   {{-- fin contenedor pricincipal --}}
+    {{-- fin contenedor pricincipal --}}
 
-     {{-- MODAL DIRECCIONES --}}
+    {{-- MODAL DIRECCIONES --}}
 
-     {{-- <div id="ModalDirecciones" class="modal fade center" role="dialog">
+    <div id="ModalDireccionesEventos" class="modal fade center" role="dialog">
         <div class="modal-dialog modal-lg" style="max-width: 1000px!important;">
-  
-           <!-- Modal content-->
-           <div class="modal-content">
-              <div class="modal-header" style="background:#E5EEFB;">
-  
-                 <h4 class="modal-title">Ingresa tu Dirección</h4>
-                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>              
-  
-                 <div class="modal-body">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="background:#E5EEFB;">
+
+                    <h4 class="modal-title">Ingresa tu Dirección</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
                     <div class="row form-row">
-  
-                       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD01" style="font-family: 'Barlow', sans-serif;"> Calle - Carrera *</label>
-                             <select name="DD01" id="DD01" type="text" class="form-control input-md" required="required" title="Selecciona el tipo de indicación inicial para la dirección que desea ingresar">
-                                <option value=""></option>
-                                @foreach ($Parametros2 as $parametro2)
-                                <option value="{{$parametro2->ParDes}}">{{$parametro2->ParDes}}</option>
-                                @endforeach
 
-                               
-                             </select>
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD02" style="font-family: 'Barlow', sans-serif;">N° - Nombre * </label>
-                             <input id="DD02" name="DD02" type="text" class="form-control" maxlength="20" required="required" title="En este campo se deberá digitar número o nombre según corresponda a la selección en el campo anterior, te recomendamos observar el campo de visualización que se encuentra al final de este módulo para organizar tu dirección correctamente." onkeypress="return NumDoc(event)" onchange="aMayusculas(this.value,this.id)" style="height: 29px!important;">
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD03" style="font-family: 'Barlow', sans-serif;">Letra </label>
-                             <select id="DD03" name="DD03" type="text" class="form-control input-md" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
-                                <option value=""></option>
-                                @foreach ($Parametros1 as $parametro1)
-                                <option value="{{$parametro1->ParNom}}">{{$parametro1->ParNom}}</option>
-                                @endforeach
-                                
-                             </select>
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD04" style="font-family: 'Barlow', sans-serif;">Numero* </label>
-                             <input id="DD04" name="DD04" type="text" class="form-control" maxlength="4" title="Digita en este campo el primer número de tu dirección" onkeypress="return Numeros(event)" required="required" style="height: 29px!important;">
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD05" style="font-family: 'Barlow', sans-serif;">Letra </label>
-                             <select id="DD05" name="DD05" type="text" class="form-control input-md" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
-                                <option value=""></option>
-                                @foreach ($Parametros1 as $parametro1)
-                                <option value="{{$parametro1->ParNom}}">{{$parametro1->ParNom}}</option>
-                                @endforeach
-                             </select>
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD06" style="font-family: 'Barlow', sans-serif;">Numero* </label>
-                             <input id="DD06" name="DD06" type="text" class="form-control" maxlength="4" title="Digita en este campo el primer número de tu dirección" onkeypress="return Numeros(event)" style="height: 29px!important;">
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD07" style="font-family: 'Barlow', sans-serif;">Letra </label>
-                             <select id="DD07" name="DD07" type="text" class="form-control input-md" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
-                                <option value=""></option>
-                                @foreach ($Parametros1 as $parametro1)
-                                <option value="{{$parametro1->ParNom}}">{{$parametro1->ParNom}}</option>
-                                @endforeach
-                                
-                             </select>
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-6 col-md-2 col-sm-12 col-xs-12 caja_ultima"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD08" style="font-family: 'Barlow', sans-serif;">Complemento </label>
-                             <input id="DD08" name="DD08" type="text" class="form-control" maxlength="80" title="Digita en este el complemento de tu direccion" onkeyup="aMayusculas(this.value,this.id)">
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><br><br>
-                          <div class="form-group">
-                             <input style="background-color: #004884; color: #FFFFFF; font-weight: bold; border-radius:8px;" name="Direccion" id="DD000" type="text" class="form-control input-md DD00" data-toggle="tooltip" title="Previsualizador de la dirección introducida" data-delay='{"show":"30", "hide":"30"}' placeholder="Pre visualizador de direcciones" required="required" readonly>
-                          </div>
-                       </div>
-  
-                      
-                    </div>
-                 </div>
-  
-                 <div class="modal-footer">
-                    
-                    <button style="font-size:15px;" type="button" class="btn btn-round btn-middle btn-outline-info" id="btnDireccion" value="Boton">Ingresar Dirección</button>
-                    <button style="font-size:15px;" type="button" class="btn btn-round btn-middle btn-outline-info" data-dismiss="modal">Cerrar</button>
-                 </div>
-              </form>
-           </div>
-        </div>
-     </div> --}}
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD01"
+                                    style="font-family: 'Barlow', sans-serif;"> Calle - Carrera *</label>
+                                <select name="DD01" id="DD01" type="text" class="form-control input-md modal1"
+                                    required="required"
+                                    title="Selecciona el tipo de indicación inicial para la dirección que desea ingresar">
+                                    <option value=""></option>
+                                    @foreach ($Parametros2 as $parametro2)
+                                        <option value="{{ $parametro2->ParDes }}">{{ $parametro2->ParDes }}</option>
+                                    @endforeach
 
-     {{-- <div id="ModalDireccionesEmpresas" class="modal fade center" role="dialog">
-        <div class="modal-dialog modal-lg" style="max-width: 1000px!important;">
-  
-           <!-- Modal content-->
-           <div class="modal-content">
-              <div class="modal-header" style="background:#E5EEFB;">
-  
-                 <h4 class="modal-title">Ingresa tu Dirección</h4>
-                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>              
-  
-                 <div class="modal-body">
-                    <div class="row form-row">
-  
-                       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD01" style="font-family: 'Barlow', sans-serif;"> Calle - Carrera *</label>
-                             <select name="DD01" id="DD010" type="text" class="form-control input-md" required="required" title="Selecciona el tipo de indicación inicial para la dirección que desea ingresar">
-                                <option value=""></option>
-                                @foreach ($Parametros2 as $parametro2)
-                                <option value="{{$parametro2->ParDes}}">{{$parametro2->ParDes}}</option>
-                                @endforeach
 
-                               
-                             </select>
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD02" style="font-family: 'Barlow', sans-serif;">N° - Nombre * </label>
-                             <input id="DD020" name="DD02" type="text" class="form-control" maxlength="20" required="required" title="En este campo se deberá digitar número o nombre según corresponda a la selección en el campo anterior, te recomendamos observar el campo de visualización que se encuentra al final de este módulo para organizar tu dirección correctamente." onkeypress="return NumDoc(event)" onchange="aMayusculas(this.value,this.id)" style="height: 29px!important;">
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD03" style="font-family: 'Barlow', sans-serif;">Letra </label>
-                             <select id="DD030" name="DD03" type="text" class="form-control input-md" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
-                                <option value=""></option>
-                                @foreach ($Parametros1 as $parametro1)
-                                <option value="{{$parametro1->ParNom}}">{{$parametro1->ParNom}}</option>
-                                @endforeach
-                                
-                             </select>
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD04" style="font-family: 'Barlow', sans-serif;">Numero* </label>
-                             <input id="DD040" name="DD04" type="text" class="form-control" maxlength="4" title="Digita en este campo el primer número de tu dirección" onkeypress="return Numeros(event)" required="required" style="height: 29px!important;">
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD05" style="font-family: 'Barlow', sans-serif;">Letra </label>
-                             <select id="DD050" name="DD050" type="text" class="form-control input-md" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
-                                <option value=""></option>
-                                @foreach ($Parametros1 as $parametro1)
-                                <option value="{{$parametro1->ParNom}}">{{$parametro1->ParNom}}</option>
-                                @endforeach
-                             </select>
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD06" style="font-family: 'Barlow', sans-serif;">Numero* </label>
-                             <input id="DD060" name="DD06" type="text" class="form-control" maxlength="4" title="Digita en este campo el primer número de tu dirección" onkeypress="return Numeros(event)" style="height: 29px!important;">
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD07" style="font-family: 'Barlow', sans-serif;">Letra </label>
-                             <select id="DD070" name="DD070" type="text" class="form-control input-md" title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
-                                <option value=""></option>
-                                @foreach ($Parametros1 as $parametro1)
-                                <option value="{{$parametro1->ParNom}}">{{$parametro1->ParNom}}</option>
-                                @endforeach
-                                
-                             </select>
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-6 col-md-2 col-sm-12 col-xs-12 caja_ultima"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD08" style="font-family: 'Barlow', sans-serif;">Complemento </label>
-                             <input id="DD080" name="DD08" type="text" class="form-control" maxlength="80" title="Digita en este el complemento de tu direccion" onkeyup="aMayusculas(this.value,this.id)">
-                          </div>
-                       </div>
-  
-                       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><br><br>
-                          <div class="form-group">
-                             <input style="background-color: #004884; color: #FFFFFF; font-weight: bold; border-radius:8px;" name="Direccion" id="DD0000" type="text" class="form-control input-md DD00" data-toggle="tooltip" title="Previsualizador de la dirección introducida" data-delay='{"show":"30", "hide":"30"}' placeholder="Pre visualizador de direcciones" required="required" readonly>
-                          </div>
-                       </div>
-  
-                      
-                    </div>
-                 </div>
-  
-                 <div class="modal-footer">
-                    
-                    <button style="font-size:15px;" type="button" class="btn btn-round btn-middle btn-outline-info" id="btnDireccionEmpresas" value="Boton">Ingresar Dirección</button>
-                    <button style="font-size:15px;" type="button" class="btn btn-round btn-middle btn-outline-info" data-dismiss="modal">Cerrar</button>
-                 </div>
-              </form>
-           </div>
-        </div>
-     </div> --}}
-
-     {{-- MODAL CONSULTAR SOLICITUD --}}
-     
-     <div id="ModalConsulta" class="modal fade center" role="dialog">
-        <div class="modal-dialog modal-lg" style="max-width: 1000px!important;">
-           <!-- Modal content-->
-           <div class="modal-content">
-              <div class="modal-header" style="background:#E5EEFB;">
-                 <h4 class="modal-title">Consultar Solicitud</h4>
-                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-              <form method="post" action="{{route('parqueadero.consulta')}}">
-                @csrf
-                 <div class="modal-body">
-                    <div class="row form-row">
-                       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD01" style="font-family: 'Barlow', sans-serif;">Buscar Por </label>
-                             <select id="VD01" name="tipo_parametro" class="form-control input-md" title="Seleccione la opción para validar el documento" required="required">
-                                <option value="">Seleccione</option>
-                                <option value="radicado">Numero de radicado</option>                                
-                                <option value="identificacion_solicitante">Documento de identificación Solicitante</option>
-  
-                               </select>
+                                </select>
                             </div>
-                       </div>  
-                       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><br>
-                          <div class="form-group">
-                             <label style="color:#111111;" class="input" for="DD01" style="font-family: 'Barlow', sans-serif;">Digite Numero </label>
-                            <input type="text" name="parametro" id="VD00" class="form-control input-md" title="Seleccione la opción para validar el documento" required="required" onkeypress="return Numeros(event)" onkeyup="aMayusculas(this.value,this.id)" maxlength="40" minlength="5">
-      
-                          </div>
-                       </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD02"
+                                    style="font-family: 'Barlow', sans-serif;">N° - Nombre * </label>
+                                <input id="DD02" name="DD02" type="text" class="form-control modal1" maxlength="20"
+                                    required="required"
+                                    title="En este campo se deberá digitar número o nombre según corresponda a la selección en el campo anterior, te recomendamos observar el campo de visualización que se encuentra al final de este módulo para organizar tu dirección correctamente."
+                                    onkeypress="return NumDoc(event)" onchange="aMayusculas(this.value,this.id)"
+                                    style="height: 29px!important;">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD03"
+                                    style="font-family: 'Barlow', sans-serif;">Letra </label>
+                                <select id="DD03" name="DD03" type="text" class="form-control input-md modal1"
+                                    title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
+                                    <option value=""></option>
+                                    @foreach ($Parametros1 as $parametro1)
+                                        <option value="{{ $parametro1->ParNom }}">{{ $parametro1->ParNom }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD04"
+                                    style="font-family: 'Barlow', sans-serif;">Numero* </label>
+                                <input id="DD04" name="DD04" type="text" class="form-control modal1" maxlength="4"
+                                    title="Digita en este campo el primer número de tu dirección"
+                                    onkeypress="return Numeros(event)" required="required" style="height: 29px!important;">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD05"
+                                    style="font-family: 'Barlow', sans-serif;">Letra </label>
+                                <select id="DD05" name="DD05" type="text" class="form-control input-md modal1"
+                                    title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
+                                    <option value=""></option>
+                                    @foreach ($Parametros1 as $parametro1)
+                                        <option value="{{ $parametro1->ParNom }}">{{ $parametro1->ParNom }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD06"
+                                    style="font-family: 'Barlow', sans-serif;">Numero* </label>
+                                <input id="DD06" name="DD06" type="text" class="form-control modal1" maxlength="4"
+                                    title="Digita en este campo el primer número de tu dirección"
+                                    onkeypress="return Numeros(event)" style="height: 29px!important;">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD07"
+                                    style="font-family: 'Barlow', sans-serif;">Letra </label>
+                                <select id="DD07" name="DD07" type="text" class="form-control input-md modal1"
+                                    title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
+                                    <option value=""></option>
+                                    @foreach ($Parametros1 as $parametro1)
+                                        <option value="{{ $parametro1->ParNom }}">{{ $parametro1->ParNom }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-2 col-sm-12 col-xs-12 caja_ultima"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD08"
+                                    style="font-family: 'Barlow', sans-serif;">Complemento </label>
+                                <input id="DD08" name="DD08" type="text" class="form-control modal1" maxlength="80"
+                                    title="Digita en este el complemento de tu direccion"
+                                    onkeyup="aMayusculas(this.value,this.id)">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><br><br>
+                            <div class="form-group">
+                                <input
+                                    style="background-color: #004884; color: #FFFFFF; font-weight: bold; border-radius:8px;"
+                                    name="Direccion" id="DD000" type="text" class="form-control input-md DD00"
+                                    data-toggle="tooltip" title="Previsualizador de la dirección introducida"
+                                    data-delay='{"show":"30", "hide":"30"}' placeholder="Pre visualizador de direcciones"
+                                    required="required" readonly>
+                            </div>
+                        </div>
+
+
                     </div>
-                 </div>
-  
-                 <div class="modal-footer">
-                   
-                    <button type="submit" class="btn btn-round btn-middle btn-outline-info"  id="Boton">Realizar Búsqueda</button>
-                    <button type="button" class="btn btn-round btn-middle btn-outline-info" data-dismiss="modal">Cerrar</button>
-                 </div>
-              </form>
-           </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button style="font-size:15px;" type="button" class="btn btn-round btn-middle btn-outline-info"
+                        id="btnDireccionEventos" value="Boton">Ingresar Dirección</button>
+                    <button style="font-size:15px;" type="button" class="btn btn-round btn-middle btn-outline-info"
+                        data-dismiss="modal">Cerrar</button>
+                </div>
+                </form>
+            </div>
         </div>
-     </div>
+    </div>
+
+    <div id="ModalUbicacion" class="modal fade center" role="dialog">
+        <div class="modal-dialog modal-lg" style="max-width: 1000px!important;">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="background:#E5EEFB;">
+
+                    <h4 class="modal-title">Ingresa tu Dirección</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row form-row">
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD01"
+                                    style="font-family: 'Barlow', sans-serif;"> Calle - Carrera *</label>
+                                <select name="DD01" id="DD010" type="text" class="form-control input-md modal2"
+                                    required="required"
+                                    title="Selecciona el tipo de indicación inicial para la dirección que desea ingresar">
+                                    <option value=""></option>
+                                    @foreach ($Parametros2 as $parametro2)
+                                        <option value="{{ $parametro2->ParDes }}">{{ $parametro2->ParDes }}</option>
+                                    @endforeach
+
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD02"
+                                    style="font-family: 'Barlow', sans-serif;">N° - Nombre * </label>
+                                <input id="DD020" name="DD02" type="text" class="form-control modal2" maxlength="20"
+                                    required="required"
+                                    title="En este campo se deberá digitar número o nombre según corresponda a la selección en el campo anterior, te recomendamos observar el campo de visualización que se encuentra al final de este módulo para organizar tu dirección correctamente."
+                                    onkeypress="return NumDoc(event)" onchange="aMayusculas(this.value,this.id)"
+                                    style="height: 29px!important;">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD03"
+                                    style="font-family: 'Barlow', sans-serif;">Letra </label>
+                                <select id="DD030" name="DD03" type="text" class="form-control input-md modal2"
+                                    title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
+                                    <option value=""></option>
+                                    @foreach ($Parametros1 as $parametro1)
+                                        <option value="{{ $parametro1->ParNom }}">{{ $parametro1->ParNom }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD04"
+                                    style="font-family: 'Barlow', sans-serif;">Numero* </label>
+                                <input id="DD040" name="DD04" type="text" class="form-control modal2" maxlength="4"
+                                    title="Digita en este campo el primer número de tu dirección"
+                                    onkeypress="return Numeros(event)" required="required" style="height: 29px!important;">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD05"
+                                    style="font-family: 'Barlow', sans-serif;">Letra </label>
+                                <select id="DD050" name="DD050" type="text" class="form-control input-md modal2"
+                                    title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
+                                    <option value=""></option>
+                                    @foreach ($Parametros1 as $parametro1)
+                                        <option value="{{ $parametro1->ParNom }}">{{ $parametro1->ParNom }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD06"
+                                    style="font-family: 'Barlow', sans-serif;">Numero* </label>
+                                <input id="DD060" name="DD06" type="text" class="form-control modal2" maxlength="4"
+                                    title="Digita en este campo el primer número de tu dirección"
+                                    onkeypress="return Numeros(event)" style="height: 29px!important;">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD07"
+                                    style="font-family: 'Barlow', sans-serif;">Letra </label>
+                                <select id="DD070" name="DD070" type="text" class="form-control input-md modal2"
+                                    title="Selecciona una letra si tu indicación de dirección en el campo anterior contiene esta opción, si no la posee déjala en blanco">
+                                    <option value=""></option>
+                                    @foreach ($Parametros1 as $parametro1)
+                                        <option value="{{ $parametro1->ParNom }}">{{ $parametro1->ParNom }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-2 col-sm-12 col-xs-12 caja_ultima"><br>
+                            <div class="form-group">
+                                <label style="color:#111111;" class="input" for="DD08"
+                                    style="font-family: 'Barlow', sans-serif;">Complemento </label>
+                                <input id="DD080" name="DD08" type="text" class="form-control modal2" maxlength="80"
+                                    title="Digita en este el complemento de tu direccion"
+                                    onkeyup="aMayusculas(this.value,this.id)">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><br><br>
+                            <div class="form-group">
+                                <input
+                                    style="background-color: #004884; color: #FFFFFF; font-weight: bold; border-radius:8px;"
+                                    name="Direccion" id="DD0000" type="text" class="form-control input-md DD00"
+                                    data-toggle="tooltip" title="Previsualizador de la dirección introducida"
+                                    data-delay='{"show":"30", "hide":"30"}' placeholder="Pre visualizador de direcciones"
+                                    required="required" readonly>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button style="font-size:15px;" type="button" class="btn btn-round btn-middle btn-outline-info"
+                        id="btnModalUbicacionEvento" value="Boton">Ingresar Dirección</button>
+                    <button style="font-size:15px;" type="button" class="btn btn-round btn-middle btn-outline-info"
+                        data-dismiss="modal">Cerrar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- MODAL CONSULTAR SOLICITUD --}}
+
+    <div id="ModalConsulta" class="modal fade center" role="dialog">
+        <div class="modal-dialog modal-lg" style="max-width: 1000px!important;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="background:#E5EEFB;">
+                    <h4 class="modal-title">Consultar Solicitud</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form method="post" action="{{ route('eventos.consulta') }}">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row form-row">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><br>
+                                <div class="form-group">
+                                    <label style="color:#111111;" class="input" for="DD01"
+                                        style="font-family: 'Barlow', sans-serif;">Buscar Por </label>
+                                    <select id="VD01" name="tipo_parametro" class="form-control input-md"
+                                        title="Seleccione la opción para validar el documento" required="required">
+                                        <option value="">Seleccione</option>
+                                        <option value="radicado">Numero de radicado</option>
+                                        <option value="ide_responsable">Documento de identificación Solicitante
+                                        </option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><br>
+                                <div class="form-group">
+                                    <label style="color:#111111;" class="input" for="DD01"
+                                        style="font-family: 'Barlow', sans-serif;">Digite Numero </label>
+                                    <input type="text" name="parametro" id="VD00" class="form-control input-md"
+                                        title="Seleccione la opción para validar el documento" required="required"
+                                        onkeypress="return Numeros(event)" onkeyup="aMayusculas(this.value,this.id)"
+                                        maxlength="40" minlength="5">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-round btn-middle btn-outline-info" id="Boton">Realizar Búsqueda</button>
+                        <button type="button" class="btn btn-round btn-middle btn-outline-info"
+                            data-dismiss="modal">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 @endsection
