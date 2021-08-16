@@ -1187,6 +1187,17 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
 
    });
 
+   $('#fecha_evento').change(function () {
+
+    var date = moment($(this).val());
+    if(date.isoWeekday() == 7 || date.isoWeekday() == 6){
+        alert("Atención solo se pueden seleccionar dias habiles");
+        $('#fecha_evento').val('');
+
+        return;
+    }
+ });
+
    $('.clockpicker').clockpicker({
     placement: 'top',
 	align: 'left',    
@@ -1239,6 +1250,53 @@ $('#myForm_eventos').ready(function(){
     }
 
 });
+
+$('#cant_personas').change(function(){
+
+    var cantidad = $(this).val();
+    if(parseInt(cantidad) <= 50){
+        $('#adj_conceptoCMGRD_arch').attr('required', false);
+        $('#adj_certificadoBomberos_arch').attr('required', false);
+        $('#adj_hospitalaria_arch').attr('required', false);
+        $('.caja-cmgrd').addClass('d-none');           
+    }else if(parseInt(cantidad) > 50){
+        $('#adj_conceptoCMGRD_arch').attr('required', true);
+        $('#adj_certificadoBomberos_arch').attr('required', true);
+        $('#adj_hospitalaria_arch').attr('required', false);
+        $('.caja-cmgrd').removeClass('d-none');   
+
+    }
+
+});
+
+$('#pub_ext').change(function(){
+
+    var publicidad = $(this).val();
+    if(publicidad == 'SI'){
+        $('#adj_publicidad_arch').attr('required', true);      
+        $('.caja_publicidad').removeClass('d-none');           
+    }else if(publicidad == 'NO'){
+        $('#adj_publicidad_arch').attr('required', false);        
+        $('.caja_publicidad').addClass('d-none');   
+
+    }
+
+});
+
+$('#reproduccion_musica').change(function(){
+
+    var publicidad = $(this).val();
+    if(publicidad == 'SI'){
+        $('#adj_derAutor_arch').attr('required', true);      
+        $('.caja_derechos').removeClass('d-none');           
+    }else if(publicidad == 'NO'){
+        $('#adj_derAutor_arch').attr('required', false);        
+        $('.caja_derechos').addClass('d-none');   
+
+    }
+
+});
+   
    
    
      

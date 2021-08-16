@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\DocUpdate;
 
 class Evento extends Model
 {
@@ -27,6 +28,9 @@ class Evento extends Model
         "hora_fin",
         "ubicacion_evento",
         "barrio_evento",
+        "cant_personas",
+        "pub_ext",
+        "reproduccion_musica",
         "descripcion_evento",
         "adj_logisticaEvento",
         "adj_cedulaRes",
@@ -50,7 +54,14 @@ class Evento extends Model
         "tratamiento_datos",
         "acepto_terminos",
         "confirmo_mayorEdad",
-        "compartir_informacion"
+        "compartir_informacion",
+
     ];
+
+    public function documentos(){     
+
+        return $this->hasOne(DocUpdate::class); //relacion 1  a 1
+
+    }
     
 }

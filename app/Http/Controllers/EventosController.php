@@ -7,6 +7,7 @@ use App\Parametro;
 use App\Barrio;
 use App\Evento;
 use App\Auditoria;
+use App\DocUpdate;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
@@ -101,19 +102,16 @@ class EventosController extends Controller
             "hora_fin" => "required",
             "ubicacion_evento" => "required",       
             "barrio_evento" => "required",
-            "descripcion_evento" => "required",
-            "adj_conceptoCMGRD_arch" => "required",
+            "cant_personas"=> "required",
+            "pub_ext"=> "required",
+            "reproduccion_musica"=> "required",
+            "descripcion_evento" => "required",            
             "adj_cedulaRes_arch" => "required",          
             "adj_contratoArr_arch" => "required",
             "adj_conceptoTecAmb_arch"=> "required",
-            "adj_certificadoPONAL_arch"=> "required",
-            "adj_certificadoBomberos_arch"=> "required",
-            "adj_hospitalaria_arch"=> "required",
-            "adj_poliza_arch"=> "required",
-            "adj_publicidad_arch"=> "required",
-            "adj_certVigilancia_arch"=> "required",
-            "adj_certificadoEMAB_arch"=> "required",
-            "adj_derAutor_arch"=> "required",
+            "adj_certificadoPONAL_arch"=> "required",                     
+            "adj_poliza_arch"=> "required",        
+            "adj_certificadoEMAB_arch"=> "required",            
             "tratamiento_datos"=> "required",
             "acepto_terminos"=> "required",
             "confirmo_mayorEdad"=> "required",
@@ -134,7 +132,7 @@ class EventosController extends Controller
 
         //documentos adjuntos
 
-        if($request->adj_logisticaEvento || $request->adj_logisticaEvento != null){      
+        if($request->adj_logisticaEvento_arch || $request->adj_logisticaEvento_arch != null){      
         $adjunto1 = $request->file('adj_logisticaEvento_arch')->storeAs('documentos_eventos/' . $radicado, 'Logistica-evento-' . $radicado . '.pdf');
         }else{
           $adjunto1 = false;
@@ -145,33 +143,54 @@ class EventosController extends Controller
         }else{
             $adjunto3 = false;
         }
+
+        if($request->adj_conceptoCMGRD_arch || $request->adj_conceptoCMGRD_arch != null){ 
+            $adjunto5 =  $request->file('adj_conceptoCMGRD_arch')->storeAs('documentos_eventos/' . $radicado, 'Concepto-CMGRD-' . $radicado . '.pdf');
+           }else{
+               $adjunto5 = false;
+           }
+
+           if($request->adj_hospitalaria_arch || $request->adj_hospitalaria_arch != null){ 
+            $adjunto9 = $request->file('adj_hospitalaria_arch')->storeAs('documentos_eventos/' . $radicado, 'Servicio-prehospitalario-' . $radicado . '.pdf');
+           }else{
+               $adjunto9 = false;
+           }
+
+           if($request->adj_certificadoBomberos_arch || $request->adj_certificadoBomberos_arch != null){ 
+            $adjunto8 = $request->file('adj_certificadoBomberos_arch')->storeAs('documentos_eventos/' . $radicado, 'Concepto-BOMBEROS-' . $radicado . '.pdf');
+           }else{
+               $adjunto8 = false;
+           }
+
+           if($request->adj_publicidad_arch || $request->adj_publicidad_arch != null){ 
+            $adjunto11 =  $request->file('adj_publicidad_arch')->storeAs('documentos_eventos/' . $radicado, 'Pago-publicidad-' . $radicado . '.pdf');
+           }else{
+               $adjunto11 = false;
+           }
+
+           if($request->adj_derAutor_arch || $request->adj_derAutor_arch != null){ 
+            $adjunto14 =  $request->file('adj_derAutor_arch')->storeAs('documentos_eventos/' . $radicado, 'Certificado-derechos-autor-' . $radicado . '.pdf');
+           }else{
+               $adjunto14 = false;
+           }
+        
         
         $adjunto2 =  $request->file('adj_cedulaRes_arch')->storeAs('documentos_eventos/' . $radicado, 'Documento-identificacion-' . $radicado . '.pdf');
 
         $adjunto4 = $request->file('adj_contratoArr_arch')->storeAs('documentos_eventos/' . $radicado, 'Contrato-arrendamiento-' . $radicado . '.pdf');
 
-        $adjunto5 = $request->file('adj_conceptoCMGRD_arch')->storeAs('documentos_eventos/' . $radicado, 'Concepto-CMGRD-' . $radicado . '.pdf');
-
         $adjunto6 = $request->file('adj_conceptoTecAmb_arch')->storeAs('documentos_eventos/' . $radicado, 'Concepto-Tecnico-ambiental-' . $radicado . '.pdf');
 
-        $adjunto7 = $request->file('adj_certificadoPONAL_arch')->storeAs('documentos_eventos/' . $radicado, 'Concepto-PONAL-' . $radicado . '.pdf');
-
-        $adjunto8 = $request->file('adj_certificadoBomberos_arch')->storeAs('documentos_eventos/' . $radicado, 'Concepto-BOMBEROS-' . $radicado . '.pdf');
-
-        $adjunto9 = $request->file('adj_hospitalaria_arch')->storeAs('documentos_eventos/' . $radicado, 'Servicio-prehospitalario-' . $radicado . '.pdf');
+        $adjunto7 = $request->file('adj_certificadoPONAL_arch')->storeAs('documentos_eventos/' . $radicado, 'Concepto-PONAL-' . $radicado . '.pdf');      
 
         $adjunto10 =  $request->file('adj_poliza_arch')->storeAs('documentos_eventos/' . $radicado, 'Poliza-responsabilidad-civil-' . $radicado . '.pdf');
-
-        $adjunto11 =  $request->file('adj_publicidad_arch')->storeAs('documentos_eventos/' . $radicado, 'Pago-publicidad-' . $radicado . '.pdf');
-
-        $adjunto12 =  $request->file('adj_certVigilancia_arch')->storeAs('documentos_eventos/' . $radicado, 'Certificado-empresa-vigilancia-' . $radicado . '.pdf');
-
+      
         $adjunto13 =  $request->file('adj_certificadoEMAB_arch')->storeAs('documentos_eventos/' . $radicado, 'Certificado-EMAB-' . $radicado . '.pdf');
 
-        $adjunto14 =  $request->file('adj_derAutor_arch')->storeAs('documentos_eventos/' . $radicado, 'Certificado-derechos-autor-' . $radicado . '.pdf');
+       
        
         //rutas de documentos
-        if ($adjunto2 && $adjunto4 && $adjunto5 && $adjunto6 && $adjunto7 && $adjunto8 && $adjunto9 && $adjunto10 && $adjunto11 && $adjunto12 && $adjunto13 && $adjunto14 || $adjunto1 || $adjunto3) {
+        if ($adjunto2 && $adjunto4 && $adjunto6 && $adjunto7 && $adjunto10 && $adjunto13 || $adjunto14 || $adjunto1 || $adjunto3 || $adjunto5 || $adjunto9 || $adjunto8 || $adjunto11) {
 
            if($adjunto1){
             $adj_logisticaEvento = 'storage/documentos_eventos/' . $radicado . '/Logistica-evento-' . $radicado . '.pdf';
@@ -185,29 +204,51 @@ class EventosController extends Controller
                 $adj_autorizacionTra = null;
             }
 
+            if($adjunto5){
+                $adj_conceptoCMGRD = 'storage/documentos_eventos/' . $radicado . '/Concepto-CMGRD-' . $radicado . '.pdf';
+                  }else{
+                  $adj_conceptoCMGRD = null;
+              }
+
+              if($adjunto9){
+                $adj_hospitalaria = 'storage/documentos_eventos/' . $radicado . '/Servicio-prehospitalario-' . $radicado . '.pdf';
+                  }else{
+                  $adj_hospitalaria = null;
+              }
+
+              if($adjunto8){
+                $adj_certificadoBomberos = 'storage/documentos_eventos/' . $radicado . '/Concepto-BOMBEROS-' . $radicado . '.pdf';
+                  }else{
+                  $adj_certificadoBomberos = null;
+              }
+
+              if($adjunto11){
+                $adj_publicidad = 'storage/documentos_eventos/' . $radicado . '/Pago-publicidad-' . $radicado . '.pdf';
+                  }else{
+                  $adj_publicidad = null;
+              }
+
+              if($adjunto14){
+                $adj_derAutor = 'storage/documentos_eventos/' . $radicado . '/Certificado-derechos-autor-' . $radicado . '.pdf';
+                  }else{
+                  $adj_derAutor = null;
+              }
+
+
             $adj_cedulaRes = 'storage/documentos_eventos/' . $radicado . '/Documento-identificacion-' . $radicado . '.pdf';
 
             $adj_contratoArr = 'storage/documentos_eventos/' . $radicado . '/Contrato-arrendamiento-' . $radicado . '.pdf';
 
-            $adj_conceptoCMGRD = 'storage/documentos_eventos/' . $radicado . '/Concepto-CMGRD-' . $radicado . '.pdf';
-
             $adj_conceptoTecAmb = 'storage/documentos_eventos/' . $radicado . '/Concepto-Tecnico-ambiental-' . $radicado . '.pdf';
 
             $adj_certificadoPONAL = 'storage/documentos_eventos/' . $radicado . '/Concepto-PONAL-' . $radicado . '.pdf';
+       
 
-            $adj_certificadoBomberos = 'storage/documentos_eventos/' . $radicado . '/Concepto-BOMBEROS-' . $radicado . '.pdf';
-
-            $adj_hospitalaria = 'storage/documentos_eventos/' . $radicado . '/Servicio-prehospitalario-' . $radicado . '.pdf';
-
-            $adj_poliza = 'storage/documentos_eventos/' . $radicado . '/Poliza-responsabilidad-civil-' . $radicado . '.pdf';
-
-            $adj_publicidad = 'storage/documentos_eventos/' . $radicado . '/Pago-publicidad-' . $radicado . '.pdf';
-
-            $adj_certVigilancia = 'storage/documentos_eventos/' . $radicado . '/Certificado-empresa-vigilancia-' . $radicado . '.pdf';
+            $adj_poliza = 'storage/documentos_eventos/' . $radicado . '/Poliza-responsabilidad-civil-' . $radicado . '.pdf';            
 
             $adj_certificadoEMAB = 'storage/documentos_eventos/' . $radicado . '/Certificado-EMAB-' . $radicado . '.pdf';
 
-            $adj_derAutor = 'storage/documentos_eventos/' . $radicado . '/Certificado-derechos-autor-' . $radicado . '.pdf';
+            
 
             // add al requests
 
@@ -225,8 +266,7 @@ class EventosController extends Controller
                 'adj_certificadoBomberos'=> $adj_certificadoBomberos,
                 'adj_hospitalaria'=> $adj_hospitalaria,
                 'adj_poliza'=> $adj_poliza,
-                'adj_publicidad'=>$adj_publicidad,
-                'adj_certVigilancia'=> $adj_certVigilancia,
+                'adj_publicidad'=>$adj_publicidad,                
                 'adj_certificadoEMAB'=> $adj_certificadoEMAB,
                 'adj_derAutor'=> $adj_derAutor,
                 'estado_solicitud' => 'ENVIADA',
@@ -242,6 +282,20 @@ class EventosController extends Controller
                 'estado' => null,
                 'mensaje'=> null
             ];
+
+            $detalleCorreo_fun = [
+                'nombres' => ' Funcionario Carlos Fernando Calderon',
+                'radicado' => $radicado,
+                'Subject' => 'Solicitud pendiente de Permiso para espectáculos públicos No'.$radicado,
+                'documento'=> 'NO',
+                'fecha_pendiente' => null,            
+                'estado' => 'FUNCIONARIO',
+                'mensaje'=> null
+            ];
+            $correo_funcionario = 'ojrincon@bucaramanga.gov.co';
+
+
+
 
             $solicitud = $request->all();
             // return $solicitud;
@@ -262,6 +316,7 @@ class EventosController extends Controller
     
                 // envio de correo                
                 Mail::to($request->email_responsable)->queue(new NotificacionEventos($detalleCorreo));
+                Mail::to($correo_funcionario)->queue(new NotificacionEventos($detalleCorreo_fun));
     
                 $request->session()->flash('radicado_id', $radicado);
                 return redirect()->route('eventos.confirmacion');
@@ -282,10 +337,21 @@ class EventosController extends Controller
 
     }
 
-    public function updateDocs(Request $request){
+    public function updateDocs(Request $request){       
+
 
         $solicitud = Evento::FindOrFail($request->id);
+        $contadorDocs = DocUpdate::where('evento_id', $request->id);
+        if($contadorDocs == null || $contadorDocs->count() == 0){
+            $docUpdate = new DocUpdate;
+            $docUpdate->evento_id  = $request->id;
+        }else{
+            $docUpdate = DocUpdate::FindOrFail($request->id);
+        }
+       
         $contador = 0;
+        
+
 
         if($solicitud->tipo_persona == 1){            
             $responsable = $solicitud->nom_responsable.' '.$solicitud->ape_responsable;
@@ -294,27 +360,29 @@ class EventosController extends Controller
             }
 
         if($request->adj_cedulaRes_arch){
-            $adjunto1 =  $request->file('adj_cedulaRes_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Documento-identificacion-' . $solicitud->radicado . '.pdf');
+            $adjunto1 =  $request->file('adj_cedulaRes_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Documento-identificacion-update-' . $solicitud->radicado . '.pdf');
+            $adj_cedulaRes = 'storage/documentos_eventos/' . $solicitud->radicado . '/Documento-identificacion-update-' . $solicitud->radicado . '.pdf';
+            $docUpdate->adj_cedulaRes = $adj_cedulaRes;
             $contador++;
         }else{
             $adjunto1 = false;
         }   
 
         if($request->adj_logisticaEvento_arch){
-            $adjunto2 =  $request->file('adj_logisticaEvento_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Logistica-evento-' . $solicitud->radicado . '.pdf');
+            $adjunto2 =  $request->file('adj_logisticaEvento_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Logistica-evento-update-' . $solicitud->radicado . '.pdf');
             //guarda ruta
-            $ruta_adj_logisticaEvento = 'storage/documentos_eventos/' . $solicitud->radicado . '/Logistica-evento-' . $solicitud->radicado . '.pdf';
-            $solicitud->adj_logisticaEvento = $ruta_adj_logisticaEvento;            
+            $ruta_adj_logisticaEvento = 'storage/documentos_eventos/' . $solicitud->radicado . '/Logistica-evento-update-' . $solicitud->radicado . '.pdf';
+            $docUpdate->adj_logisticaEvento = $ruta_adj_logisticaEvento;            
             $contador++;
         }else{
             $adjunto2 = false;
         } 
 
         if($request->adj_autorizacionTra_arch){
-            $adjunto3 =  $request->file('adj_autorizacionTra_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Autorizacion-transito-' . $solicitud->radicado . '.pdf');
+            $adjunto3 =  $request->file('adj_autorizacionTra_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Autorizacion-transito-update-' . $solicitud->radicado . '.pdf');
             // guarda ruta
-            $ruta_adj_autorizacionTra = 'storage/documentos_eventos/' . $solicitud->radicado . '/Autorizacion-transito-' . $solicitud->radicado . '.pdf';
-            $solicitud->adj_autorizacionTra = $ruta_adj_autorizacionTra;
+            $ruta_adj_autorizacionTra = 'storage/documentos_eventos/' . $solicitud->radicado . '/Autorizacion-transito-update-' . $solicitud->radicado . '.pdf';
+            $docUpdate->adj_autorizacionTra = $ruta_adj_autorizacionTra;
 
             $contador++;
         }else{
@@ -322,14 +390,18 @@ class EventosController extends Controller
         } 
 
         if($request->adj_contratoArr_arch){
-            $adjunto4 =  $request->file('adj_contratoArr_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Contrato-arrendamiento-' . $solicitud->radicado . '.pdf');
+            $adjunto4 =  $request->file('adj_contratoArr_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Contrato-arrendamiento-update-' . $solicitud->radicado . '.pdf');
+            $ruta_adj_contratoArr = 'storage/documentos_eventos/' . $solicitud->radicado . '/Contrato-arrendamiento-update-' . $solicitud->radicado . '.pdf';
+            $docUpdate->adj_contratoArr = $ruta_adj_contratoArr;
             $contador++;
         }else{
             $adjunto4 = false;
         } 
 
         if($request->adj_conceptoCMGRD_arch){
-            $adjunto5 =  $request->file('adj_conceptoCMGRD_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Concepto-CMGRD-' . $solicitud->radicado . '.pdf');
+            $adjunto5 =  $request->file('adj_conceptoCMGRD_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Concepto-CMGRD-update-' . $solicitud->radicado . '.pdf');
+            $ruta_adj_conceptoCMGRD = 'storage/documentos_eventos/' . $solicitud->radicado . '/Concepto-CMGRD-update-' . $solicitud->radicado . '.pdf';
+            $docUpdate->adj_conceptoCMGRD = $ruta_adj_conceptoCMGRD;
             $contador++;
         }else{
             $adjunto5 = false;
@@ -337,69 +409,79 @@ class EventosController extends Controller
 
         
         if($request->adj_conceptoTecAmb_arch){
-            $adjunto6 =  $request->file('adj_conceptoTecAmb_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Concepto-Tecnico-ambiental-' . $solicitud->radicado . '.pdf');
+            $adjunto6 =  $request->file('adj_conceptoTecAmb_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Concepto-Tecnico-ambiental-update-' . $solicitud->radicado . '.pdf');
+            $ruta_adj_conceptoTecAmb = 'storage/documentos_eventos/' . $solicitud->radicado . '/Concepto-Tecnico-ambiental-update-' . $solicitud->radicado . '.pdf';
+            $docUpdate->adj_conceptoTecAmb = $ruta_adj_conceptoTecAmb;
             $contador++;
         }else{
             $adjunto6 = false;
         } 
 
         if($request->adj_certificadoPONAL_arch){
-            $adjunto7 =  $request->file('adj_certificadoPONAL_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Concepto-PONAL-' . $solicitud->radicado . '.pdf');
+            $adjunto7 =  $request->file('adj_certificadoPONAL_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Concepto-PONAL-update-' . $solicitud->radicado . '.pdf');
+            $ruta_adj_certificadoPONAL = 'storage/documentos_eventos/' . $solicitud->radicado . '/Concepto-PONAL-update-' . $solicitud->radicado . '.pdf';
+            $docUpdate->adj_certificadoPONAL = $ruta_adj_certificadoPONAL;
             $contador++;
         }else{
             $adjunto7 = false;
         } 
 
         if($request->adj_certificadoBomberos_arch){
-            $adjunto8 =  $request->file('adj_certificadoBomberos_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Concepto-BOMBEROS-' . $solicitud->radicado . '.pdf');
+            $adjunto8 =  $request->file('adj_certificadoBomberos_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Concepto-BOMBEROS-update-' . $solicitud->radicado . '.pdf');
+            $ruta_adj_certificadoBomberos = 'storage/documentos_eventos/' . $solicitud->radicado . '/Concepto-BOMBEROS-update-' . $solicitud->radicado . '.pdf';
+            $docUpdate->adj_certificadoBomberos = $ruta_adj_certificadoBomberos;
             $contador++;
         }else{
             $adjunto8 = false;
         } 
 
         if($request->adj_hospitalaria_arch){
-            $adjunto9=  $request->file('adj_hospitalaria_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Servicio-prehospitalario-' . $solicitud->radicado . '.pdf');
+            $adjunto9=  $request->file('adj_hospitalaria_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Servicio-prehospitalario-update-' . $solicitud->radicado . '.pdf');
+            $ruta_adj_hospitalaria = 'storage/documentos_eventos/' . $solicitud->radicado . '/Servicio-prehospitalario-update-' . $solicitud->radicado . '.pdf';
+            $docUpdate->adj_hospitalaria = $ruta_adj_hospitalaria;
             $contador++;
         }else{
             $adjunto9 = false;
         } 
 
         if($request->adj_publicidad_arch){
-            $adjunto10=  $request->file('adj_publicidad_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Pago-publicidad-' . $solicitud->radicado . '.pdf');
+            $adjunto10=  $request->file('adj_publicidad_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Pago-publicidad-update-' . $solicitud->radicado . '.pdf');
+            $ruta_adj_publicidad = 'storage/documentos_eventos/' . $solicitud->radicado . '/Pago-publicidad-update-' . $solicitud->radicado . '.pdf';
+            $docUpdate->adj_publicidad = $ruta_adj_publicidad;
             $contador++;
         }else{
             $adjunto10 = false;
         } 
-
-        if($request->adj_certVigilancia_arch){
-            $adjunto11=  $request->file('adj_certVigilancia_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Certificado-empresa-vigilancia-' . $solicitud->radicado . '.pdf');
-            $contador++;
-        }else{
-            $adjunto11 = false;
-        } 
+       
 
         if($request->adj_certificadoEMAB_arch){
-            $adjunto12=  $request->file('adj_certificadoEMAB_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Certificado-EMAB-' . $solicitud->radicado . '.pdf');
+            $adjunto12=  $request->file('adj_certificadoEMAB_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Certificado-EMAB-update-' . $solicitud->radicado . '.pdf');
+            $ruta_adj_certificadoEMAB = 'storage/documentos_eventos/' . $solicitud->radicado . '/Certificado-EMAB-update-' . $solicitud->radicado . '.pdf';
+            $docUpdate->adj_certificadoEMAB = $ruta_adj_certificadoEMAB;
             $contador++;
         }else{
             $adjunto12 = false;
         } 
 
         if($request->adj_derAutor_arch){
-            $adjunto13=  $request->file('adj_derAutor_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Certificado-derechos-autor-' . $solicitud->radicado . '.pdf');
+            $adjunto13=  $request->file('adj_derAutor_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Certificado-derechos-autor-update-' . $solicitud->radicado . '.pdf');
+            $ruta_adj_derAutor = 'storage/documentos_eventos/' . $solicitud->radicado . '/Certificado-derechos-autor-update-' . $solicitud->radicado . '.pdf';
+            $docUpdate->adj_derAutor = $ruta_adj_derAutor;
             $contador++;
         }else{
             $adjunto13 = false;
         } 
 
         if($request->adj_poliza_arch){
-            $adjunto14=  $request->file('adj_poliza_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Poliza-responsabilidad-civil-' . $solicitud->radicado . '.pdf');
+            $adjunto14=  $request->file('adj_poliza_arch')->storeAs('documentos_eventos/' . $solicitud->radicado, 'Poliza-responsabilidad-civil-update-' . $solicitud->radicado . '.pdf');
+            $ruta_adj_poliza = 'storage/documentos_eventos/' . $solicitud->radicado . '/Poliza-responsabilidad-civil-update-' . $solicitud->radicado . '.pdf';  
+            $docUpdate->adj_poliza = $ruta_adj_poliza;
             $contador++;
         }else{
             $adjunto14 = false;
         }
 
-        if($adjunto1 || $adjunto2 || $adjunto3 || $adjunto4 || $adjunto5 || $adjunto6 || $adjunto7 || $adjunto8 || $adjunto9 || $adjunto10 || $adjunto11 || $adjunto12 || $adjunto13 || $adjunto14){
+        if($adjunto1 || $adjunto2 || $adjunto3 || $adjunto4 || $adjunto5 || $adjunto6 || $adjunto7 || $adjunto8 || $adjunto9 || $adjunto10 || $adjunto12 || $adjunto13 || $adjunto14){
 
             //auditoria
             $auditoria = Auditoria::create([
@@ -413,7 +495,8 @@ class EventosController extends Controller
           ]);
 
           $solicitud->act_documentos = "SI";
-          $solicitud->save();            
+          $solicitud->save();   
+          $docUpdate->save();         
           Alert::success('Operacion exitosa', 'Se han cargado '.$contador.' archivo(s) en el sistema');
           return redirect()->route('eventos.index');
 

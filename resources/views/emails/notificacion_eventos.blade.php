@@ -39,7 +39,16 @@
 						<p align="justify">Usted ha realizado una solicitud de permiso para espectaculos públicos, si desea realizar alguna consulta sobre el estado de la solicitud diríjase a la pagina <a href="http://tramitesenlinea.test/eventos-publicos">http://tramitesenlinea.test/eventos-publicos</a> con el numero de radicado <strong>{{$detalleCorreo['radicado']}}</strong> opción <u>consulto mi solicitud</u>.</p>
 
 						<p align="justify">Si tiene alguna inquietud referente a la solicitud favor comunicarse al correo <a href="mailto:contactenos@bucaramanga.gov.co">contactenos@bucaramanga.gov.co</a> y realizar la observación o comunicarse al número telefónico <a href="tel:6337000">6337000</a>ext.</p>  
-						
+					
+					
+					@elseif ($detalleCorreo['estado'] == 'FUNCIONARIO')
+
+					<h3 align="justify">Notificación de solicitud pendiente N° {{$detalleCorreo['radicado']}}.<br></h3>
+                    <p align="justify">Cordial saludo,  <strong> {{$detalleCorreo['nombres']}} </strong> .<p>
+
+					<p align="justify">Usted tiene una solicitud pendiente del tramite "Permiso para espectáculos públicos diferentes a las artes escénicas", por favor ingrese a la plataforma para revisarla. <a href="http://tramitesenlinea.bucaramanga.gov.co/">http://tramitesenlinea.bucaramanga.gov.co/</a> 			
+
+
 					@else
 
 					<h3 align="justify">Solicitud n°{{$detalleCorreo['radicado']}} en estado {{$detalleCorreo['estado']}}.<br></h3>

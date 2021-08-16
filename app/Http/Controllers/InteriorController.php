@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Auditoria;
 use App\Parqueadero;
 use App\Evento;
+use App\DocUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -353,8 +354,9 @@ class InteriorController extends Controller
     public function eventoDetalle($id)
     {
         $solicitud = Evento::findOrFail($id);
+        $doc_update = DocUpdate::where('evento_id', $id)->get();            
 
-        return view('tramites.interior.eventos.detalle', compact('solicitud'));
+        return view('tramites.interior.eventos.detalle', compact('solicitud', 'doc_update'));
     }
 
     public function eventosUpdate(Request $request){

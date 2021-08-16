@@ -77,12 +77,10 @@
                     <td><strong>Telefono solicitante:</strong><br>
                         {{$solicitud->tel_responsable}}
                     </td>
-                    <td><strong>Correo Solicitante:</strong><br>
+                    <td colspan="2"><strong>Correo Solicitante:</strong><br>
                         {{$solicitud->email_responsable}}
                     </td>
-                    <td><strong></strong><br>
-                        {{-- vacip --}}
-                     </td>
+                    
                     </tr>
     
                      <tr>
@@ -94,6 +92,22 @@
                     </td>
                     
                     </tr>
+
+                    <tr>
+                        <td><strong>Asistencia al Evento:</strong><br>
+                            {{$solicitud->cant_personas}} personas Aprox
+                        </td>
+                        <td ><strong>Uso de Publicidad Exterior:</strong><br>
+                            {{$solicitud->pub_ext}}
+                        </td>
+
+                        <td ><strong>Reproduccion de Obras Artisticas:</strong><br>
+                            {{$solicitud->reproduccion_musica}}
+                        </td>
+                        
+                        
+                    </tr>
+        
     
                      <tr>
                     <td><strong>Fecha del evento</strong><br>
@@ -149,8 +163,12 @@
                     </tr>
 
                     <tr>
-                        <td><strong>Concepto del Comité de Gestion del Riesgo:</strong><br>
+                        <td><strong>Concepto del Comité de Gestión del Riesgo:</strong><br>
+                            @if($solicitud->adj_conceptoCMGRD != null)
                             <a href="http://tramitesenlinea.test/{{$solicitud->adj_conceptoCMGRD}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                            @else
+                            <small>No hay documento adjunto</small>
+                            @endif
                         </td>
 
                         <td><strong>Concepto Tecnico Sanitario y Ambiental:</strong><br>
@@ -165,13 +183,21 @@
                         </td>
 
                         <td><strong>Aprobación Bomberos Bucaramanga:</strong><br>
+                            @if($solicitud->adj_certificadoBomberos != null)
                             <a href="http://tramitesenlinea.test/{{$solicitud->adj_certificadoBomberos}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                            @else
+                            <small>No hay documento adjunto</small>
+                            @endif
                         </td>
 
                     </tr>
                     <tr>
                         <td><strong>Prestación de Servicio Pre Hospitalaria:</strong><br>
+                            @if($solicitud->adj_hospitalaria != null)
                             <a href="http://tramitesenlinea.test/{{$solicitud->adj_hospitalaria}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                            @else
+                            <small>No hay documento adjunto</small>
+                            @endif
                         </td>
 
                         <td><strong>Póliza de responsabilidad civil:</strong><br>
@@ -182,24 +208,146 @@
 
                     <tr>
                         <td><strong>Soporte de Pago Publicidad Exterior:</strong><br>
+                            @if($solicitud->adj_publicidad != null)
                             <a href="http://tramitesenlinea.test/{{$solicitud->adj_publicidad}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                            @else
+                            <small>No hay documento adjunto</small>
+                            @endif
                         </td>
 
-                        <td><strong>Certificado de Vigilancia:</strong><br>
-                            <a href="http://tramitesenlinea.test/{{$solicitud->adj_certVigilancia}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
-                        </td>
-
-                    </tr>
-                    <tr>
                         <td><strong>Certificado de Aseo(EMAB):</strong><br>
                             <a href="http://tramitesenlinea.test/{{$solicitud->adj_certificadoEMAB}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
                         </td>
 
+                    </tr>
+                    <tr>
+                        
                         <td><strong>Autorización derechos de Autor:</strong><br>
+                            @if($solicitud->adj_derAutor != null)
                             <a href="http://tramitesenlinea.test/{{$solicitud->adj_derAutor}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                            @else
+                            <small>No hay documento adjunto</small>
+                            @endif
                         </td>
 
                     </tr>
+                   
+                    
+                   
+                    @if(sizeof($doc_update)!= 0)
+                    
+                    <tr style="background-color:#004884">
+                        <td colspan="3" style="background-color:#004884; color:white">Documentos Actualizados</td>
+                    </tr>
+                    
+                     <tr>
+
+                     @if($doc_update[0]->adj_logisticaEvento != null || $doc_update[0]->adj_logisticaEvento != '')
+                     <td><strong>Logistica del evento actualizado:</strong><br>                   
+                        <a href="http://tramitesenlinea.test/{{$doc_update[0]->adj_logisticaEvento}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                    </td>
+                     @endif
+
+                     @if($doc_update[0]->adj_cedulaRes != null || $doc_update[0]->adj_cedulaRes != '')
+                     <td><strong>Documento de identificación actualizado:</strong><br>                   
+                        <a href="http://tramitesenlinea.test/{{$doc_update[0]->adj_cedulaRes}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                    </td>
+                     @endif
+
+
+                    </tr>
+
+                    <tr>
+                        @if($doc_update[0]->adj_autorizacionTra != null || $doc_update[0]->adj_autorizacionTra != '')
+                        <td><strong>Autorización de transito actualizado:</strong><br>                   
+                           <a href="http://tramitesenlinea.test/{{$doc_update[0]->adj_autorizacionTra}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                       </td>
+                        @endif
+   
+                        @if($doc_update[0]->adj_contratoArr != null || $doc_update[0]->adj_contratoArr != '')
+                        <td><strong>Contrato de arrendamiento actualizado:</strong><br>                   
+                           <a href="http://tramitesenlinea.test/{{$doc_update[0]->adj_contratoArr}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                       </td>
+                        @endif
+   
+   
+                    </tr>
+                    <tr>
+
+                        @if($doc_update[0]->adj_conceptoCMGRD != null || $doc_update[0]->adj_conceptoCMGRD != '')
+                        <td><strong>Concepto CMGRD actualizado:</strong><br>                   
+                           <a href="http://tramitesenlinea.test/{{$doc_update[0]->adj_conceptoCMGRD}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                       </td>
+                        @endif
+   
+                        @if($doc_update[0]->adj_conceptoTecAmb != null || $doc_update[0]->adj_conceptoTecAmb != '')
+                        <td><strong>Concepto técnico ambiental actualizado:</strong><br>                   
+                           <a href="http://tramitesenlinea.test/{{$doc_update[0]->adj_conceptoTecAmb}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                       </td>
+                        @endif
+   
+   
+                    </tr>
+                    <tr>
+
+                        @if($doc_update[0]->adj_certificadoPONAL != null || $doc_update[0]->adj_certificadoPONAL != '')
+                        <td><strong>Certificado MEBUC actualizado:</strong><br>                   
+                           <a href="http://tramitesenlinea.test/{{$doc_update[0]->adj_certificadoPONAL}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                       </td>
+                        @endif
+   
+                        @if($doc_update[0]->adj_certificadoBomberos != null || $doc_update[0]->adj_certificadoBomberos != '')
+                        <td><strong>Aprobación Bomberos actualizado:</strong><br>                   
+                           <a href="http://tramitesenlinea.test/{{$doc_update[0]->adj_certificadoBomberos}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                       </td>
+                        @endif   
+   
+                    </tr>
+                    <tr>
+
+                        @if($doc_update[0]->adj_hospitalaria != null || $doc_update[0]->adj_hospitalaria != '')
+                        <td><strong>Servicio Pre-hospitalario actualizado:</strong><br>                   
+                           <a href="http://tramitesenlinea.test/{{$doc_update[0]->adj_hospitalaria}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                       </td>
+                        @endif
+   
+                        @if($doc_update[0]->adj_poliza != null || $doc_update[0]->adj_poliza != '')
+                        <td><strong>Póliza de responsabilidad civil actualizado:</strong><br>                   
+                           <a href="http://tramitesenlinea.test/{{$doc_update[0]->adj_poliza}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                       </td>
+                        @endif
+   
+   
+                    </tr>
+                    <tr>
+
+                        @if($doc_update[0]->adj_publicidad != null || $doc_update[0]->adj_publicidad != '')
+                        <td><strong>Pago de publicidad exterior actualizado:</strong><br>                   
+                           <a href="http://tramitesenlinea.test/{{$doc_update[0]->adj_publicidad}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                       </td>
+                        @endif
+   
+                        @if($doc_update[0]->adj_certificadoEMAB != null || $doc_update[0]->adj_certificadoEMAB != '')
+                        <td><strong>Certificado EMAB actualizado:</strong><br>                   
+                           <a href="http://tramitesenlinea.test/{{$doc_update[0]->adj_certificadoEMAB}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                       </td>
+                        @endif
+   
+   
+                    </tr>
+                    <tr>
+
+                        @if($doc_update[0]->adj_derAutor != null || $doc_update[0]->adj_derAutor != '')
+                        <td><strong>Autorización derechos de Autor actualizado:</strong><br>                   
+                           <a href="http://tramitesenlinea.test/{{$doc_update[0]->adj_derAutor}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                       </td>
+                        @endif   
+                        
+   
+   
+                    </tr>
+                    @endif
+
                     @if($solicitud->adjunto_respuesta != null)
 
                     <tr style="background-color:#004884">
