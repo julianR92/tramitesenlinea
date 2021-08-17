@@ -723,6 +723,7 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
                     ": Activar para ordenar la columna de manera descendente",
             },
         },
+        
         responsive:true,
         scrollX:        200,
         scrollCollapse: true,
@@ -1008,12 +1009,12 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
         if(estado_actual == 'ENVIADA'){
 
             $("#estado_solicitud_parqueaderos option[value='APROBADA']").hide();
-            $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
+            
             
         }else if(estado_actual== 'PENDIENTE'){
 
             $("#estado_solicitud_parqueaderos option[value='APROBADA']").hide();
-            $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
+            
 
         }else if(estado_actual == 'RESPUESTA-PLANEACION'){
 

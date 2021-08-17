@@ -98,7 +98,7 @@
 
                        {{-- AQUI VA APROBADA --}}
 
-                       @if($solicitud->estado_solicitud == 'PENDIENTE')                        
+                       @if($solicitud->estado_solicitud == 'PENDIENTE' && $solicitud->act_documentos == null)                        
                         
                        <div class="col-md-12">
                            <h5>Cargue sus archivos pendientes <small>Faltan {{$diff}} dia(s) para el vencimiento del plazo</small></h5>
@@ -142,20 +142,19 @@
                         </div>                         
                        </div>
                        </div>
-                       @if($solicitud->act_documentos == null)     
+                         
                        <div class="col-md-4">
                            <div class="form-group">
                                <button type="submit"  onclick="return confirm('¿Esta seguro de actualizar los documentos ?')"  class="btn btn-round btn-middle btn-outline-info"  id="Boton">Actualizar documentos</button>
                            </div>
                        </div>
-                       @else
-                       <div class="col-md-4">
-                        <small>Usted ya realizo (1)una la actualización de documentos</small>
-                    </div>
+                      
+                @elseif($solicitud->estado_solicitud == 'PENDIENTE' && $solicitud->act_documentos == 'SI')
+                         <div class="col-md-4"><h6>Atención!!</h6><p>Usted ya realizó una actualización de documentos el dia {{$solicitud->updated_at}}</p></div> 
 
-                       @endif                                          
+                                                              
 
-                       @endif
+                 @endif
                         </div>
                         </div> 
                         <div class="card-footer">

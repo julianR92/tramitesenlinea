@@ -119,7 +119,11 @@
                     </tr>
                     <tr>
                         <td colspan="3"><strong>Licencia de construcción:</strong><br>
+                            @if($solicitud->adjunto_licencia || $solicitud->adjunto_licencia != null)
                             <a href="http://tramitesenlinea.test/{{$solicitud->adjunto_licencia}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                            @else
+                            <small>No hay documento adjunto</small>  
+                            @endif
                         </td>
 
                     </tr>

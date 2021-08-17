@@ -5,7 +5,7 @@
     <div class="container mt-3 mb-4 m-xs-x-3">
 
         <div class="row pl-4">
-            <div class="px-0 col-md-11">
+            <div class="px-0 col-md-9">
                 <nav aria-label="Miga de pan" style="max-height: 20px;">
                     <ol class="breadcrumb" style="background-color: #FFFFFF;">
                         <li class="breadcrumb-item ml-3 ml-md-0">
@@ -28,7 +28,7 @@
                             <div class="image-icon">
                                 <span class="breadcrumb govco-icon govco-icon-shortr-arrow" style="height: 22px;"></span>
                                 <p class="ml-3 ml-md-0 "><b style="color: #004fbf;text-transform: none;">
-                                        Intervención del Espacio Publico para Localización de Equipamiento
+                                    Categorización de parqueaderos
                                     </b></p>
                             </div>
                         </li>
@@ -46,7 +46,7 @@
                       <thead>
                         <tr>
                           <th colspan="3">
-                            Solicitud N° - {{$solicitud->radicado}}
+                            Solicitud N° - {{$solicitud->radicado}} 
                           </th>
                         </tr>
                       </thead>
@@ -54,112 +54,76 @@
                     <tr>
                     <td><strong>Radicado N°-&nbsp;<br>
                    </strong>{{$solicitud->radicado}}</td>
-                    <td colspan="2"><strong>Tipo de solicitud:</strong><br>
-                        {{$solicitud->modalidad}}
+                    <td colspan="2"><strong>Nombre del solicitante:</strong><br>
+                        {{$solicitud->nom_solicitante}} {{$solicitud->ape_solicitante}}
                     </td>                 
                      
                    
                     </tr>
                     <tr>
-                    <td><strong>Construcción</strong><br>
-                        {{$solicitud->construccion}}
+                    <td><strong>Número de Identificación</strong><br>
+                        {{$solicitud->identificacion_solicitante}}
                    </td>
-                    <td colspan="2"><strong>Direccion del Predio</strong>
-                    <br>{{$solicitud->direccion_predio}} - {{$solicitud->barrio}} &nbsp;&nbsp;
-                    <small><b>Vereda</b> : {{$solicitud->vereda}}</small>
+                    <td colspan="2"><strong>Direccion del solicitante</strong>
+                    <br>{{$solicitud->direccion_solicitante}} - {{$solicitud->barrio_solicitante}}                     
                    </td>                    
                     </tr>
 
                     <tr>
-                    <td><strong>Matricula:</strong><br>
-
-                        @if($solicitud->matricula == null || $solicitud->matricula == '' )
-                            <small>No hay # de matricula.</small>
-                           @else
-                           {{$solicitud->matricula}}
-                        @endif
-
-                        
+                    <td><strong>Telefono solicitante:</strong><br>
+                        {{$solicitud->tel_solicitante}}
                     </td>
-                    <td><strong>Identificación Catrastal:</strong><br>
-                        @if($solicitud->identificacion_catastral == null || $solicitud->identificacion_catastral == '' )
-                            <small>No hay # de matricula.</small>
-                           @else
-                           {{$solicitud->identificacion_catastral}}
-                        @endif
-                        
+                    <td><strong>Correo Solicitante:</strong><br>
+                        {{$solicitud->email_responsable}}
                     </td>
-                    <td><strong>Nombres del Titular:</strong><br>
-                        {{$solicitud->nom_titular}} {{$solicitud->ape_titular}}
+                    <td><strong></strong><br>
+                        {{-- vacip --}}
                      </td>
                     </tr>
     
                      <tr>
-                    <td><strong>Identificacion del titular</strong><br>
-                        {{$solicitud->identificacion_titular}}
+                    <td><strong>Razón social Parqueadero y/o Empresa</strong><br>
+                        {{$solicitud->nombre_empresa}}
                     </td>
-                    <td><strong>Telefono del titular:</strong><br>
-                        {{$solicitud->tel_titular}}
+                    <td colspan="2"><strong>Telefono:</strong><br>
+                        {{$solicitud->tel_empresa}}
                     </td>
-                    <td><strong>Email Titular</strong><br>
-                        {{$solicitud->email_titular}}
-                    </td>
+                    
                     </tr>
     
                      <tr>
-                    <td><strong>Profesional Encargado:</strong><br>
-                        {{$solicitud->nom_profesional}} {{$solicitud->ape_profesional}}
+                    <td><strong>Dirección Parqueadero y/o Empresa:</strong><br>
+                        {{$solicitud->direccion_empresa}}
                     </td>
-                    <td><strong>N° Identificación Profesional:</strong><br>
-                        {{$solicitud->ide_profesional}}
+                    <td colspan="2"><strong>Barrio:</strong><br>
+                        {{$solicitud->barrio_empresa}}
                     </td>                
-                     <td><strong>Matricula Profesional:</strong><br>
-                        {{$solicitud->matricula_profesional}}
-                  
-                    </td>               
+                                   
                     </tr>
-                    <tr>
-                    <td ><strong>Fecha de expedicion de matricula: </strong><br>
-                        {{$solicitud->fecha_matricula}}
-                    </td>
-                    <td colspan="2" ><strong>Nombre del Responsable de la Solicitud: </strong><br>
-                        {{$solicitud->nom_responsable}} {{$solicitud->ape_responsable}}
-                    </td>
-                    </tr>
+                   
 
-                    <tr>
-                        <td ><strong>Identificación del Responsable: </strong><br>
-                            {{$solicitud->ide_responsable}}
-                        </td>
-
-                        <td ><strong>Telefono del responsable: </strong><br>
-                            {{$solicitud->tel_responsable}}
-                        </td>
-
-                        <td ><strong>Email del responsable: </strong><br>
-                            {{$solicitud->email_responsable}}
-                        </td>
-
-                    </tr>
+                 
 
                     <tr style="background-color:#004884">
                         <td colspan="3" style="background-color:#004884; color:white">Documentos Adjuntos</td>
                     </tr>
 
                     <tr>
-                        <td><strong>Documento de Identidad Solicitante:</strong><br>
-                            <a href="http://espaciopublico.bucaramanga.gov.co/{{$solicitud->archivo_documento}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                        <td><strong>Camara de Comercio y/o RUt:</strong><br>
+                            <a href="http://tramitesenlinea.test/{{$solicitud->adjunto_camara_rut}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
                         </td>
-                        <td><strong>Poder especial:</strong><br>
-                            <a href="http://espaciopublico.bucaramanga.gov.co/{{$solicitud->archivo_poder}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
-                        </td>
-                        <td><strong>Descripción del proyecto:</strong><br>
-                            <a href="http://espaciopublico.bucaramanga.gov.co/{{$solicitud->archivo_descripcion}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                       
+                        <td><strong>Planos Aprobados:</strong><br>
+                            <a href="http://tramitesenlinea.test/{{$solicitud->adjunto_planos}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3"><strong>Planos del proyecto:</strong><br>
-                            <a href="http://espaciopublico.bucaramanga.gov.co/{{$solicitud->archivo_planos}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                        <td colspan="3"><strong>Licencia de construcción:</strong><br>
+                            @if($solicitud->adjunto_licencia || $solicitud->adjunto_licencia != null)
+                            <a href="http://tramitesenlinea.test/{{$solicitud->adjunto_licencia}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                            @else
+                            <small>No hay documento adjunto</small>                      
+                            @endif
                         </td>
 
                     </tr>
@@ -174,8 +138,10 @@
                                         <p style="color: #069169;font-weight:bold">ENVIADA<span class="govco-icon govco-icon-check-p size-1x"></span></p>
                                          @elseif($solicitud->estado_solicitud == 'PENDIENTE')
                                          <p style="color: #3772FF;font-weight:bold">PENDIENTE<span class="govco-icon govco-icon-eye-p size-1x"></span></p>
-                                         @elseif($solicitud->estado_solicitud == 'EN PROGRESO')
-                                         <p style="color: #F3561F;font-weight:bold">EN PROGRESO<span class="govco-icon govco-icon-reload-n size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'REVISION-PLANEACION')
+                                         <p style="color: #F3561F;font-weight:bold">TRÁMITE EN CONCEPTO TÉCNICO<span class="govco-icon govco-icon-right-arrow-cn size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'RESPUESTA-PLANEACION')
+                                         <p style="color: #F42E62;font-weight:bold">RESPUESTA TRÁMITE DE CONCEPTO TÉCNICO<span class="govco-icon govco-icon-left-arrow-cn size-1x"></span></p>
                                          @elseif($solicitud->estado_solicitud == 'APROBADA')
                                          <p style="color: #069169;font-weight:bold">APROBADA<span class="govco-icon govco-icon-like size-1x"></span></p>
                                          @elseif($solicitud->estado_solicitud == 'RECHAZADA')
@@ -205,45 +171,21 @@
                             {{$solicitud->fecha_actuacion}} 
                             @endif
                         </td>
-                        <td>
-                            @if($solicitud->documento_respuesta != null)
-                            <strong>Documento de respuesta:</strong><br>
-                            <a href="http://tramitesenlinea.bucaramanga.gov.co/{{$solicitud->documento_respuesta}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>                                                         
-                            @else                                
-                            @endif
-                        
-
-
-                           
+                        <td>                                          
+                         
                         </td>
                     </tr>
                     
                     {{-- aqui va el form --}}
-                    <form method="POST" action="{{route('espacio.update')}}"  enctype="multipart/form-data" id="myForm1">
+                    <form class="myFormDefault" method="POST" action="{{route('interior.parqueaderos.update')}}"  enctype="multipart/form-data" id="myForm">
                         @csrf
                     <tr>
-                        <td>
-                            <div class="form-group">
-                                <label for="estado">Cambiar Estado de la solicitud*</label>
-                                <select class="form-control  @error('estado_solicitud') is-invalid @enderror estado" name="estado_solicitud" id="estado" required>
-                                    <option value="">Seleccione</option>
-                                    <option value="PENDIENTE">PENDIENTE</option>
-                                    <option value="EN PROGRESO">EN PROGRESO</option>
-                                    <option value="APROBADA">APROBADA</option>
-                                    <option value="RECHAZADA">RECHAZADA</option>
-                                </select>
-                                @error('estado_solicitud')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong class="text-danger">{{ $message }}</strong>
-                                </span>
-                            @enderror
-                            </div>
-                        </td>
+                       
                         <td colspan="2">
                             <div class="form-group">
-                             <label for="observaciones">Observaciones*</label>
-                                 <textarea name="observaciones_solicitud" id="observaciones_espacio" onkeypress="return Observaciones(event)"  maxlength="500" class="form-control  @error('observaciones_solicitud') is-invalid @enderror" id="observaciones" cols="2" rows="3" required></textarea>
-                                 @error('observaciones_solicitud')
+                             <label for="observaciones_planeacion">Observaciones*</label>
+                                 <textarea name="observaciones_planeacion" id="observaciones_planeacion" onkeypress="return Direccion(event)"  maxlength="500" class="form-control  @error('observaciones_planeacion') is-invalid @enderror" cols="2" rows="3" required></textarea>
+                                 @error('observaciones_planeacion')
                                 <span class="invalid-feedback" role="alert">
                                     <strong class="text-danger">{{ $message }}</strong>
                                 </span>
@@ -252,14 +194,11 @@
                             
                             </div>
                         </td>
-                    </tr>
-
-                    <tr>
                         <td>
                             <div class="form-group">
-                                <label for="documento_respuesta">Cargar Respuesta</label>
-                                <input type="file" accept="application/pdf" name="documento_respuesta" id="documento_respuesta" class="form-control @error('observaciones_solicitud') is-invalid @enderror" disabled>
-                                @error('documento_respuesta')
+                                <label for="documento_respuesta_planeacion">Cargar Respuesta Tecnica</label>
+                                <input type="file" accept="application/pdf" name="documento_respuesta_planeacion" id="documento_respuesta_planeacion" class="form-control @error('documento_respuesta_planeacion') is-invalid @enderror" required>
+                                @error('documento_respuesta_planeacion')
                                 <span class="invalid-feedback" role="alert">
                                     <strong class="text-danger">{{ $message }}</strong>
                                 </span>
@@ -267,13 +206,18 @@
                             </div>
 
                         </td>
+                    </tr>
+
+                    <tr>
+                        
                         <td colspan="2">
                             <div class="form-group">
-                                <input type="hidden" id="estado_sol_espacio" value="{{$solicitud->estado_solicitud}}">
+                                <input type="hidden"  name="estado_solicitud" value="RESPUESTA-PLANEACION">
+                                <input type="hidden" class="estado_actual" id="estado_sol" value="{{$solicitud->estado_solicitud}}">
                                 <input type="hidden" name="username" value="{{auth()->user()->username}}">
                                 <input type="hidden" name="id" value="{{$solicitud->id}}">
-                                <button type="submit"  onclick="return confirm('¿Esta seguro de generar esta respuesta ?')"  id="myBtnEspacio" class="btn btn-round btn-middle btn-outline-info"  id="Boton">Actualizar estado</button>
-                                <a href="{{url('/tramites/planeacion/espacio')}}" class="btn btn-round btn-high">Volver</a>
+                                <button type="submit"  onclick="return confirm('¿Esta seguro de generar esta respuesta ?')"  id="myBtn_planeacion" class="btn btn-round btn-middle btn-outline-info"  id="Boton">Actualizar estado</button>
+                                <a href="{{url('/tramites/planeacion/parqueaderos')}}" class="btn btn-round btn-high">Volver</a>
 
 
                             </div>

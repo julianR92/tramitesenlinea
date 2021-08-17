@@ -60,7 +60,7 @@ class InteriorController extends Controller
 
             $date = date('Y-m-d');
             //sumo 30 días
-            $date_30 = date("Y-m-d", strtotime($date . "+ 15 days"));
+            $date_30 = date("Y-m-d", strtotime($date . "+15 Weekday"));
 
 
             $detalleCorreo = [
@@ -111,7 +111,7 @@ class InteriorController extends Controller
             $date = date('Y-m-d');
             //sumo 30 días
             $date_30 = NULL;
-            $date_planeacion = date("Y-m-d", strtotime($date . "+ 30 days"));
+            $date_planeacion = date("Y-m-d", strtotime($date . "+30 Weekday"));
 
             $detalleCorreo = [
                 'nombres' => '',

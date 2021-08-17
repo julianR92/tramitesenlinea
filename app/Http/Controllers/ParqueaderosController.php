@@ -54,8 +54,7 @@ class ParqueaderosController extends Controller
         "barrio_empresa" => "required",
         "tel_empresa" => "required",
         "archivo_camara_rut" => "required",       
-        "archivo_planos" => "required",
-        "archivo_licencia" => "required",
+        "archivo_planos" => "required",        
         "tratamiento_datos" => "required",
         "acepto_terminos" => "required",
         "confirmo_mayorEdad" => "required",
@@ -78,18 +77,24 @@ class ParqueaderosController extends Controller
 
 
      $adjunto3 = $request->file('archivo_planos')->storeAs('documentos_parqueaderos/' . $radicado, 'planos_aprobados-' . $radicado . '.pdf');
-
+     
+     if($request->archivo_licencia || $request->archivo_licencia != null){  
      $adjunto4 = $request->file('archivo_licencia')->storeAs('documentos_parqueaderos/' . $radicado, 'licencia_construccion-' . $radicado . '.pdf');
-
-     if ($adjunto1 && $adjunto3 && $adjunto4) {
+     }else{
+         $adjunto4 = false;
+     }
+     if ($adjunto1 && $adjunto3 || $adjunto4) {
 
         //rutas de guardado
         $adjunto_camara_rut = 'storage/documentos_parqueaderos/' . $radicado . '/camara_comercio_RUT-' . $radicado . '.pdf';        
 
         $archivo_planos = 'storage/documentos_parqueaderos/' . $radicado . '/planos_aprobados-' . $radicado . '.pdf';
-
+         
+        if($adjunto4){
         $archivo_licencia = 'storage/documentos_parqueaderos/' . $radicado . '/licencia_construccion-' . $radicado . '.pdf';
-
+        }else{
+         $archivo_licencia = null;  
+        }
         $request->request->add([
             'radicado' => $radicado,
             'adjunto_camara_rut' => $adjunto_camara_rut,            
@@ -110,6 +115,17 @@ class ParqueaderosController extends Controller
             'mensaje'=> null
         ];
 
+        $detalleCorreo_fun = [
+            'nombres' => ' Funcionario Carlos Guerrero',
+            'radicado' => $radicado,
+            'Subject' => 'Solicitud pendiente Categorización de parqueaderos No'.$radicado,
+            'documento'=> 'NO',
+            'fecha_pendiente' => null,            
+            'estado' => 'FUNCIONARIO',
+            'mensaje'=> 'Dr Carlos Guerrero'
+        ];
+        $correo_funcionario = 'ojrincon@bucaramanga.gov.co';
+
         $solicitud = $request->all();
             // return $solicitud;
         $saveSolicitud = Parqueadero::create($solicitud);
@@ -129,6 +145,7 @@ class ParqueaderosController extends Controller
 
             // envio de correo                
             Mail::to($request->email_responsable)->queue(new NotificacionParqueaderos($detalleCorreo));
+            Mail::to($correo_funcionario)->queue(new NotificacionParqueaderos($detalleCorreo_fun));
 
             $request->session()->flash('radicado_id', $radicado);
             return redirect()->route('parqueaderos.confirmacion');
@@ -195,6 +212,8 @@ class ParqueaderosController extends Controller
 
         if($request->archivo_licencia){
             $adjunto4 = $request->file('archivo_licencia')->storeAs('documentos_parqueaderos/' . $solicitud->radicado, 'licencia_construccion-' . $solicitud->radicado . '.pdf');
+            $archivo_licencia = 'storage/documentos_parqueaderos/' . $solicitud->radicado . '/licencia_construccion-' . $solicitud->radicado . '.pdf';
+            $solicitud->adjunto_licencia = $archivo_licencia;
             $contador++;
 
         }else{

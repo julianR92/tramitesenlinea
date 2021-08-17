@@ -277,10 +277,10 @@
 
                             
                             <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="archivo_licencia" class="form-label">Licencia de construcción* </label>
+                                <label for="archivo_licencia" class="form-label">Licencia de construcción </label>
                             <div class="form-group">
                                 <div class="file-loading">
-                                    <input class=" @error('archivo_licencia') is-invalid @enderror documentos_adjuntos" id="archivo_licencia" accept="application/pdf" name="archivo_licencia" type="file" data-overwrite-initial="true" required>
+                                    <input class=" @error('archivo_licencia') is-invalid @enderror documentos_adjuntos" id="archivo_licencia" accept="application/pdf" name="archivo_licencia" type="file" data-overwrite-initial="true">
                                     @error('archivo_licencia')
                                     <span class="invalid-feedback" role="alert">
                                        <strong class="text-danger">{{ $message }}</strong>
@@ -325,7 +325,7 @@
                                @enderror
                             <div class="form-check-inline">
                                <label class="radiolist-govco radiobutton-govco">
-                                  <input type="radio" name="compartir_informacion" id="rb_si" value="SI" required/>
+                                  <input type="radio" name="compartir_informacion" id="rb_si" value="SI" required checked/>
                                   <label for="rb_si">SI</label>
                                </label>
                             </div>
@@ -580,7 +580,7 @@
                        <div class="col-lg-6 col-md-2 col-sm-12 col-xs-12 caja_ultima"><br>
                           <div class="form-group">
                              <label style="color:#111111;" class="input" for="DD08" style="font-family: 'Barlow', sans-serif;">Complemento </label>
-                             <input id="DD08" name="DD08" type="text" class="form-control " maxlength="80" title="Digita en este el complemento de tu direccion" onkeyup="aMayusculas(this.value,this.id)">
+                             <input id="DD08" name="DD08" type="text" class="form-control modal1" maxlength="80" title="Digita en este el complemento de tu direccion" onkeyup="aMayusculas(this.value,this.id)">
                           </div>
                        </div>
   
