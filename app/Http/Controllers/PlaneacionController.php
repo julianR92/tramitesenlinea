@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\EspacioPublico;
 use App\Auditoria;
 use App\Parqueadero;
+use App\AuditoriaParqueadero;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EnvioNotificacion;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
 
 class PlaneacionController extends Controller
 {
@@ -25,14 +27,20 @@ class PlaneacionController extends Controller
 
     public function espacioIndex()
     {
+
         $sEnviadas = EspacioPublico::where('estado_solicitud', 'ENVIADA')->get();
         $sProgreso = EspacioPublico::where('estado_solicitud', 'EN PROGRESO')->get();
         $sPendientes = EspacioPublico::where('estado_solicitud', 'PENDIENTE')->get();
         $sAprobadas = EspacioPublico::where('estado_solicitud', 'APROBADA')->get();
         $sRechazadas = EspacioPublico::where('estado_solicitud', 'RECHAZADA')->get();
+        $porCerrar =  EspacioPublico::where('estado_solicitud', 'PENDIENTE')->where('fecha_pendiente' ,'<',DB::raw('DATE_ADD(NOW(),INTERVAL 5 DAY)'))->get()->count();        
+        $count_enviadas = $sEnviadas->count();
+        $count_progreso = $sProgreso->count();
+        $count_pendientes = $sPendientes->count();
+        $count_aprobadas = $sAprobadas->count();
+        $count_rechazadas = $sRechazadas->count();
 
-
-        return view('tramites.planeacion.espacio.index', compact('sEnviadas', 'sProgreso', 'sPendientes', 'sAprobadas', 'sRechazadas'));
+        return view('tramites.planeacion.espacio.index', compact('sEnviadas', 'sProgreso', 'sPendientes', 'sAprobadas', 'sRechazadas', 'count_enviadas', 'count_progreso', 'count_pendientes', 'count_aprobadas', 'count_rechazadas', 'porCerrar'));
     }
 
     public function detalleSolicitud($id)
@@ -284,18 +292,27 @@ class PlaneacionController extends Controller
     public function indexParqueaderos(){
      
         $sEnRevision = Parqueadero::where('estado_solicitud', 'REVISION-PLANEACION')->get();
+        $contador_revision = $sEnRevision->count();
+        $sRevisadas = AuditoriaParqueadero::where('estado_solicitud', 'RESPUESTA-PLANEACION')->get();
+        $contador_revisadas = $sRevisadas->count();
+        $porCerrar =  Parqueadero::where('estado_solicitud', 'REVISION-PLANEACION')->where('fecha_pendiente_planeacion' ,'<',DB::raw('DATE_ADD(NOW(),INTERVAL 5 DAY)'))->get()->count();   
+
         
-        return view('tramites.planeacion.parqueaderos.index', compact('sEnRevision'));
+        return view('tramites.planeacion.parqueaderos.index', compact('sEnRevision','contador_revision','porCerrar', 'sRevisadas','contador_revisadas'));
 
     }
 
-    public function parqueaderoDetalle($id){
-     
+    public function parqueaderoDetalle($id){    
     
         $solicitud = Parqueadero::findOrFail($id);
 
         return view('tramites.planeacion.parqueaderos.detalle', compact('solicitud'));
 
+    }
+    public function parqueaderoDetalleAuditoria($id){ 
+        
+        $solicitud = AuditoriaParqueadero::findOrFail($id);
+        return view('tramites.planeacion.parqueaderos.auditoria', compact('solicitud'));
 
     }
 }

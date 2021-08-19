@@ -47,23 +47,31 @@
         <div class="col-md-12 pt-4" style="padding-left: 10px!important">
             <h1 class="headline-xl-govco">Solicitudes Espacio Publico para la localización de equipamiento</h1>
             <div class="row pt-5">
+            
+            @if($porCerrar > 0)
+            <div class="col-md-4 pb-4">
+                <button type="button" class="btn btn-danger btn-block btn-sm" style="background-color:#A80521!important;">
+                    <span class="govco-icon govco-icon-exclamation-cn size-1x text-white"></span> &nbsp; Solicitudes pendientes por cerrarse automaticamente <span class="badge badge-light">{{$porCerrar}}</span>
+                  </button>
+            </div>
+            @endif
 
                 <div class="tabs-govco col-md-12 animate__animated animate__bounceInRight">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Enviadas <span class="badge badge-primary">4</span></a>
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Enviadas <span class="badge badge-primary">{{$count_enviadas}}</span></a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">En Progreso</a>
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">En Progreso <span class="badge badge-primary">{{$count_progreso}}</span></a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Pendientes</a>
+                        <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Pendientes <span class="badge badge-primary">{{$count_pendientes}}</span></a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Aprobadas</a>
+                        <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Aprobadas <span class="badge badge-primary">{{$count_aprobadas}}</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="rechazadas-tab" data-toggle="tab" href="#rechazadas" role="tab" aria-controls="rechazadas" aria-selected="false">Rechazadas</a>
+                            <a class="nav-link" id="rechazadas-tab" data-toggle="tab" href="#rechazadas" role="tab" aria-controls="rechazadas" aria-selected="false">Rechazadas <span class="badge badge-primary">{{$count_rechazadas}}</span></a>
                             </li>
                     </ul>
                 

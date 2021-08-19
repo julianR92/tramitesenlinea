@@ -44,11 +44,10 @@
                     @elseif ($detalleCorreo['estado'] == 'FUNCIONARIO')
 
 					<h3 align="justify">Tiene la solicitud n°{{$detalleCorreo['radicado']}} pendiente por revisar en la plataforma.<br></h3>
-                    <p align="justify">Cordial saludo Funcionario .<p>
+                    <p align="justify">Cordial saludo {{$detalleCorreo['nombres']}}.<p>
 
 
                      <p align="justify">{{ $detalleCorreo['mensaje']}}</p>
-
                      
                      
 					<p align="justify">Nos permitimos recordarle que tiene una solicitud pendiente por revisar en la plataforma de tramites por favor dirijase a la siguiente url<a href="http://tramitesenlinea.bucaramanga.gov.co/" target="_blank"> http://tramitesenlinea.bucaramanga.gov.co/ </a> e ingrese sus credenciales</p>

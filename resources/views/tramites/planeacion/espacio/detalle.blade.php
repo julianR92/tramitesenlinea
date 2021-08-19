@@ -219,7 +219,7 @@
                     </tr>
                     
                     {{-- aqui va el form --}}
-                    <form method="POST" action="{{route('espacio.update')}}"  enctype="multipart/form-data" id="myForm1">
+                    <form method="POST" class="form-ciudadano" action="{{route('espacio.update')}}"  enctype="multipart/form-data" id="myForm1">
                         @csrf
                     <tr>
                         <td>
@@ -272,8 +272,10 @@
                                 <input type="hidden" id="estado_sol_espacio" value="{{$solicitud->estado_solicitud}}">
                                 <input type="hidden" name="username" value="{{auth()->user()->username}}">
                                 <input type="hidden" name="id" value="{{$solicitud->id}}">
-                                <button type="submit"  onclick="return confirm('¿Esta seguro de generar esta respuesta ?')"  id="myBtnEspacio" class="btn btn-round btn-middle btn-outline-info"  id="Boton">Actualizar estado</button>
+                                <button type="submit"  onclick="return confirm('¿Esta seguro de generar esta respuesta ?')"  id="myBtnEspacio" class="btn btn-round btn-middle btn-outline-info btn_enviar_solicitud"  id="Boton">Actualizar estado</button>
+                                <button style="font-size:15px;" class="btn btn-round btn-middle btn_carga d-none" type="button" disabled><span class="spinner-grow spinner-grow-sm text-primary" role="status" aria-hidden="true"></span> Actulizando estado...</button>
                                 <a href="{{url('/tramites/planeacion/espacio')}}" class="btn btn-round btn-high">Volver</a>
+                               
 
 
                             </div>

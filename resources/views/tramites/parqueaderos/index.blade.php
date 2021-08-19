@@ -234,7 +234,7 @@
                             <h3 class="headline-l-govco mt-3 pl-0">2. Documentos Adjuntos de la Solicitud</h3>
                             
                             <div class="col-md-8 pl-1 pr-1 pt-3">
-                                <label for="archivo_camara_rut" class="form-label">Camara de Comercio &nbsp; <small style="font-size: 10px!important"><em style="font-size: 10px!important">(Mínimo  3 meses de antigüedad)</em> </small> &nbsp; y/o RUT </label>
+                                <label for="archivo_camara_rut" class="form-label">Camara de Comercio &nbsp; <small style="font-size: 10px!important"><em style="font-size: 10px!important">(Mínimo  3 meses de antigüedad)</em> </small> &nbsp; y/o RUT<br> <small class="text-danger"  style="font-size: 11px!important">Solo se permiten archivos .pdf con un tamaño máximo de 10MB</small> </label>
                             <div class="form-group">
                                 <div class="file-loading">
                                     <input class=" @error('archivo_camara_rut') is-invalid @enderror documentos_adjuntos" id="archivo_camara_rut" accept="application/pdf" name="archivo_camara_rut" type="file" data-overwrite-initial="true" required>
@@ -262,7 +262,7 @@
                             </div>
 
                             <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="archivo_planos" class="form-label">Planos Aprobados* </label>
+                                <label for="archivo_planos" class="form-label">Planos Aprobados* <br> <small class="text-danger"  style="font-size: 11px!important">Solo se permiten archivos .pdf con un tamaño máximo de 10MB</small> </label>
                             <div class="form-group">
                                 <div class="file-loading">
                                     <input class=" @error('archivo_planos') is-invalid @enderror documentos_adjuntos" id="archivo_planos" accept="application/pdf" name="archivo_planos" type="file" data-overwrite-initial="true" required>
@@ -277,10 +277,10 @@
 
                             
                             <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="archivo_licencia" class="form-label">Licencia de construcción </label>
+                                <label for="archivo_licencia" class="form-label">Licencia de construcción* <br> <small class="text-danger"  style="font-size: 11px!important">Solo se permiten archivos .pdf con un tamaño máximo de 10MB</small></label>
                             <div class="form-group">
                                 <div class="file-loading">
-                                    <input class=" @error('archivo_licencia') is-invalid @enderror documentos_adjuntos" id="archivo_licencia" accept="application/pdf" name="archivo_licencia" type="file" data-overwrite-initial="true">
+                                    <input class=" @error('archivo_licencia') is-invalid @enderror documentos_adjuntos" id="archivo_licencia" accept="application/pdf" name="archivo_licencia" type="file" data-overwrite-initial="true" required>
                                     @error('archivo_licencia')
                                     <span class="invalid-feedback" role="alert">
                                        <strong class="text-danger">{{ $message }}</strong>

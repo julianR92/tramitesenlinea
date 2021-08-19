@@ -115,6 +115,7 @@ Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|PLANEACION|editar
 
     Route::get('/tramites/planeacion/parqueaderos/', 'PlaneacionController@indexParqueaderos')->name('planeacion.parqueaderos.index');
     Route::get('/tramites/planeacion/parqueadero/{id}','PlaneacionController@parqueaderoDetalle')->name('planeacion.parqueaderos.detalle');
+    Route::get('/tramites/planeacion/parqueadero/auditoria/{id}','PlaneacionController@parqueaderoDetalleAuditoria')->name('planeacion.parqueaderos.detalle.auditoria');
 
 
 });

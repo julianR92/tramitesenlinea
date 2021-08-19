@@ -54,7 +54,8 @@ class ParqueaderosController extends Controller
         "barrio_empresa" => "required",
         "tel_empresa" => "required",
         "archivo_camara_rut" => "required",       
-        "archivo_planos" => "required",        
+        "archivo_planos" => "required", 
+        "archivo_licencia"=> "required",       
         "tratamiento_datos" => "required",
         "acepto_terminos" => "required",
         "confirmo_mayorEdad" => "required",
@@ -212,8 +213,6 @@ class ParqueaderosController extends Controller
 
         if($request->archivo_licencia){
             $adjunto4 = $request->file('archivo_licencia')->storeAs('documentos_parqueaderos/' . $solicitud->radicado, 'licencia_construccion-' . $solicitud->radicado . '.pdf');
-            $archivo_licencia = 'storage/documentos_parqueaderos/' . $solicitud->radicado . '/licencia_construccion-' . $solicitud->radicado . '.pdf';
-            $solicitud->adjunto_licencia = $archivo_licencia;
             $contador++;
 
         }else{

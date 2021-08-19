@@ -1297,6 +1297,11 @@ $('#reproduccion_musica').change(function(){
     }
 
 });
+
+$(".form-ciudadano").submit(function(e){
+    $(".btn_enviar_solicitud").addClass("d-none");
+    $('.btn_carga').removeClass('d-none');
+  });
    
    
    

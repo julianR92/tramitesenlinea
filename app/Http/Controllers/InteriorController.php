@@ -6,6 +6,7 @@ use App\Auditoria;
 use App\Parqueadero;
 use App\Evento;
 use App\DocUpdate;
+use App\AuditoriaParqueadero;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -111,10 +112,10 @@ class InteriorController extends Controller
             $date = date('Y-m-d');
             //sumo 30 días
             $date_30 = NULL;
-            $date_planeacion = date("Y-m-d", strtotime($date . "+30 Weekday"));
+            $date_planeacion = date("Y-m-d", strtotime($date . "+15 Weekday"));
 
             $detalleCorreo = [
-                'nombres' => '',
+                'nombres' => 'Francia Milena Zuluaga Tangarife',
                 'mensaje' => $request->observaciones_solicitud,
                 'Subject' => 'Revision de Solicitud Pendiente Categorización de parqueaderos N°' . $datos->radicado,
                 'documento' => 'NO',
@@ -132,7 +133,7 @@ class InteriorController extends Controller
             $datos->act_documentos = null;
             $datos->fecha_pendiente_planeacion = $date_planeacion;
 
-            $correo_responsable = 'iabarraganj@bucaramanga.gov.co';
+            $correo_responsable = ['julianrincon9230@gmail.com', 'ojrincon@bucaramanga.gov.co'];
 
             if ($datos->save()) {
 
@@ -173,10 +174,10 @@ class InteriorController extends Controller
 
             //crear ruta de guardado
             $ruta_guardado = 'storage/documentos_parqueaderos/' . $datos->radicado . '/Concepto_Tecnico-' . $datos->radicado . '.pdf';
-            $correo_responsable = 'cjguerrero@bucaramanga.gov.co';
+            $correo_responsable = 'ojrincon@bucaramanga.gov.co';
 
             $detalleCorreo = [
-                'nombres' => '',
+                'nombres' => 'Carlos Javier Guerrero Gutierrez',
                 'mensaje' => $request->observaciones_planeacion,
                 'Subject' => 'Respuesta concepto Tecnico de Solicitud N°' . $datos->radicado,
                 'documento' => 'NO',
@@ -206,8 +207,32 @@ class InteriorController extends Controller
                         'tramite'=>'CATEGORIZACION DE PARQUEADEROS',
                         'radicado'=> $datos->radicado,
                         'accion' => 'update a estado ' . $request->estado_solicitud,
-                        'observacion'=>$request->observaciones_solicitud
+                        'observacion'=>$request->observaciones_planeacion
 
+                    ]);
+
+                    $auditoriaPlaneacion = AuditoriaParqueadero::create([
+                        'parqueadero_id' =>$datos->id,
+                        'radicado'=> $datos->radicado,
+                        'nom_solicitante'=>$datos->nom_solicitante,
+                        'ape_solicitante'=>$datos->ape_solicitante,
+                        'tipo_documento'=>$datos->tipo_documento,
+                        'identificacion_solicitante'=>$datos->identificacion_solicitante,
+                        'direccion_solicitante'=>$datos->direccion_solicitante,
+                        'barrio_solicitante'=>$datos->barrio_solicitante,
+                        'tel_solicitante'=>$datos->barrio_solicitante,
+                        'email_responsable'=>$datos->email_responsable,
+                        'nombre_empresa'=>$datos->nombre_empresa,
+                        'direccion_empresa'=>$datos->direccion_empresa,
+                        'barrio_empresa'=>$datos->barrio_empresa,
+                        'tel_empresa'=>$datos->tel_empresa,
+                        'adjunto_camara_rut'=>$datos->adjunto_camara_rut,
+                        'adjunto_planos'=>$datos->adjunto_planos,
+                        'adjunto_licencia'=>$datos->adjunto_licencia,
+                        'estado_solicitud'=> $request->estado_solicitud,
+                        'observaciones_solicitud'=>$request->observaciones_planeacion,
+                        'fecha_actuacion'=> $date,
+                        'adjunto_resPlaneacion'=> $ruta_guardado
                     ]);
 
                     Mail::to($correo_responsable)->queue(new NotificacionParqueaderos($detalleCorreo));
