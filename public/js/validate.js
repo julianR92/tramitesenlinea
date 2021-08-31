@@ -1302,6 +1302,80 @@ $(".form-ciudadano").submit(function(e){
     $(".btn_enviar_solicitud").addClass("d-none");
     $('.btn_carga').removeClass('d-none');
   });
+
+  //metrolinea
+
+  $(".select_general").select2({
+    width: "100%",
+    placeholder: "Seleccione..",
+});
+
+$('#ruta_frecuente').select2({
+    placeholder: "Seleccione..",
+    width: "100%",
+    multiple:"multiple",
+    tags: true,
+    tokenSeparators: [',', ' ']    
+
+});
+
+$('#tipo_poblacion').change(function() {
+    var tipo = $(this).val();
+    if(tipo == 'ESTUDIANTE'){
+        $('.caja_estudios').removeClass('d-none');
+        $('#institucion_educativa').attr('required', true);
+        $('.caja_discapacidad').addClass('d-none');
+        $('#discapacidad').attr('required', false);
+        $('.caja_certificadoEstudios').removeClass('d-none');
+        $('#archivo_certificadoEstudio').attr('required', true);
+
+    }else if(tipo == 'PERSONAS CON DISCAPACIDAD'){
+        $('.caja_discapacidad').removeClass('d-none');
+        $('#discapacidad').attr('required', true);
+        $('.caja_estudios').addClass('d-none');
+        $('#institucion_educativa').attr('required', false);  
+        $('.caja_certificadoEstudios').addClass('d-none');
+        $('#archivo_certificadoEstudio').attr('required', false);      
+
+    }else{
+        $('.caja_discapacidad').addClass('d-none');
+        $('#discapacidad').attr('required', false);
+        $('.caja_estudios').addClass('d-none');
+        $('#institucion_educativa').attr('required', false); 
+        $('.caja_certificadoEstudios').addClass('d-none');
+        $('#archivo_certificadoEstudio').attr('required', false);  
+
+    }
+
+});
+
+$('#fecha_nacimiento').ready(function(){    
+    var today = moment(new Date()).format('YYYY-MM-DD');
+    $('#fecha_nacimiento').attr('max', today); 
+});
+
+$('#fecha_nacimiento').change(function(){
+    var fecha = moment($(this).val());
+    var today = moment(new Date());
+    var difference = today.diff(fecha, 'year');
+   if(difference < 6){
+     alert('ATENCION Niños menores de 6 años no pueden ser registrados en el programa');
+     window.location.href = 'https://www.bucaramanga.gov.co/';
+     $("#FormMetrolinea").trigger("reset");
+     
+   }else if(difference < 18){
+       $('.caja_acudiente').removeClass('d-none');
+       $('#nombre_acudiente').attr('required', true);
+   }else if(difference >= 18){
+    $('.caja_acudiente').addClass('d-none');
+    $('#nombre_acudiente').attr('required', false);
+
+   } 
+   $('#edad').val(difference);
+
+
+
+});
    
    
    

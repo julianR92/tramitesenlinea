@@ -59,6 +59,15 @@ Route::get('/eventos-publicos/detalle/{id}', 'EventosController@detalle')->name(
 Route::post('/eventos-publicos/updateDocs', 'EventosController@updateDocs')->name('eventos.updateDocs');
 
 
+// RUTAS METROLINEA
+
+Route::get('/registro-metrolinea', 'MetrolineaController@index')->name('metrolinea.index');
+Route::post('/registro-metrolinea/store', 'MetrolineaController@store')->name('metrolinea.store');
+Route::get('/registro-metrolinea/confirmacion', 'MetrolineaController@confirmacion')->name('metrolinea.confirmacion');
+Route::get('/registro-metrolinea/finalizar', 'MetrolineaController@end')->name('metrolinea.finalizar');
+Route::post('/registro-metrolinea/consulta', 'MetrolineaController@consulta')->name('metrolinea.consulta');
+
+
 
 
 
