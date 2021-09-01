@@ -1376,6 +1376,73 @@ $('#fecha_nacimiento').change(function(){
 
 
 });
+
+// barra accesibilidad
+$(".min-fontsize").click(function() {
+
+    var fuente = $("#body").css("font-size");
+    console.log(fuente);
+    var fuente_suma = parseInt(fuente) - 2;
+    var fuente_px = fuente_suma + 'px';
+    if (fuente_suma <= 12) {
+       $("*").css("font-size", '12px');
+    } else {
+       console.log(fuente_suma);
+       $("*").css("font-size", fuente_px);
+    }
+
+
+ });
+ $(".max-fontsize").click(function() {
+
+    var fuente = $("#body").css("font-size");
+    console.log(fuente);
+    var fuente_suma = parseInt(fuente) + 2;
+    var fuente_px = fuente_suma + 'px';
+    if (fuente_suma >= 22) {
+       $("*").css("font-size", '22px');
+    } else {
+       console.log(fuente_suma);
+       $("*").css("font-size", fuente_px);
+    }
+
+
+ });
+
+ $(".contrast-ref").click(function() {
+
+    var clase = $('#body').attr("class");
+    var color = '#3366CC';
+    var color2 = 'white';
+
+    if (clase == 'all') {
+       $('#body').removeClass("all");
+       $('#myForm').css('background-color', 'white');
+       $('#nav-header').css('background-color', color);
+       $('#nav-secondary').css('background-color', color2);
+       $('.card-cabecera').attr('style', 'background-color: #3366CC!important;');
+       $('.div_principal').attr('id','div_img');
+       $('ol').attr('style', 'background-color: #FFFFFF!important;');
+       $('label').attr('style', 'color: #4B4B4B!important;');
+    //    $('.all button').attr('style', 'background-color:#FFFFFF!important');
+
+
+
+    } else {
+       $('#body').addClass("all");
+       $('#myForm').css('background-color', 'black');
+       $('#nav-header').css('background-color', 'black');
+       $('#nav-secondary').css('background-color','black');
+       $('.card-cabecera').attr('style', 'background-color: black!important;');
+       $('.div_principal').attr('id','');  
+       $('ol').attr('style', 'background-color: black!important;');
+       $('label').attr('style', 'color: #FFFFFF!important;');
+    //    $('.all button').attr('style', 'background-color:#000000!important');
+             
+
+    }
+
+ })
    
    
    

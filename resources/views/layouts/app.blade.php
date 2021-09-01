@@ -17,6 +17,8 @@
    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
    <link rel="stylesheet" type="text/css" href="{{asset('css/step.css')}}">
 
+   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+
    {{-- animate css --}}
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
@@ -33,9 +35,9 @@
 
     <title>@yield('title')</title>
 </head>
-<body>
+<body id="body">
 
-    <nav class="navbar navbar-expand-lg fixed-top navbar-govco navbar-expanded">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-govco navbar-expanded" id="nav-header">
         <div class="navbar-container container pl-2">
               <div class="navbar-logo float-left">
                  <a class="navbar-brand" href="https://www.gov.co/">
@@ -123,14 +125,21 @@
                         <p>Horario de Atención: Lunes a viernes de 6:00 a.m. a 02:00 p.m. jornada contínua</p>
                         <br>
                         <div class="row">
+                           <div class="col-md-12"><p class="font-weight-bold">Redes Sociales</p></div>
+                           <div class="col-md-1">                            
+                              <a href="https://www.facebook.com/alcaldiadebucaramanga/"><i class="fab fa-facebook fa-2x text-white"></i></a>
+                             
+                           </div>                          
+                          
+                           <div class="col-md-1">                              
+                              <a href="https://twitter.com/AlcaldiaBGA"><i class="fab fa-twitter-square fa-2x text-white"></i></a>
+                           </div>
+                           
                            <div class="col-md-1">
-                              <a href="https://www.facebook.com/alcaldiadebucaramanga/"><i class="fa fa-facebook fa-2x text-white"></i></a>
+                              <a href="https://www.instagram.com/alcaldiabga/"><i class="fab fa-instagram fa-2x text-white"></i></a>
                            </div>
                            <div class="col-md-1">
-                              <a href="https://twitter.com/AlcaldiaBGA"><i class="fa fa-twitter fa-2x text-white"></i></a>
-                           </div>
-                           <div class="col-md-1">
-                              <a href="https://www.youtube.com/user/PrensaBucaramanga"><i class="  fa fa-youtube-play fa-2x text-white"></i></a>
+                              <a href="https://www.youtube.com/user/PrensaBucaramanga"><i class="fab fa-youtube fa-2x text-white"></i></a>
                            </div>
                         </div>
                      </div>
@@ -142,14 +151,44 @@
                         <p>Atención a la Ciudadanía: (57+7) 652 55 55</p>
                         <p>Fax: (57+7) 652 17 77</p>
                         <p>Centro Integral de la Mujer - Violencia Intrafamiliar: 6351897.</p>
+                        <p>Correo Institucional: contactenos@bucaramanga.gov.co</p>
+                        <p>Correo de notificaciones judiciales: notificaciones@bucaramanga.gov.co</p>
                      </div>
                   </div>
+                  
+               </div>
+               <div class="row pt-5 mb-0 pb-0">
+                  <div class="col-md-1"></div>
+                  <div class="col-md-10"><p class="font-weight-bold" style="text-align:center;"><a class="text-white" href="https://www.bucaramanga.gov.co/autorizacion-de-tratamiento-de-datos-personales/" target="_blank" >Autorización de tratamiento de datos personales |</a>&nbsp;<a class="text-white" href="https://www.bucaramanga.gov.co/wp-content/uploads/2018/12/Resolucion-340-Dic-26-2018-y-Politica.pdf" target="_blank" >Política de tratamiento de datos personales |</a>&nbsp; <a class="text-white" href="https://www.bucaramanga.gov.co/condiciones-de-uso/" target="_blank" >Política web y condiciones de uso |</a>&nbsp; <a class="text-white" href="https://www.bucaramanga.gov.co/wp-content/uploads/2021/08/Politica_Editorial_Actualizada_2014.pdf" target="_blank" >Política Editorial |</a>&nbsp; <a class="text-white" href="https://www.bucaramanga.gov.co/wp-content/uploads/2021/08/Plan_de_Uso_Redes_Sociales.pdf" target="_blank">Plan de uso de redes sociales |</a>&nbsp;  <a class="text-white" href="https://www.bucaramanga.gov.co/wp-content/uploads/2021/08/PLAN-DE-COMUNICACIONES-2020-2023.pdf" target="_blank">Plan de comunicaciones |</a>&nbsp;<a class="text-white" href="https://www.bucaramanga.gov.co/wp-content/uploads/2021/08/PLAN-DE-COMUNICACIONES-2020-2023.pdf" target="_blank">Política de seguridad de la información |</a>&nbsp; <a class="text-white" href="https://www.bucaramanga.gov.co/politicas-de-privacidad/" target="_blank">Uso y monitoreo de la página web |</a>&nbsp; <a class="text-white" href="https://www.gov.co/home/mapa-del-sitio" target="_blank">Mapa del sitio</a> </p></div>
+                  <div class="col-md-1"></div>
                </div>
             </div>
          </div>
       </div>
    </div>
    </footer>
+
+   <!-- BARRA DE ACCESIBILIDAD -->
+<div class="block block--gov-accessibility">
+   <div class="block-options navbar-expanded">
+       <a class="contrast-ref">
+           <span class="govco-icon govco-icon-contrast-n"></span>
+           <label> Contraste </label>
+       </a>
+       <a class="min-fontsize">
+           <span class="govco-icon govco-icon-less-size-n"></span>
+           <label class="align-middle"> Reducir letra </label>
+       </a>
+       <a class="max-fontsize">
+           <span class="govco-icon govco-icon-more-size-n"></span>
+           <label class="align-middle"> Aumentar letra </label>
+       </a>
+       {{-- <a target="_blank" href="https://centroderelevo.gov.co/632/w3-channel.html">
+           <span class="govco-icon govco-icon-relief-n"></span>
+           <label class="align-middle"> Centro de relevo </label>
+       </a> --}}
+   </div>
+</div>
 
 
      
