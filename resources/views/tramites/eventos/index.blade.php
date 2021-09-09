@@ -71,7 +71,7 @@
                         </div>
                     </div>
 
-                    <form action="{{route('eventos.store')}}" method="POST" id="myForm" enctype="multipart/form-data">
+                    <form action="{{route('eventos.store')}}" method="POST" id="myForm" enctype="multipart/form-data" class="form-ciudadano">
                         @csrf
                         <div class="card govco-card border-0 shadow-none" style="border-radius: 0px;">
 
@@ -741,9 +741,9 @@
                             </div>
 
                             <div class="col-md-12  pl-1 pr-1 pt-3 text-left mt-4" style="padding-left: 0px!important">
-                                
-                                <button style="font-size:15px;" type="submit" class="btn btn-round btn-middle"
-                                     onclick="return confirm('¿Esta seguro de realizar esta solicitud ?, ¿ Revisó bien los anexos?, si esta seguro oprima aceptar')">Enviar Solicitud</button>
+                         <div class="g-recaptcha" data-sitekey="6LccRDwcAAAAALTdA0arpJ6ilqwmIQF0Jv6qq7Rk"></div>
+                                <button style="font-size:15px;" type="submit" class="btn btn-round btn-middle btn_enviar_solicitud" onclick="return confirm('¿Esta seguro de realizar esta solicitud ?, ¿ Revisó bien los anexos?, si esta seguro oprima aceptar')">Enviar Solicitud</button>
+                                <button style="font-size:15px;" class="btn btn-round btn-middle btn_carga d-none" type="button" disabled><span class="spinner-grow spinner-grow-sm text-primary" role="status" aria-hidden="true"></span> Enviando...</button>
                             </div>
                         </div>
                     </form>

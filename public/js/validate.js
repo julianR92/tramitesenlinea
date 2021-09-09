@@ -1299,6 +1299,15 @@ $('#reproduccion_musica').change(function(){
 });
 
 $(".form-ciudadano").submit(function(e){
+
+    var response = grecaptcha.getResponse();
+
+         if (response.length == 0) {
+            alert("Captcha no verificado");
+            e.preventDefault();
+            return;
+         }
+
     $(".btn_enviar_solicitud").addClass("d-none");
     $('.btn_carga').removeClass('d-none');
   });

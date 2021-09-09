@@ -55,3 +55,27 @@
     padding-bottom: 10px !important;
 }
 
+@media only screen and (max-width: 572px){
+  
+    .g-recaptcha iframe {
+      max-width: 100%;
+      transform:scale(0.77);
+      -webkit-transform:scale(0.77);
+      transform-origin: center center;
+      -webkit-transform-origin: center center;
+    }
+    #rc-imageselect {
+      transform:scale(0.77);
+      -webkit-transform:scale(0.77);
+      transform-origin:0 0;
+      -webkit-transform-origin:0 0;
+    }
+  }
+  
+  .g-recaptcha > div > div{
+    margin: 4px auto !important;
+    text-align: center;
+    width: auto !important;
+    height: auto !important;
+  }
+

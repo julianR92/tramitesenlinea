@@ -33,6 +33,9 @@
    {{-- clock picker --}}
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css" integrity="sha512-MT4B7BDQpIoW1D7HNPZNMhCD2G6CDXia4tjCdgqQLyq2a9uQnLPLgMNbdPY7g6di3hHjAI8NGVqhstenYrzY1Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+   {{-- captcha --}}
+   <script src='https://www.google.com/recaptcha/api.js'></script>
+
     <title>@yield('title')</title>
 </head>
 <body id="body">
