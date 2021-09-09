@@ -18,11 +18,11 @@ class MetrolineaController extends Controller
 
         $Barrios = Barrio::all();
         $instituciones = Instituciones::where('tipo', '1')->Orwhere('tipo','4')->get();
-        $orientacion_sexual = Orientacion::all();
+        // $orientacion_sexual = Orientacion::all();
         $discapacidades = DB::table('tipo_discapacidad')->get();
         
        
-       return view('tramites.metrolinea.index', compact('Barrios', 'orientacion_sexual','instituciones', 'discapacidades'));
+       return view('tramites.metrolinea.index', compact('Barrios','instituciones', 'discapacidades'));
 
     }
 
@@ -50,7 +50,7 @@ class MetrolineaController extends Controller
         "estado_civil" => "required",
         "nivel_estudios" => "required",
         "tipo_documento" => "required",
-        "documento_usuario" => "required",
+        "documento_usuario" => "required|unique:caracterizacion_metrolinea",
         "sexo" => "required",
         "telefono_usuario" => "required",
         "email_usuario" => "required",

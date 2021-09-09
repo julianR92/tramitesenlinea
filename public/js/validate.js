@@ -1323,7 +1323,7 @@ $('#ruta_frecuente').select2({
     placeholder: "Seleccione..",
     width: "100%",
     multiple:"multiple",
-    tags: true,
+    tags: false,
     tokenSeparators: [',', ' ']    
 
 });

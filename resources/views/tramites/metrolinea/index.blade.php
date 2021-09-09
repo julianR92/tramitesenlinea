@@ -253,7 +253,7 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                            {{-- <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="orientacion_sexual" class="form-label">Orientacion Sexual* </label>
                                 <select name="orientacion_sexual" id="orientacion_sexual"
                                     class="form-control @error('orientacion_sexual') is-invalid @enderror" required>
@@ -269,7 +269,7 @@
                                         <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="telefono_usuario" class="form-label">Teléfono / Celular * </label>
@@ -396,7 +396,44 @@
                                     class="form-control @error('ruta_frecuente') is-invalid @enderror" required multiple>                                    
                                     <option value="T1">T1</option>
                                     <option value="T2">T2</option>
-                                    <option value="P3">P3</option>                                  
+                                    <option value="T3">T3</option>
+                                    <option value="P1">P1</option>
+                                    <option value="P2">P2</option>   
+                                    <option value="P3">P3</option>
+                                    <option value="P5">P5</option>  
+                                    <option value="P6">P6</option>  
+                                    <option value="P8">P8</option>
+                                    <option value="P10">P10</option> 
+                                    <option value="P13">P13</option>
+                                    <option value="P15">P15</option>
+                                    <option value="AN1">AN1</option>
+                                    <option value="AN2">AN2</option> 
+                                    <option value="AB1">AB1</option>  
+                                    <option value="AB3">AB3</option>
+                                    <option value="AP1">AP1</option> 
+                                    <option value="AP2">AP2</option>
+                                    <option value="AP3">AP3</option> 
+                                    <option value="AP4">AP4</option>
+                                    <option value="AP5">AP5</option>
+                                    <option value="AP7">AP7</option>
+                                    <option value="AP12">AP12</option>
+                                    <option value="AP14">AP14</option>
+                                    <option value="AC1">AC1</option> 
+                                    <option value="AC4">AC4</option>
+                                    <option value="AF1">AF1</option> 
+                                    <option value="AF2">AF2</option>
+                                    <option value="APD1">APD1</option> 
+                                    <option value="APD3">APD3</option>
+                                    <option value="APD4">APD4</option>
+                                    <option value="APD6">APD6</option>
+                                    <option value="APD7">APD7</option>
+                                    <option value="APD9">APD9</option>
+
+
+
+
+
+
 
                                 </select>
                                 @error('ruta_frecuente')
