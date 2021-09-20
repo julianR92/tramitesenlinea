@@ -170,6 +170,10 @@
                                                                 <span class="govco-icon govco-icon-analytic-cn"></span>
                                                                 <span class="btn-govco-text text-sm">Trazabilidad</span></a>
 
+                                                                <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('espacio.documento', $solicitudesPr->id)}}" target="_blank">
+                                                                    <span class="govco-icon govco-icon-print-p "></span>
+                                                                    <span class="btn-govco-text text-sm">Imprimir</span></a>
+
                                                         
                                                                                                       
                                                     
@@ -235,6 +239,8 @@
                                                         <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesPE->radicado , 'tramite' => $tramite] )}}">
                                                             <span class="govco-icon govco-icon-analytic-cn"></span>
                                                             <span class="btn-govco-text text-sm">Trazabilidad</span></a>
+
+                                                            
     
 
                                                 

@@ -68,10 +68,6 @@ Route::get('/registro-metrolinea/finalizar', 'MetrolineaController@end')->name('
 Route::post('/registro-metrolinea/consulta', 'MetrolineaController@consulta')->name('metrolinea.consulta');
 
 
-
-
-
-
 Route::group(['middleware' => ['role:SUPER-ADMIN']], function () {
 
     //RUTAS DE ROLES
@@ -119,6 +115,7 @@ Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|PLANEACION|editar
     Route::get('/tramites/planeacion/espacio','PlaneacionController@espacioIndex')->name('espacio.index');
     Route::get('/tramites/planeacion/espacio/{id}', 'PlaneacionController@detalleSolicitud')->name('espacio.detalle');
     Route::post('/tramites/planeacion/espacio/update','PlaneacionController@updateSolicitud')->name('espacio.update');
+    Route::get('/tramites/planeacion/espacio/document/{id}', 'PlaneacionController@documentSolicitud')->name('espacio.documento');
 
     // rutas tramite categorizacion de parqueaderos
 

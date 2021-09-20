@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\EnvioNotificacion;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
+use PDF;
+
 
 class PlaneacionController extends Controller
 {
@@ -288,6 +290,15 @@ class PlaneacionController extends Controller
             }
 
         }
+    }
+
+    public function documentSolicitud($id){
+
+        $solicitud= EspacioPublico::findOrFail($id);
+        // $pdf = App::make('dompdf.wrapper');
+        $pdf = PDF::loadView('tramites.planeacion.espacio.document', compact('solicitud'));
+        return $pdf->stream();
+
     }
     public function indexParqueaderos(){
      
