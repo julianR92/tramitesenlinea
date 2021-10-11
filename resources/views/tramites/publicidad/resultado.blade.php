@@ -25,8 +25,7 @@
                             <div class="image-icon">
                                 <span class="breadcrumb govco-icon govco-icon-shortr-arrow" style="height: 22px;"></span>
                                 <p class="ml-3 ml-md-0 "><b style="color: #004fbf;text-transform: none;">
-                                    Te llevamos en el corazon
-                                    
+                                    Categorización Parqueaderos
                                     </b></p>
                             </div>
                         </li>
@@ -54,20 +53,28 @@
                                     style="text-align: left!important;">
                                     <thead>
                                         <tr>
-                                            <th style="color: #004884;" class="">N° Solicitud</th>
-                                            <th style="color: #004884;">Nombres</th>                                          
-                                            <th style="color: #004884;">Estado solicitud</th>
+                                            <th style="color: #004884;" class="">Radicado</th>
+                                            <th style="color: #004884;">Nombres Reponsable</th>                                            
+                                            <th style="color: #004884;">Razon Social/Empresa</th>
+                                            <th style="color: #004884;;">Direccion Empresa</th>
+                                            <th style="color: #004884;">Estado de la solicitud</th>
                                             <th style="color: #004884;">Fecha de Solicitud</th>
-                                            <th style="color: #004884;">Observaciones</th>
+                                            <th style="color: #004884;">Detalle </th>
 
                                         </tr>
                                     </thead>
                                     @foreach ($QuerySolicitud as $solicitud)
                                     <tr>
-                                       <td>{{$solicitud->numero_solicitud}}</td>
-                                       <td>{{$solicitud->nombre_usuario}} {{$solicitud->apellido_usuario}} </td>
-                                        <td>@if ($solicitud->estado_solicitud == 'ENVIADA')
-                                        <p style="color: #069169;font-weight:bold">ENVIADA<span class="govco-icon govco-icon-check-p size-1x"></span></p>                                        
+                                       <td>{{$solicitud->radicado}}</td>
+                                       <td>{{$solicitud->nom_solicitante}} {{$solicitud->ape_solicitante}} </td>
+                                       <td>{{$solicitud->nombre_empresa}}</td>
+                                       <td>{{$solicitud->direccion_empresa}}- {{$solicitud->barrio_empresa}}</td>
+                                       <td>@if ($solicitud->estado_solicitud == 'ENVIADA')
+                                        <p style="color: #069169;font-weight:bold">ENVIADA<span class="govco-icon govco-icon-check-p size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'PENDIENTE')
+                                         <p style="color: #3772FF;font-weight:bold">PENDIENTE<span class="govco-icon govco-icon-eye-p size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'REVISION-PLANEACION' || $solicitud->estado_solicitud == 'RESPUESTA-PLANEACION')
+                                         <p style="color: #F3561F;font-weight:bold">EN PROGRESO<span class="govco-icon govco-icon-reload-n size-1x"></span></p>
                                          @elseif($solicitud->estado_solicitud == 'APROBADA')
                                          <p style="color: #069169;font-weight:bold">APROBADA<span class="govco-icon govco-icon-like size-1x"></span></p>
                                          @elseif($solicitud->estado_solicitud == 'RECHAZADA')
@@ -76,16 +83,14 @@
                                        <td>{{$solicitud->created_at}}</td>
                                        <td>
                                         @if ($solicitud->estado_solicitud == 'ENVIADA')
-                                        <small>Solicitud en Revision</small>
-                                        @elseif ($solicitud->estado_solicitud == 'APROBADA')
-                                        <small>Después de 2 días de Aprobada puedes reclamar tu tarjeta en la sede del CAME de la estación de Metrolínea(Provenza)</small>
-                                        @elseif ($solicitud->estado_solicitud == 'RECHAZADA')
-                                        <small>No cumple con alguno de los requisitos</small>
+                                        <small>Su solicitud aun no ha sido revisada</small>
+                                        @elseif($solicitud->estado_solicitud == 'REVISION-PLANEACION' || $solicitud->estado_solicitud == 'RESPUESTA-PLANEACION')
+                                        <small>TRÁMITE EN CONCEPTO TÉCNICO</small>
                                         @else
-                                        {{-- <a href="{{route('parqueadero.detalle', Crypt::encrypt($solicitud->id))}}" class="btn-symbolic-govco align-column-govco">
+                                        <a href="{{route('parqueadero.detalle', Crypt::encrypt($solicitud->id))}}" class="btn-symbolic-govco align-column-govco">
                                             <span class="govco-icon govco-icon-search-cn"></span>
                                             <span class="btn-govco-text">Detalle</span>
-                                        </a> --}}
+                                        </a>
 
                                         @endif
                                         
@@ -104,7 +109,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <a class="btn btn-round btn-high" href="{{ URL::route('metrolinea.index') }}" style="float: left;">Volver</a>
+                            <a class="btn btn-round btn-high" href="{{ URL::route('parqueaderos.index') }}" style="float: left;">Volver</a>
                         </div>
 
                     </div>

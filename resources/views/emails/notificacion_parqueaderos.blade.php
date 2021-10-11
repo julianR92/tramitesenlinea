@@ -61,7 +61,7 @@
 
                        @if ($detalleCorreo['fecha_pendiente'] != null)
                      
-					   <p align="justify">Nos permitimos recordarle que cuenta hasta el <strong>{{$detalleCorreo['fecha_pendiente']}} para cargar los documentos nuevamente.</strong> Para volver adjuntar los documentos diríjase a la página <a href="http://tramitesenlinea.test:8080/categorizacion-parqueaderos" target="_blank"> http://tramitesenlinea.test:8080/categorizacion-parqueaderos </a> opción <u>consulto mi solicitud, botón detalle</u>.</p>
+					   <p align="justify">Nos permitimos recordarle que cuenta hasta el <strong>{{$detalleCorreo['fecha_pendiente']}} para cargar los documentos nuevamente.</strong> Para volver adjuntar los documentos diríjase a la página <a href="http://tramitesenlinea.test/categorizacion-parqueaderos" target="_blank"> http://tramitesenlinea.test/categorizacion-parqueaderos </a> opción <u>consulto mi solicitud, botón detalle</u>. o ingrese al siguiente link <a href="http://tramitesenlinea.test/categorizacion-parqueaderos/detalle/{{$detalleCorreo['id']}}"> Clic aqui</a></p>
                                               
                        @endif
 

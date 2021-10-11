@@ -41,6 +41,8 @@
 
                      @if ($detalleCorreo['fecha_pendiente'] != null)
                      
+					 <p align="justify">para volver a cargar los documentos por favor ingrese <a href="http://espaciopublico.test/solicitud/detalle/{{$detalleCorreo['id']}}" target="_blank"> clic aqui</a></p> 
+
                      <p align="justify">Recuerda que tienes hasta el <strong>{{$detalleCorreo['fecha_pendiente']}} para cargar los documentos nuevamente</strong></a></p>
                                               
                      @endif

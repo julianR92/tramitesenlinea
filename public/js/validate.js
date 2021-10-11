@@ -169,8 +169,8 @@ $(document).ready(function () {
         }
     });
 
-      /*============================================================================
-    =            input de  direccion
+        /*============================================================================
+    =            input de  razon social
                 id = "address_validate"        maxlength =100
     ============================================================================*/
 
@@ -187,7 +187,6 @@ $(document).ready(function () {
             }
           })
     });
-
 
     $("#btn-sugerencias").click(function () {
         $("#text-button").fadeToggle("slow", "swing");
@@ -639,8 +638,6 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
     // DATATABLES
 
     $(".tablas").DataTable({
-       
-
         language: {
             sProcessing: "Procesando...",
             sLengthMenu: "Mostrar _MENU_ registros",
@@ -674,7 +671,7 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
 
     });
 
-    // tablas de exports
+     // tablas de exports
     $('.tablas_export').ready(function(){
         var radicado = $('#radicado').val();
     
@@ -723,7 +720,6 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
                     ": Activar para ordenar la columna de manera descendente",
             },
         },
-        
         responsive:true,
         scrollX:        200,
         scrollCollapse: true,
@@ -1009,12 +1005,12 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
         if(estado_actual == 'ENVIADA'){
 
             $("#estado_solicitud_parqueaderos option[value='APROBADA']").hide();
-            
+            // $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
             
         }else if(estado_actual== 'PENDIENTE'){
 
             $("#estado_solicitud_parqueaderos option[value='APROBADA']").hide();
-            
+            // $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
 
         }else if(estado_actual == 'RESPUESTA-PLANEACION'){
 
@@ -1188,22 +1184,22 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
 
    });
 
-   $('#fecha_evento').change(function () {
+ //   $('#fecha_evento').change(function () {
 
-    var date = moment($(this).val());
-    if(date.isoWeekday() == 7 || date.isoWeekday() == 6){
-        alert("Atención solo se pueden seleccionar dias habiles");
-        $('#fecha_evento').val('');
+ //    var date = moment($(this).val());
+ //    if(date.isoWeekday() == 7 || date.isoWeekday() == 6){
+ //        alert("Atención solo se pueden seleccionar dias habiles");
+ //        $('#fecha_evento').val('');
 
-        return;
-    }
- });
+ //        return;
+ //    }
+ // });
 
    $('.clockpicker').clockpicker({
     placement: 'top',
-	align: 'left',    
+    align: 'left',    
     twelvehour: true,
-	donetext: 'Aceptar'
+    donetext: 'Aceptar'
 
    });
 
@@ -1230,8 +1226,8 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
         $('#documento_respuesta_eventos').attr('required', true);
 
     }else if(estado == 'RECHAZADA'){
-        $('#documento_respuesta_eventos').attr('disabled', true);
-        $('#documento_respuesta_eventos').attr('required', false);
+        $('#documento_respuesta_eventos').attr('disabled', false);
+        $('#documento_respuesta_eventos').attr('required', true);
     }else{
         $('#documento_respuesta_eventos').attr('disabled', true);
         $('#documento_respuesta_eventos').attr('required', false);
@@ -1298,95 +1294,233 @@ $('#reproduccion_musica').change(function(){
 
 });
 
-$(".form-ciudadano").submit(function(e){
 
-    var response = grecaptcha.getResponse();
+// funcion para los forms ciudadanos
+
+// funcion general spinner de carga
+
+     $(".form-ciudadano").submit(function(e){
+        var response = grecaptcha.getResponse();
 
          if (response.length == 0) {
             alert("Captcha no verificado");
             e.preventDefault();
             return;
          }
+        $(".btn_enviar_solicitud").addClass("d-none");
+        $('.btn_carga').removeClass('d-none');
+      });
 
-    $(".btn_enviar_solicitud").addClass("d-none");
-    $('.btn_carga').removeClass('d-none');
-  });
+     //metrolinea
 
-  //metrolinea
+      $(".select_general").select2({
+        width: "100%",
+        placeholder: "Seleccione..",
+    });
 
-  $(".select_general").select2({
-    width: "100%",
-    placeholder: "Seleccione..",
-});
+    $('#ruta_frecuente').select2({
+        placeholder: "Seleccione..",
+        width: "100%",
+        multiple:"multiple",
+        tags: false,
+        tokenSeparators: [',', ' ']    
 
-$('#ruta_frecuente').select2({
-    placeholder: "Seleccione..",
-    width: "100%",
-    multiple:"multiple",
-    tags: false,
-    tokenSeparators: [',', ' ']    
+    });
 
-});
+    $('#tipo_poblacion').change(function() {
+        var today = moment(new Date()).format('YYYY-MM-DD');
+        var tipo = $(this).val();
 
-$('#tipo_poblacion').change(function() {
-    var tipo = $(this).val();
-    if(tipo == 'ESTUDIANTE'){
-        $('.caja_estudios').removeClass('d-none');
-        $('#institucion_educativa').attr('required', true);
-        $('.caja_discapacidad').addClass('d-none');
-        $('#discapacidad').attr('required', false);
-        $('.caja_certificadoEstudios').removeClass('d-none');
-        $('#archivo_certificadoEstudio').attr('required', true);
+        if(tipo == 'ESTUDIANTE-COLEGIO' || tipo == 'ESTUDIANTE-UNIVERSIDAD'){
+             
+             var entidad = $('#institucion_educativa');
+          
+            $('.caja_estudios').removeClass('d-none');
+            $('#institucion_educativa').attr('required', true);
+            $('.caja_discapacidad').addClass('d-none');
+            $('#discapacidad').attr('required', false);
+            $('.caja_certificadoEstudios').removeClass('d-none');
+            $('#archivo_certificadoEstudio').attr('required', true);
+            $('#fecha_nacimiento').attr('max', today);
+             $('.caja-deportistas').addClass('d-none');
+            $('#archivo_deportistas_artistas').attr('required', false);   
+            
+          
 
-    }else if(tipo == 'PERSONAS CON DISCAPACIDAD'){
-        $('.caja_discapacidad').removeClass('d-none');
-        $('#discapacidad').attr('required', true);
-        $('.caja_estudios').addClass('d-none');
-        $('#institucion_educativa').attr('required', false);  
-        $('.caja_certificadoEstudios').addClass('d-none');
-        $('#archivo_certificadoEstudio').attr('required', false);      
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
 
-    }else{
-        $('.caja_discapacidad').addClass('d-none');
-        $('#discapacidad').attr('required', false);
-        $('.caja_estudios').addClass('d-none');
-        $('#institucion_educativa').attr('required', false); 
-        $('.caja_certificadoEstudios').addClass('d-none');
-        $('#archivo_certificadoEstudio').attr('required', false);  
-
-    }
-
-});
-
-$('#fecha_nacimiento').ready(function(){    
-    var today = moment(new Date()).format('YYYY-MM-DD');
-    $('#fecha_nacimiento').attr('max', today); 
-});
-
-$('#fecha_nacimiento').change(function(){
-    var fecha = moment($(this).val());
-    var today = moment(new Date());
-    var difference = today.diff(fecha, 'year');
-   if(difference < 6){
-     alert('ATENCION Niños menores de 6 años no pueden ser registrados en el programa');
-     window.location.href = 'https://www.bucaramanga.gov.co/';
-     $("#FormMetrolinea").trigger("reset");
-     
-   }else if(difference < 18){
-       $('.caja_acudiente').removeClass('d-none');
-       $('#nombre_acudiente').attr('required', true);
-   }else if(difference >= 18){
-    $('.caja_acudiente').addClass('d-none');
-    $('#nombre_acudiente').attr('required', false);
-
-   } 
-   $('#edad').val(difference);
+        $.ajax({
+            type: "POST",
+            url: "/registro-metrolinea/entidades",
+            dataType: "json",
+            data: {
+                tipo: tipo
+                
+            },
+            success: function (response) {
+                
+                if (response.success) {
+                  $('#institucion_educativa').find('option').remove();
+                  entidad.append('<option value="">Seleccione..</option>')
+                 for (var instituciones of response.respuesta){
+                     entidad.append('<option value="'+instituciones+'">'+instituciones+'</option>');
+                 }
+                 
 
 
+                   
+                } else {
+                    alert("Ha ocurrido un error al cargar los entidades educativas");
+                }
+            },
+            error: function () {
+                alert("error de petición ajax");
+            },
+        });
 
-});
 
-// barra accesibilidad
+
+
+        } else if(tipo == 'PERSONAS CON DISCAPACIDAD'){
+
+            $('.caja_discapacidad').removeClass('d-none');
+            $('#discapacidad').attr('required', true);
+            $('.caja_estudios').addClass('d-none');
+            $('#institucion_educativa').attr('required', false);  
+            $('.caja_certificadoEstudios').addClass('d-none');
+            $('#archivo_certificadoEstudio').attr('required', false);
+            $('#fecha_nacimiento').attr('max', today);
+            $('#archivo_discapacidad').attr('required', true);  
+             $('.caja-deportistas').addClass('d-none');
+            $('#archivo_deportistas_artistas').attr('required', false);      
+
+        }else if(tipo == 'ADULTO MAYOR'){          
+           $('#fecha_nacimiento').attr('max', '1960-12-31'); 
+            $('.caja-deportistas').addClass('d-none');
+            $('#archivo_deportistas_artistas').attr('required', false);
+            $('.caja_estudios').addClass('d-none');
+            $('#institucion_educativa').attr('required', false);  
+            $('.caja_certificadoEstudios').addClass('d-none');
+            $('#archivo_certificadoEstudio').attr('required', false);  
+            $('.caja_discapacidad').addClass('d-none');
+            $('#discapacidad').attr('required', false);      
+
+
+
+        }else if(tipo == 'DEPORTISTA-ARTISTA'){          
+            $('.caja-deportistas').removeClass('d-none');
+            $('#archivo_deportistas_artistas').attr('required', true);
+            $('.caja_estudios').addClass('d-none');
+            $('#institucion_educativa').attr('required', false);  
+            $('.caja_certificadoEstudios').addClass('d-none');
+            $('#archivo_certificadoEstudio').attr('required', false);
+            $('#fecha_nacimiento').attr('max', today);
+            $('.caja_discapacidad').addClass('d-none');
+            $('#discapacidad').attr('required', false);
+
+
+
+
+        }else{
+            $('.caja_discapacidad').addClass('d-none');
+            $('#discapacidad').attr('required', false);
+            $('.caja_estudios').addClass('d-none');
+            $('#institucion_educativa').attr('required', false); 
+            $('.caja_certificadoEstudios').addClass('d-none');
+            $('#archivo_certificadoEstudio').attr('required', false); 
+            $('#fecha_nacimiento').attr('max', today); 
+            $('#archivo_discapacidad').attr('required', false); 
+            $('.caja-deportistas').addClass('d-none');
+            $('#archivo_deportistas_artistas').attr('required', false);     
+  
+
+
+        }
+
+    });
+
+    $('#tiene_sisben').change(function(){
+        var sisben = $(this).val();
+        if(sisben == 'SI'){
+            $('.caja_docSisben').removeClass('d-none');
+            $('#archivo_docSisben').attr('required', true);
+            $('.caja-certificadoVecindad ').addClass('d-none');
+            $('#archivo_certiVencidad').attr('required', false);
+
+        }else{
+
+            $('.caja_docSisben').addClass('d-none');
+            $('#archivo_docSisben').attr('required', false);
+            $('.caja-certificadoVecindad ').removeClass('d-none');
+            $('#archivo_certiVencidad').attr('required', true);
+
+        }
+
+    });
+
+    $(".documentos_adjuntos_metrolinea").fileinput({
+        theme: "fas",
+        language: "es",
+        browseClass: "btn btn-primary",
+        browseLabel: "Examinar",
+        removeClass: "btn btn-danger",
+        allowedFileExtensions: ["pdf"],
+        overwriteInitial: true,
+        maxFileSize: 3000,
+    });
+
+
+    $('#estrato_socioeconomico').change(function(){
+        var estrato = $(this).val();
+        if(estrato == 4 || estrato == 5 || estrato == 6){
+
+        alert('ATENCION !! ESTOS ESTRATOS NO SON BENEFICIARIOS DEL PROGRAMA');
+         window.location.href = 'https://www.bucaramanga.gov.co/beneficio-metrolinea/';
+         $("#FormMetrolinea").trigger("reset");
+            
+
+        }
+
+    });
+
+
+
+    $('#fecha_nacimiento').ready(function(){    
+        var today = moment(new Date()).format('YYYY-MM-DD');
+        $('#fecha_nacimiento').attr('max', today); 
+    });
+
+    $('#fecha_nacimiento').change(function(){
+        var fecha = moment($(this).val());
+        var today = moment(new Date());
+        var difference = today.diff(fecha, 'year');
+       if(difference < 6){
+         alert('ATENCION !! Niños menores de 6 años no pueden ser registrados en el programa');
+         window.location.href = 'https://www.bucaramanga.gov.co/beneficio-metrolinea/';
+         $("#FormMetrolinea").trigger("reset");
+         
+       }else if(difference < 18){
+           $('.caja_acudiente').removeClass('d-none');
+           $('#nombre_acudiente').attr('required', true);
+           $('.caja_docAcudiente').removeClass('d-none');
+           $('#archivo_docAcudiente').attr('required', true);
+       }else if(difference >= 18){
+        $('.caja_acudiente').addClass('d-none');
+        $('#nombre_acudiente').attr('required', false);
+        $('.caja_docAcudiente').addClass('d-none');
+           $('#archivo_docAcudiente').attr('required', false);
+
+       } 
+       $('#edad').val(difference);
+
+
+    });
+
+    // barra accesibilidad
 $(".min-fontsize").click(function() {
 
     var fuente = $("#body").css("font-size");
@@ -1451,9 +1585,18 @@ $(".min-fontsize").click(function() {
 
     }
 
- })
-   
-   
+ });
+
+ $('.compartir-info-metro').click(function(){
+
+    var compartir = $(this).val();
+    if(compartir == 'NO'){
+        alert('Apreciado ciudadano en el evento de NO autorizar compartir sus datos, soy consciente de que mi información no podrá ser compartida con terceros por lo tanto no se podrá revisar su solicitud para acceder al beneficio');
+    }
+
+
+
+ });
    
      
     

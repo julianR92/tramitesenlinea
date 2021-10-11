@@ -152,8 +152,7 @@
                 @elseif($solicitud->estado_solicitud == 'PENDIENTE' && $solicitud->act_documentos == 'SI')
                          <div class="col-md-4"><h6>Atención!!</h6><p>Usted ya realizó una actualización de documentos el dia {{$solicitud->updated_at}}</p></div> 
 
-                @elseif($solicitud->estado_solicitud=='REVISION-PLANEACION' || $solicitud->estado_solicitud=='RESPUESTA-PLANEACION')                                        
-                <div class="col-md-4"><h6>Atención!!</h6><p>Su solicitud se encuentra en CONCEPTO TÉCNICO</p></div> 
+                                                              
 
                  @endif
                         </div>

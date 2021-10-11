@@ -66,6 +66,14 @@ Route::post('/registro-metrolinea/store', 'MetrolineaController@store')->name('m
 Route::get('/registro-metrolinea/confirmacion', 'MetrolineaController@confirmacion')->name('metrolinea.confirmacion');
 Route::get('/registro-metrolinea/finalizar', 'MetrolineaController@end')->name('metrolinea.finalizar');
 Route::post('/registro-metrolinea/consulta', 'MetrolineaController@consulta')->name('metrolinea.consulta');
+Route::post('/registro-metrolinea/entidades', 'MetrolineaController@entidades')->name('metrolinea.entidades');
+
+
+// RUTAS DE PUBLICIDAD EXTERIOR
+
+Route::get('/publicidad-exterior', 'PublicidadController@index')->name('publicidad.index');
+
+
 
 
 Route::group(['middleware' => ['role:SUPER-ADMIN']], function () {

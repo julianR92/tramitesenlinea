@@ -23,7 +23,7 @@
                         <div class="image-icon">
                             <span class="breadcrumb govco-icon govco-icon-shortr-arrow" style="height: 22px;"></span>
                             <p class="ml-3 ml-md-0 "><b style="color: #004fbf;text-transform: none;">
-                                Te llevamos en el corazon
+                                Categorización de parqueaderos
                                 </b></p>
                         </div>
                     </li>
@@ -64,16 +64,16 @@
                 <div class="alert-success-govco alert alert-dismissible fade show animate__animated animate__bounceInRight" aria-label="Alerta: caso de éxito">
                      <div class="alert-heading">
                       <span class="govco-icon govco-icon-check-cn size-2x"></span>
-                      <span class="headline-l-govco">Tu solicitud se realizó correctamente</span>
+                      <span class="headline-l-govco">Tu solicitud se realizo correctamente</span>
                       
                     </div>
-                    <p>Apreciado Ciudadano, su solicitud ha sido recibida satisfactoriamente para consultar el estado de su solicitud tenga en cuenta el siguiente número de solicitud: <strong> {{session('radicado_id')}}</strong></p>
+                    <p>Apreciado Ciudadano, su solicitud ha sido recibida satisfactoriamente para consultar el estado de sus solicitud tenga en cuenta el siguiente numero de radicado: <strong> {{session('radicado_id')}}</strong></p>
                   </div>
 
 
             </div>
             <div class="col-md-4">
-                <button style="font-size:15px;" type="button" class="btn btn-round btn-middle" name="consultar"><a href="{{URL::route('metrolinea.finalizar')}}">Finalizar</a></button>
+                <button style="font-size:15px;" type="button" class="btn btn-round btn-middle" name="consultar"><a href="{{URL::route('parqueaderos.finalizar')}}">Finalizar</a></button>
 
 
             </div>
@@ -83,13 +83,13 @@
 </div>
 <script>
     setTimeout(function() {
-      window.location.href = '/registro-metrolinea';
+      window.location.href = '/categorizacion-parqueaderos/finalizar';
    }, 120000);
 </script>
 @else
 
 <script>
-    window.location = '/registro-metrolinea';
+    window.location = '/categorizacion-parqueaderos';
 </script>
 
 

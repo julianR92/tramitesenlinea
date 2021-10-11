@@ -24,7 +24,7 @@
                             <div class="image-icon">
                                 <span class="breadcrumb govco-icon govco-icon-shortr-arrow" style="height: 22px;"></span>
                                 <p class="ml-3 ml-md-0 "><b style="color: #004fbf;text-transform: none;">
-                                        Te llevamos en el corazon
+                                        Te llevamos en el corazón
                                     </b></p>
                             </div>
                         </li>
@@ -68,12 +68,15 @@
                             <h1 class="headline-xl-govco">Te llevamos en el corazón - Metrolinea</h1>
 
                             - @if ($errors->any())
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <ul>
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
                         </div>
                     @endif 
 
@@ -85,7 +88,7 @@
                                     <span class="govco-icon govco-icon-bell-sound-p size-2x"></span>
                                     <span class="headline-l-govco">Importante</span>
                                 </div>
-                                <p style="text-align: justify"> Resaltar informacion importante </p>
+                                <p style="text-align: justify"> Esta información debe ser 100% veraz y solo te podrás registrar una vez, asegúrate de validar tu información personal y documentos adjuntos antes de enviar de solicitud.</p>
                             </div>
                         </div>
 
@@ -94,12 +97,13 @@
                         <div class="row form-group mt-2">
 
                             <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="tipo_poblacion" class="form-label"> *Tipo de Poblacion </label>
+                                <label for="tipo_poblacion" class="form-label"> Tipo de Poblacion* </label>
                                 <select class="form-control  @error('tipo_poblacion') is-invalid @enderror"
                                     name="tipo_poblacion" id="tipo_poblacion" required>
                                     <option value="">Seleccione</option>
-                                    <option value="ESTUDIANTE">ESTUDIANTE</option>
-                                    <option value="DEPORTISTA">DEPORTISTA DE ALTO RENDIMIENTO</option>
+                                    <option value="ESTUDIANTE-COLEGIO">ESTUDIANTE COLEGIO</option>
+                                    <option value="ESTUDIANTE-UNIVERSIDAD">ESTUDIANTE UNIVERSITARIO / TECNOLOGO / TECNICO</option>
+                                    <option value="DEPORTISTA-ARTISTA">DEPORTISTA / ARTISTA</option>
                                     <option value="ADULTO MAYOR">ADULTO MAYOR</option>
                                     <option value="PERSONAS CON DISCAPACIDAD">PERSONA CON DISCAPACIDAD</option>
                                 </select>
@@ -144,7 +148,7 @@
                                     <option value="">Seleccione</option>
                                     <option value="T.I.">Tarjeta de Identidad</option>
                                     <option value="C.C.">Cedula de Ciudadanía</option>
-                                    <option value="C.E.">Cedula de Extranjería</option>
+                                    {{-- <option value="C.E.">Cedula de Extranjería</option> --}}
                                     <option value="P.P.">Pasaporte</option>
                                 </select>
                                 @error('tipo_documento')
@@ -168,7 +172,7 @@
 
                             <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento* </label>
-                                <input value="{{ old('fecha_nacimiento') }}" type="date"
+                                <input type="date"
                                     class="form-control document_validate  @error('fecha_nacimiento') is-invalid @enderror"
                                     name="fecha_nacimiento" id="fecha_nacimiento" required>
                                 @error('fecha_nacimiento')
@@ -194,10 +198,24 @@
                                 @enderror
                             </div>
 
+                            <div class="col-md-12 pl-1 pt-3 caja_discapacidad d-none">
+
+                                <label for="nombre_cuidador" class="form-label">Nombre del cuidador primario&nbsp; <small
+                                        style="font-size: 11px!important"><em style="font-size: 11px!important">(Persona
+                                            responsable de la persona con discapacidad OPCIONAL)</em> </small> </label>
+                                <input type="text" value="{{ old('nombre_cuidador') }}"
+                                    class="form-control  @error('nombre_cuidador') is-invalid @enderror"
+                                    name="nombre_cuidador" id="nombre_cuidador" maxlength="120"
+                                    onkeypress="return Letras(event)" onkeyup="aMayusculas(this.value,this.id)">
+                                @error('nombre_cuidador')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
                             <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="estado_civil" class="form-label">Estado Civil* <small
-                                        style="font-size: 10px!important"><em style="font-size: 10px!important">(del usuario
-                                            del sistema)</em> </small> </label>
+                <label for="estado_civil" class="form-label">Estado Civil* <small style="font-size: 10px!important"><em style="font-size: 10px!important">(del solicitante)</em> </small> </label>
                                 <select class="form-control  @error('estado_civil') is-invalid @enderror"
                                     name="estado_civil" id="estado_civil" required>
                                     <option value="">Seleccione</option>
@@ -206,6 +224,7 @@
                                     <option value="Divorciado">Divorciado(a)</option>
                                     <option value="Concubinato">Concubinato</option>
                                     <option value="Viudo">Viudo(a)</option>
+                                    <option value="Ninguno">Ninguno(a)</option>
                                 </select>
                                 @error('estado_civil')
                                     <span class="invalid-feedback" role="alert">
@@ -216,8 +235,7 @@
 
                             <div class="col-md-6 pl-1 pr-1 pt-3 ">
                                 <label for="nivel_estudios" class="form-label">Nivel de estudios* <small
-                                        style="font-size: 10px!important"><em style="font-size: 10px!important">(del usuario
-                                            del sistema)</em> </small> </label>
+                                        style="font-size: 10px!important"><em style="font-size: 10px!important">(del solicitante)</em> </small> </label>
                                 <select class="form-control  @error('nivel_estudios') is-invalid @enderror"
                                     name="nivel_estudios" id="nivel_estudios" required>
                                     <option value="">Seleccione</option>
@@ -244,7 +262,7 @@
                                     <option value="">Seleccione</option>
                                     <option value="Mujer">Mujer</option>
                                     <option value="Hombre">Hombre</option>
-                                    <option value="Intersexual">Intersexual</option>
+                                    <option value="Otro">Otro</option>
                                 </select>
                                 @error('sexo')
                                     <span class="invalid-feedback" role="alert">
@@ -357,14 +375,14 @@
                             </div>
 
                             <div class="col-md-6 pl-1 pr-1 pt-3 caja_estudios d-none">
-                                <label for="institucion_educativa" class="form-label">Institucion Educativa Publica* </label>
+                                <label for="institucion_educativa" class="form-label">Entidad Educativa* </label>
                                 <select name="institucion_educativa" id="institucion_educativa"
                                     class="form-control @error('institucion_educativa') is-invalid @enderror select_general">
                                     <option value=""></option>
-                                    @foreach ($instituciones as $institucion)
+                                    {{-- @foreach ($instituciones as $institucion)
                                         <option value="{{ $institucion->nombre_institucion }}">{{ $institucion->nombre_institucion }}</option>
 
-                                    @endforeach
+                                    @endforeach --}}
                                 </select>
                                 @error('institucion_educativa')
                                     <span class="invalid-feedback" role="alert">
@@ -427,13 +445,7 @@
                                     <option value="APD4">APD4</option>
                                     <option value="APD6">APD6</option>
                                     <option value="APD7">APD7</option>
-                                    <option value="APD9">APD9</option>
-
-
-
-
-
-
+                                    <option value="APD9">APD9</option>                         
 
                                 </select>
                                 @error('ruta_frecuente')
@@ -478,6 +490,22 @@
                                 @enderror
                             </div>
 
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="tiene_sisben" class="form-label">¿Tiene sisben?* </label>
+                                <select class="form-control  @error('tiene_sisben') is-invalid @enderror" name="tiene_sisben" id="tiene_sisben"
+                                    required>
+                                    <option value="">Seleccione</option>
+                                    <option value="SI">SI</option>
+                                    <option value="NO">NO</option>
+                                    
+                                </select>
+                                @error('tiene_sisben')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
 
                                                                
                           <h3 class="headline-l-govco mt-3 pl-0">2. Documentos Adjuntos de la Solicitud</h3>
@@ -485,11 +513,11 @@
                             <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="archivo_documentoIdentidad" class="form-label">Copia de documento de identidad <br> <small class="text-danger"
                                         style="font-size: 11px!important">Solo se permiten archivos .pdf con un tamaño
-                                        máximo de 10MB</small> </label>
+                                        máximo de 3MB</small> </label><br><br>
                                 <div class="form-group">
                                     <div class="file-loading">
                                         <input
-                                            class=" @error('archivo_documentoIdentidad') is-invalid @enderror documentos_adjuntos"
+                                            class=" @error('archivo_documentoIdentidad') is-invalid @enderror documentos_adjuntos_metrolinea"
                                             id="archivo_documentoIdentidad" accept="application/pdf" name="archivo_documentoIdentidad"
                                             type="file" data-overwrite-initial="true" required>
                                         @error('archivo_documentoIdentidad')
@@ -503,15 +531,15 @@
 
                             
 
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="archivo_certiVencidad" class="form-label">Certificado de Vecindad* <br> <small
+                            <div class="col-md-6 pl-1 pr-1 pt-3 caja-certificadoVecindad d-none">
+                                <label for="archivo_certiVencidad" class="form-label">Certificado de vecindad y recibo de servicio publico (unidos en un mismo pdf)* <br> <small
                                         class="text-danger" style="font-size: 11px!important">Solo se permiten archivos .pdf
-                                        con un tamaño máximo de 10MB</small> </label>
+                                        con un tamaño máximo de 3MB</small> </label>
                                 <div class="form-group">
                                     <div class="file-loading">
-                                        <input class=" @error('archivo_certiVencidad') is-invalid @enderror documentos_adjuntos"
+                                        <input class=" @error('archivo_certiVencidad') is-invalid @enderror documentos_adjuntos_metrolinea"
                                             id="archivo_certiVencidad" accept="application/pdf" name="archivo_certiVencidad" type="file"
-                                            data-overwrite-initial="true" required>
+                                            data-overwrite-initial="true">
                                         @error('archivo_certiVencidad')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong class="text-danger">{{ $message }}</strong>
@@ -523,12 +551,12 @@
 
 
                             <div class="col-md-6 pl-1 pr-1 pt-3 caja_certificadoEstudios d-none">
-                                <label for="archivo_certificadoEstudio" class="form-label">Certificado de estudios* <br> <small
+                                <label for="archivo_certificadoEstudio" class="form-label">Carnet Vigente de Entidad Educativa ó Certificado de matricula vigente*<br> <small
                                         class="text-danger" style="font-size: 11px!important">Solo se permiten archivos .pdf
-                                        con un tamaño máximo de 10MB</small></label>
+                                        con un tamaño máximo de 3MB</small></label><br>
                                 <div class="form-group">
                                     <div class="file-loading">
-                                        <input class=" @error('archivo_certificadoEstudio') is-invalid @enderror documentos_adjuntos"
+                                        <input class=" @error('archivo_certificadoEstudio') is-invalid @enderror documentos_adjuntos_metrolinea"
                                             id="archivo_certificadoEstudio" accept="application/pdf" name="archivo_certificadoEstudio"
                                             type="file" data-overwrite-initial="true">
                                         @error('archivo_certificadoEstudio')
@@ -539,6 +567,80 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3 caja_docAcudiente d-none">
+                                <label for="archivo_docAcudiente" class="form-label">Copia Documento de identificación del acudiente* <br> <small
+                                        class="text-danger" style="font-size: 11px!important">Solo se permiten archivos .pdf
+                                        con un tamaño máximo de 3MB</small></label>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input class=" @error('archivo_docAcudiente') is-invalid @enderror documentos_adjuntos_metrolinea"
+                                            id="archivo_docAcudiente" accept="application/pdf" name="archivo_docAcudiente"
+                                            type="file" data-overwrite-initial="true">
+                                        @error('archivo_docAcudiente')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3 caja_docSisben d-none">
+                                <label for="archivo_docSisben" class="form-label">Copia calificación Sisben metodología 4: de A1 a C9.* <br> <small
+                                        class="text-danger" style="font-size: 11px!important">Solo se permiten archivos .pdf
+                                        con un tamaño máximo de 3MB</small></label><br>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input class=" @error('archivo_docSisben') is-invalid @enderror documentos_adjuntos_metrolinea"
+                                            id="archivo_docSisben" accept="application/pdf" name="archivo_docSisben"
+                                            type="file" data-overwrite-initial="true">
+                                        @error('archivo_docSisben')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3 caja_discapacidad d-none">
+                                <label for="archivo_" class="form-label"> Registro de localización y caracterización de personas con discapacidad del Ministerio de Salud ó Circular Externa 009.* <br> <small
+                                        class="text-danger" style="font-size: 11px!important">Solo se permiten archivos .pdf
+                                        con un tamaño máximo de 3MB</small></label>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input class=" @error('archivo_discapacidad') is-invalid @enderror documentos_adjuntos_metrolinea"
+                                            id="archivo_discapacidad" accept="application/pdf" name="archivo_discapacidad"
+                                            type="file" data-overwrite-initial="true">
+                                        @error('archivo_discapacidad')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3 caja-deportistas d-none">
+                                <label for="archivo_" class="form-label"> Carnét de escuelas de formación deportiva o artística vigente.* <br> <small
+                                        class="text-danger" style="font-size: 11px!important">Solo se permiten archivos .pdf
+                                        con un tamaño máximo de 3MB</small></label>
+                                <div class="form-group">
+                                    <div class="file-loading">
+                                        <input class=" @error('archivo_deportistas_artistas') is-invalid @enderror documentos_adjuntos_metrolinea"
+                                            id="archivo_deportistas_artistas" accept="application/pdf" name="archivo_deportistas_artistas"
+                                            type="file" data-overwrite-initial="true">
+                                        @error('archivo_deportistas_artistas')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong class="text-danger">{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+
 
                             {{-- por definir cuarto documento --}}
                             <div class="col-md-12 pl-1 pt-3">
@@ -554,7 +656,7 @@
                                 </label><br>
 
                                 <a class="btn btn-low px-0"
-                                    href="https://www.bucaramanga.gov.co/Inicio/autorizacion-de-tratamiento-de-datos-personales/"
+                                    href="https://www.bucaramanga.gov.co/wp-content/uploads/2018/12/Resolucion-340-Dic-26-2018-y-Politica.pdf"
                                     target="_blank">Acepto términos y condiciones</a>
                                 <label class="checkbox-govco d-inline">
                                     <input type="checkbox" id="AT01" name="acepto_terminos" checked value="SI" />
@@ -573,8 +675,8 @@
                                 </p>
                             </div>
                             <div class="col-md-11 pl-1 pr-1 pt-3">
-                                <p>Acepto que la información aquí registrada sea compartida con otras entidades y/o
-                                    terceros vinculados a la Alcaldía de Bucaramanga</p>
+                                <p class="text-justify">Acepto que la información aquí registrada sea compartida con otras entidades y/o
+                                    terceros vinculados a la Alcaldía de Bucaramanga, en especial a Metrolinea para optar al beneficio de tarifa diferencial.</p>
                                 @error('compartir_informacion')
                                     <span class="invalid-feedback" role="alert">
                                         <strong class="text-danger">{{ $message }}</strong>
@@ -582,14 +684,14 @@
                                 @enderror
                                 <div class="form-check-inline">
                                     <label class="radiolist-govco radiobutton-govco">
-                                        <input type="radio" name="compartir_informacion" id="rb_si" value="SI" required
+                                        <input type="radio" class="compartir-info-metro" name="compartir_informacion" id="rb_si" value="SI" required
                                             checked />
                                         <label for="rb_si">SI</label>
                                     </label>
                                 </div>
                                 <div class="form-check-inline">
                                     <label class="radiolist-govco radiobutton-govco">
-                                        <input type="radio" name="compartir_informacion" id="rb_no" value="NO" />
+                                        <input type="radio" class="compartir-info-metro" name="compartir_informacion" id="rb_no" value="NO" />
                                         <label for="rb_no">NO</label>
                                     </label>
                                 </div>
@@ -597,6 +699,9 @@
                             </div>
 
                             <div class="col-md-12  pl-1 pr-1 pt-3 text-left mt-4" style="padding-left: 0px!important">
+                               
+                                <div class="g-recaptcha" data-sitekey="6LccRDwcAAAAALTdA0arpJ6ilqwmIQF0Jv6qq7Rk"></div>
+
                                 <input type="hidden" class="form-control" name="id_municipio" id="id_municipio" value="68001">
                                 <input type="hidden" class="form-control" name="edad" id="edad">
                                 <button style="font-size:15px;" type="submit" class="btn btn-round btn-middle btn_enviar_solicitud" name="consultar" onclick="return confirm('¿Esta seguro de enviar esta solicitud ?')">Enviar Solicitud</button>
@@ -637,11 +742,9 @@
                                 data-parent="#EjemploAccordion-2">
                                 <div class="card-body bg-color-selago">
                                     <div class="container">
-                                        <p class="form-inline my-0"><span class="govco-icon govco-icon-email"></span> <a
-                                                style="color: #3366CC;" href="mailto:cjguerrero@bucaramanga.gov.co"
-                                                target="_blank"> cjguerrero@bucaramanga.gov.co</a></p>
-                                        <p class="form-inline"><span class="govco-icon govco-icon-call-center"></span><a
-                                                style="color: #3366CC;" href="tel:0376337000"> (+57)7 633 70 00</a></p>
+                                        <p class="form-inline my-0">  Echa un vistazo a las preguntas frecuentes <a style="color: #3366CC;" href="https://www.bucaramanga.gov.co/beneficio-metrolinea/#seccion_preguntas" target="_blank">CLIC AQUÍ <span class="govco-icon govco-icon-hand-n size-1x "></span></a></p>
+                                        {{-- <p class="form-inline"><span class="govco-icon govco-icon-call-center"></span><a
+                                                style="color: #3366CC;" href="tel:0376337000"> (+57)7 633 70 00</a></p> --}}
                                     </div>
                                 </div>
                             </div>
@@ -777,7 +880,7 @@
                                     <select id="VD01" name="tipo_parametro" class="form-control input-md"
                                         title="Seleccione la opción para validar el documento" required="required">
                                         <option value="">Seleccione</option>
-                                        <option value="numero_solicitud">Numero de radicado</option>
+                                        <option value="numero_solicitud">Numero de solicitud</option>
                                         <option value="documento_usuario">Documento de identificación Solicitante
                                         </option>
 

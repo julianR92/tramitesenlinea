@@ -44,6 +44,14 @@ class Metrolinea extends Model
         "tratamiento_datos",
         "acepto_terminos",
         "confirmo_mayorEdad",
-        "compartir_informacion"
+        "compartir_informacion",
+        "adj_docAcudiente",
+        "adj_docSisben",
+        "adj_deportistas_artistas",
+        "adj_discapacidad",
+        "tiene_sisben",
+        "nombre_cuidador",
+
+
       ];
 }

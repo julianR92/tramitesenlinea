@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\EnvioNotificacion;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
 use PDF;
 
 
@@ -77,7 +78,8 @@ class PlaneacionController extends Controller
                 'documento' => 'NO',
                 'fecha_pendiente' => $date_30,
                 'radicado'  => $datos->radicado,
-                'estado' => $request->estado_solicitud
+                'estado' => $request->estado_solicitud,
+                'id'=> Crypt::encrypt($request->id)
             ];
 
             // actualizar
