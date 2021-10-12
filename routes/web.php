@@ -67,6 +67,9 @@ Route::get('/registro-metrolinea/confirmacion', 'MetrolineaController@confirmaci
 Route::get('/registro-metrolinea/finalizar', 'MetrolineaController@end')->name('metrolinea.finalizar');
 Route::post('/registro-metrolinea/consulta', 'MetrolineaController@consulta')->name('metrolinea.consulta');
 Route::post('/registro-metrolinea/entidades', 'MetrolineaController@entidades')->name('metrolinea.entidades');
+Route::get('/registro-metrolinea/detalle/{id}', 'MetrolineaController@detalle')->name('metrolinea.detalle');
+Route::post('/registro-metrolinea/updateDocs', 'MetrolineaController@updateDocs')->name('metrolinea.updateDocs');
+
 
 
 // RUTAS DE PUBLICIDAD EXTERIOR

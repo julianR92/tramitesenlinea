@@ -11,6 +11,8 @@ use App\Metrolinea;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
+use Carbon\Carbon;
 
 class MetrolineaController extends Controller
 {
@@ -353,6 +355,97 @@ class MetrolineaController extends Controller
         }
         
     }
+
+    public function detalle($id){
+
+        $solicitud = Metrolinea::FindOrFail(Crypt::decrypt($id));         
+        
+        return view('tramites.metrolinea.detalle', compact('solicitud'));
+
+    }
+
+    public function updateDocs(Request $request){
+
+        $solicitud = Metrolinea::FindOrFail($request->id);
+        $contador = 0;
+
+        if($request->archivo_documentoIdentidad){
+        $adjunto1 = $request->file('archivo_documentoIdentidad')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'documento-de-identidad-' . $solicitud->numero_solicitud . '.pdf');
+        $contador++;
+
+        }else{
+            $adjunto1 = false;
+        }
+        if($request->archivo_certiVencidad || $request->archivo_certiVencidad != null){  
+        $adjunto2 = $request->file('archivo_certiVencidad')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'certificado-vecindad-' . $solicitud->numero_solicitud . '.pdf');
+        $contador++;
+
+        }else{
+            $adjunto2 = false;
+        }
+        if($request->archivo_certificadoEstudio || $request->archivo_certificadoEstudio != null){  
+        $adjunto3 = $request->file('archivo_certificadoEstudio')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'certificado-estudio-' . $solicitud->numero_solicitud. '.pdf');
+        $contador++;
+
+        }else{
+            $adjunto3 = false;
+        }
+    
+        if($request->archivo_docAcudiente || $request->archivo_docAcudiente != null){
+            $adjunto4 =  $request->file('archivo_docAcudiente')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'documento-identidad-acudiente-' . $solicitud->numero_solicitud . '.pdf');
+            $contador++;
+
+        }else{
+            $adjunto4 =false;
+        }
+    
+        if($request->archivo_docSisben || $request->archivo_docSisben != null){
+            $adjunto5 =  $request->file('archivo_docSisben')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'calificacion-sisben-' . $solicitud->numero_solicitud . '.pdf');
+            $contador++;
+
+        }else{
+            $adjunto5 =false;
+        }
+    
+        if($request->archivo_discapacidad || $request->archivo_discapacidad != null){
+            $adjunto6 =  $request->file('archivo_discapacidad')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'registro-discapacidad-' . $solicitud->numero_solicitud . '.pdf');
+            $contador++;
+
+        }else{
+            $adjunto6 =false;
+        }
+    
+        if($request->archivo_deportistas_artistas || $request->archivo_deportistas_artistas != null){
+            $adjunto7 =  $request->file('archivo_deportistas_artistas')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'carnet-deportista-artista-' . $solicitud->numero_solicitud . '.pdf');
+            $contador++;
+
+        }else{
+            $adjunto7 =false;
+        }
+
+        if ($adjunto1 || $adjunto2 || $adjunto3 || $adjunto4 || $adjunto5 || $adjunto6 || $adjunto7) {
+
+        
+        $solicitud->estado_solicitud = "DOCUMENTOS-CARGADOS";
+        $solicitud->fecha_actuacion = Carbon::now();
+        $solicitud->numero_actualizaciones = $solicitud->numero_actualizaciones + 1;
+        $solicitud->save();
+
+        Alert::success('Operacion exitosa', 'Se han cargado '.$contador.' archivo(s) en el sistema');
+            return redirect()->route('metrolinea.index');
+
+        }else{
+            Alert::error('Error', 'No se ha realizado la carga de los archivos en el sistema');
+            return redirect()->route('metrolinea.index');
+        }
+
+
+
+
+
+
+    }
+
 
     
 }

@@ -70,6 +70,10 @@
                                         <p style="color: #069169;font-weight:bold">ENVIADA<span class="govco-icon govco-icon-check-p size-1x"></span></p>                                        
                                          @elseif($solicitud->estado_solicitud == 'APROBADA')
                                          <p style="color: #069169;font-weight:bold">APROBADA<span class="govco-icon govco-icon-like size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'PENDIENTE')
+                                         <p style="color: #FFAB00;font-weight:bold">PENDIENTE<span class="govco-icon govco-icon-reload-p size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'DOCUMENTOS-CARGADOS')
+                                         <p style="color: #F3561F;font-weight:bold">DOCUMENTOS NUEVAMENTE EN REVISION<span class="govco-icon govco-icon-3-phases-n size-1x"></span></p>
                                          @elseif($solicitud->estado_solicitud == 'RECHAZADA')
                                          <p style="color: #A80521;font-weight:bold">RECHAZADA<span class="govco-icon govco-icon-x-n size-1x"></span></p>
                                        @endif</td>
@@ -79,6 +83,11 @@
                                         <small>Solicitud en Revision</small>
                                         @elseif ($solicitud->estado_solicitud == 'APROBADA')
                                         <small>Después de 2 días de Aprobada puedes reclamar tu tarjeta en la sede del CAME de la estación de Metrolínea(Provenza)</small>
+                                        @elseif ($solicitud->estado_solicitud == 'PENDIENTE')
+                                        <small>Has adjuntado erroneamente algunos documentos, incluyelos nuevamente </small><br>
+                                        <a href="{{route('metrolinea.detalle', Crypt::encrypt($solicitud->id))}}" class="btn-link"> Cargar Documentos</a>
+                                        @elseif ($solicitud->estado_solicitud == 'DOCUMENTOS-CARGADOS')
+                                        <small>Documentos nuevamente en revision</small>
                                         @elseif ($solicitud->estado_solicitud == 'RECHAZADA')
                                         <small>No cumple con alguno de los requisitos</small>
                                         @else
