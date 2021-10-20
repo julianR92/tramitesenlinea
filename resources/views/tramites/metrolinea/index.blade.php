@@ -662,21 +662,21 @@
                                     <input type="checkbox" id="AT01" name="acepto_terminos" checked value="SI" />
                                     <label for="AT01"> </label>
                                 </label>
-                                <p class="text-justify">Confirmo que soy mayor de edad y con plena capacidad para
-                                    diligenciar el presente formulario.
-                                    Así mismo declaro que la información aquí suministrada corresponde a la verdad.
-                                    Declaro que he leído, entiendo y acepto las políticas de tratamiento de los datos que
-                                    suministro,
-                                    de conformidad con la Ley 1581 de 2012 y demás normas concordantes
-                                    <label class="checkbox-govco d-inline">
+                                <p class="text-justify">Autorizo al  MUNICIPIO DE BUCARAMANGA, identificado con NIT 890.201.222-0 y a METROLÍNEA S.A. con Nit. 830.507.387-3,  como los Responsables del Tratamiento  de los datos personales que comparto y, en virtud de la presente autorización, pueden procesar, recolectar, almacenar, usar, circular, suprimir, compartir, actualizar, transmitir y transferir de acuerdo con los términos y condiciones de las políticas de tratamiento vigentes, las cuales están en la página <a href="https://www.bucaramanga.gov.co/" target="_blank">www.bucaramanga.gov.co </a>  y  <a href="https://www.metrolinea.gov.co/v3.0/" target="_blank" >www.metrolinea.gov.co/v3.0/</a>, respectivamente.<label class="checkbox-govco d-inline">
+                                    <input type="checkbox" id="AT03" name="autorizacion_tratamiento" checked value="SI" />
+                                    <label for="AT03"> </label>
+                                </label>
+                            </p>
+                                <p class="text-justify">Confirmo que soy mayor de edad y con plena capacidad para diligenciar el presente formulario (y/o como acudiente). Asi mismo declaro que la información aquí suministrada corresponde a la verdad. Declaro que he leído, entiendo y acepto las políticas de tratamiento de los datos que suministro, de conformidad con la Ley 1581 de 2012 y demás normas concordantes.<label class="checkbox-govco d-inline">
                                         <input type="checkbox" id="AT02" name="confirmo_mayorEdad" checked value="SI" />
                                         <label for="AT02"> </label>
                                     </label>
                                 </p>
+
+                               
                             </div>
-                            <div class="col-md-11 pl-1 pr-1 pt-3">
-                                <p class="text-justify">Acepto que la información aquí registrada sea compartida con otras entidades y/o
-                                    terceros vinculados a la Alcaldía de Bucaramanga, en especial a Metrolinea para optar al beneficio de tarifa diferencial.</p>
+                            <div class="col-md-12 pl-1 pr-1 pt-3">
+                                <p class="text-justify">Acepto que la información aquí registrada sea compartida con otras entidades y/o terceros vinculados a la Alcaldía de Bucaramanga, en especial a Metrolinea para optar al beneficio de tarifa diferencial.</p>
                                 @error('compartir_informacion')
                                     <span class="invalid-feedback" role="alert">
                                         <strong class="text-danger">{{ $message }}</strong>
@@ -695,7 +695,7 @@
                                         <label for="rb_no">NO</label>
                                     </label>
                                 </div>
-
+                            <p class="pt-4 text-justify" ><b>Nota: &nbsp;</b> Si usted requiere ejercer sus derechos sobre la protección de datos, puede contactar a través de los siguientes correos: <a href="mailto:protecciondatos@bucaramanga.gov.co" href="_blank">protecciondatos@bucaramanga.gov.co</a> y/o <a href="mailto:jrueda@metrolinea.gov.co">jrueda@metrolinea.gov.</a></p>
                             </div>
 
                             <div class="col-md-12  pl-1 pr-1 pt-3 text-left mt-4" style="padding-left: 0px!important">

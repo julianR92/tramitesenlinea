@@ -51,6 +51,7 @@ class Metrolinea extends Model
         "adj_discapacidad",
         "tiene_sisben",
         "nombre_cuidador",
+        "autorizacion_tratamiento_compartido"
 
 
       ];

@@ -42,6 +42,8 @@ class MetrolineaController extends Controller
     
 
     public function store(Request $request){
+ 
+
 
        // validacion campos requeridos
     if($request->tipo_poblacion=='ESTUDIANTE-COLEGIO' || $request->tipo_poblacion=='ESTUDIANTE-UNIVERSIDAD'){
@@ -282,6 +284,14 @@ class MetrolineaController extends Controller
                $adj_deportistas_artistas= null; 
            }
 
+           if($request->autorizacion_tratamiento){        
+        
+            $tratamiento_compartido = 'SI';       
+            
+         }else{
+             $tratamiento_compartido = 'NO';
+         }
+
         $request->request->add([
             'numero_solicitud' => $radicado,
             'adj_documentoIdentidad' => $adj_documentoIdentidad,            
@@ -291,7 +301,8 @@ class MetrolineaController extends Controller
             'adj_docSisben'=> $adj_docSisben,
             'adj_discapacidad'=> $adj_discapacidad,
             'adj_deportistas_artistas' => $adj_deportistas_artistas,
-            'estado_solicitud' => 'ENVIADA'
+            'estado_solicitud' => 'ENVIADA',
+            'autorizacion_tratamiento_compartido' => $tratamiento_compartido
         ]);
 
         $request->merge([
@@ -366,25 +377,30 @@ class MetrolineaController extends Controller
 
     public function updateDocs(Request $request){
 
-        $solicitud = Metrolinea::FindOrFail($request->id);
+        $solicitud = Metrolinea::FindOrFail($request->id);      
+        $solicitud->numero_actualizaciones = $solicitud->numero_actualizaciones + 1;        
         $contador = 0;
 
+
         if($request->archivo_documentoIdentidad){
-        $adjunto1 = $request->file('archivo_documentoIdentidad')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'documento-de-identidad-' . $solicitud->numero_solicitud . '.pdf');
+        $adjunto1 = $request->file('archivo_documentoIdentidad')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'documento-de-identidad-' . $solicitud->numero_solicitud .'-'.$solicitud->numero_actualizaciones. '.pdf');
+        $solicitud->adj_documentoIdentidad = 'https://tramitesenlinea.bucaramanga.gov.co/storage/documentos_metrolinea/' . $solicitud->numero_solicitud . '/documento-de-identidad-' . $solicitud->numero_solicitud .'-'.$solicitud->numero_actualizaciones. '.pdf';
         $contador++;
 
         }else{
             $adjunto1 = false;
         }
         if($request->archivo_certiVencidad || $request->archivo_certiVencidad != null){  
-        $adjunto2 = $request->file('archivo_certiVencidad')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'certificado-vecindad-' . $solicitud->numero_solicitud . '.pdf');
+        $adjunto2 = $request->file('archivo_certiVencidad')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'certificado-vecindad-' . $solicitud->numero_solicitud .'-'.$solicitud->numero_actualizaciones.'.pdf');
+        $solicitud->adj_certiVecindad = 'https://tramitesenlinea.bucaramanga.gov.co/storage/documentos_metrolinea/' . $solicitud->numero_solicitud . '/certificado-vecindad-' . $solicitud->numero_solicitud .'-'.$solicitud->numero_actualizaciones. '.pdf';
         $contador++;
 
         }else{
             $adjunto2 = false;
         }
         if($request->archivo_certificadoEstudio || $request->archivo_certificadoEstudio != null){  
-        $adjunto3 = $request->file('archivo_certificadoEstudio')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'certificado-estudio-' . $solicitud->numero_solicitud. '.pdf');
+        $adjunto3 = $request->file('archivo_certificadoEstudio')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'certificado-estudio-' . $solicitud->numero_solicitud. '-'.$solicitud->numero_actualizaciones.'.pdf');
+        $solicitud->adj_certificadoEstudio = 'https://tramitesenlinea.bucaramanga.gov.co/storage/documentos_metrolinea/' . $solicitud->numero_solicitud . '/certificado-estudio-' . $solicitud->numero_solicitud .'-'.$solicitud->numero_actualizaciones. '.pdf';
         $contador++;
 
         }else{
@@ -392,7 +408,8 @@ class MetrolineaController extends Controller
         }
     
         if($request->archivo_docAcudiente || $request->archivo_docAcudiente != null){
-            $adjunto4 =  $request->file('archivo_docAcudiente')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'documento-identidad-acudiente-' . $solicitud->numero_solicitud . '.pdf');
+            $adjunto4 =  $request->file('archivo_docAcudiente')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'documento-identidad-acudiente-' . $solicitud->numero_solicitud .'-'.$solicitud->numero_actualizaciones.'.pdf');
+            $solicitud->adj_docAcudiente = 'https://tramitesenlinea.bucaramanga.gov.co/storage/documentos_metrolinea/' . $solicitud->numero_solicitud . '/documento-identidad-acudiente-' . $solicitud->numero_solicitud .'-'.$solicitud->numero_actualizaciones. '.pdf';
             $contador++;
 
         }else{
@@ -400,7 +417,8 @@ class MetrolineaController extends Controller
         }
     
         if($request->archivo_docSisben || $request->archivo_docSisben != null){
-            $adjunto5 =  $request->file('archivo_docSisben')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'calificacion-sisben-' . $solicitud->numero_solicitud . '.pdf');
+            $adjunto5 =  $request->file('archivo_docSisben')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'calificacion-sisben-' . $solicitud->numero_solicitud .'-'.$solicitud->numero_actualizaciones.'.pdf');
+            $solicitud->adj_docSisben = 'https://tramitesenlinea.bucaramanga.gov.co/storage/documentos_metrolinea/' . $solicitud->numero_solicitud . '/calificacion-sisben-' . $solicitud->numero_solicitud .'-'.$solicitud->numero_actualizaciones. '.pdf';
             $contador++;
 
         }else{
@@ -408,7 +426,8 @@ class MetrolineaController extends Controller
         }
     
         if($request->archivo_discapacidad || $request->archivo_discapacidad != null){
-            $adjunto6 =  $request->file('archivo_discapacidad')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'registro-discapacidad-' . $solicitud->numero_solicitud . '.pdf');
+            $adjunto6 =  $request->file('archivo_discapacidad')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'registro-discapacidad-' . $solicitud->numero_solicitud .'-'.$solicitud->numero_actualizaciones.'.pdf');
+            $solicitud->adj_discapacidad = 'https://tramitesenlinea.bucaramanga.gov.co/storage/documentos_metrolinea/' . $solicitud->numero_solicitud . '/registro-discapacidad-' . $solicitud->numero_solicitud .'-'.$solicitud->numero_actualizaciones. '.pdf';
             $contador++;
 
         }else{
@@ -416,7 +435,8 @@ class MetrolineaController extends Controller
         }
     
         if($request->archivo_deportistas_artistas || $request->archivo_deportistas_artistas != null){
-            $adjunto7 =  $request->file('archivo_deportistas_artistas')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'carnet-deportista-artista-' . $solicitud->numero_solicitud . '.pdf');
+            $adjunto7 =  $request->file('archivo_deportistas_artistas')->storeAs('documentos_metrolinea/' . $solicitud->numero_solicitud, 'carnet-deportista-artista-' .$solicitud->numero_solicitud.'-'.$solicitud->numero_actualizaciones.'.pdf');
+            $solicitud->adj_deportistas_artistas = 'https://tramitesenlinea.bucaramanga.gov.co/storage/documentos_metrolinea/' . $solicitud->numero_solicitud . '/carnet-deportista-artista-' . $solicitud->numero_solicitud .'-'.$solicitud->numero_actualizaciones. '.pdf';
             $contador++;
 
         }else{
@@ -427,8 +447,7 @@ class MetrolineaController extends Controller
 
         
         $solicitud->estado_solicitud = "DOCUMENTOS-CARGADOS";
-        $solicitud->fecha_actuacion = Carbon::now();
-        $solicitud->numero_actualizaciones = $solicitud->numero_actualizaciones + 1;
+        $solicitud->fecha_actuacion = Carbon::now();        
         $solicitud->save();
 
         Alert::success('Operacion exitosa', 'Se han cargado '.$contador.' archivo(s) en el sistema');

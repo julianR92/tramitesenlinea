@@ -170,7 +170,7 @@
 
                    @if($solicitud->adj_discapacidad != null || $solicitud->adj_discapacidad != '')
 
-                   <div class="col-md-6 pl-1 pr-1 pt-3 caja_discapacidad d-none">
+                   <div class="col-md-6 pl-1 pr-1 pt-3 caja_discapacidad">
                     <label for="archivo_" class="form-label"> Registro de localización y caracterización de personas con discapacidad del Ministerio de Salud ó Circular Externa 009.* <br> <small
                             class="text-danger" style="font-size: 11px!important">Solo se permiten archivos .pdf
                             con un tamaño máximo de 3MB</small></label>
@@ -188,8 +188,8 @@
                              
                      
                     
-
-                        <div class="col-md-6">                      
+                       
+                        <div class="col-md-12 pl-1 pr-1 pt-3 ">                      
                                                
                            <div class="form-group">
                                <button type="submit"  onclick="return confirm('¿Esta seguro de actualizar los documentos ?')" class="btn btn-round btn-middle btn-outline-info"  id="Boton">Actualizar documentos</button>
