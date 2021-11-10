@@ -22,8 +22,7 @@ $(document).ready(function () {
     ============================================================================*/
 
     $(".name_validate").change(function () {
-        $(this).each(function(){
-
+        $(this).each(function () {
             var input1 = $(this).val();
             var ValInput1 = input1.match(
                 /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ ]{3,20}$/
@@ -35,8 +34,7 @@ $(document).ready(function () {
                 $(this).focus();
                 $(this).val("");
             }
-        })
-      
+        });
     });
 
     /*============================================================================
@@ -64,17 +62,17 @@ $(document).ready(function () {
     ============================================================================*/
 
     $(".document_validate").change(function () {
-        $(this).each(function(){
-        var input1 = $(this).val();
-        var ValInput1 = input1.match(/^[a-zA-Z0-9\-]{5,15}$/);
-        if (ValInput1 == null) {
-            alert(
-                "No se permiten espacios, solo se permite el carácter especial (-)"
-            );
-            $(this).focus();
-            $(this).val("");
-        }
-      })
+        $(this).each(function () {
+            var input1 = $(this).val();
+            var ValInput1 = input1.match(/^[a-zA-Z0-9\-]{5,15}$/);
+            if (ValInput1 == null) {
+                alert(
+                    "No se permiten espacios, solo se permite el carácter especial (-)"
+                );
+                $(this).focus();
+                $(this).val("");
+            }
+        });
     });
 
     /*============================================================================
@@ -99,18 +97,18 @@ $(document).ready(function () {
                 id = "email_validate"        maxlength =50
     ============================================================================*/
 
-      $(".email_validate").change(function () {
-        $(this).each(function(){
-        var input10 = $(this).val();
-        var ValInput10 = input10.match(
-            /^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{4,}[.][a-zA-Z0-9\.]{2,12}$/
-        );
-        if (ValInput10 == null) {
-            alert("Correo no valido, por favor revise");
-            $(this).focus();
-            $(this).val("");
-        }
-      })
+    $(".email_validate").change(function () {
+        $(this).each(function () {
+            var input10 = $(this).val();
+            var ValInput10 = input10.match(
+                /^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{4,}[.][a-zA-Z0-9\.]{2,12}$/
+            );
+            if (ValInput10 == null) {
+                alert("Correo no valido, por favor revise");
+                $(this).focus();
+                $(this).val("");
+            }
+        });
     });
 
     /*============================================================================
@@ -118,18 +116,18 @@ $(document).ready(function () {
                 id = "number_validate"        maxlength =10
     ============================================================================*/
 
-   $(".number_validate").change(function () {
-        $(this).each(function(){
-        var input8 = $(this).val();
-        var ValInput8 = input8.match(/^[0-9]{7,10}$/);
-        if (ValInput8 == null) {
-            alert(
-                "No se permiten letras, caracteres especiales o menos de siete(7) digitos ni más de diez(10) digitos"
-            );
-            $(this).focus();
-            $(this).val("");
-        }
-      })
+    $(".number_validate").change(function () {
+        $(this).each(function () {
+            var input8 = $(this).val();
+            var ValInput8 = input8.match(/^[0-9]{7,10}$/);
+            if (ValInput8 == null) {
+                alert(
+                    "No se permiten letras, caracteres especiales o menos de siete(7) digitos ni más de diez(10) digitos"
+                );
+                $(this).focus();
+                $(this).val("");
+            }
+        });
     });
 
     /*============================================================================
@@ -169,13 +167,13 @@ $(document).ready(function () {
         }
     });
 
-        /*============================================================================
+    /*============================================================================
     =            input de  razon social
                 id = "address_validate"        maxlength =100
     ============================================================================*/
 
     $(".razon_social").change(function () {
-        $(this).each(function(){
+        $(this).each(function () {
             var input8 = $(this).val();
             var ValInput8 = input8.match(/^[a-zA-Z0-9\-.,\s]{5,100}$/);
             if (ValInput8 == null) {
@@ -185,7 +183,7 @@ $(document).ready(function () {
                 $(this).focus();
                 $(this).val("");
             }
-          })
+        });
     });
 
     $("#btn-sugerencias").click(function () {
@@ -217,8 +215,8 @@ $(document).ready(function () {
         width: "100%",
         placeholder: "Seleccione letra",
     });
-    
-     // parqueaderos
+
+    // parqueaderos
 
     $("#DD010").select2({
         width: "100%",
@@ -241,7 +239,7 @@ $(document).ready(function () {
 
     $("#barrio_empresa").select2({
         width: "100%",
-        placeholder: "Seleccione letra",
+        placeholder: "Seleccione Barrio",
     });
     //fin parqueaderos
 
@@ -253,15 +251,12 @@ $(document).ready(function () {
         width: "100%",
         placeholder: "Seleccione Vereda..",
     });
-    
 
-    $('#selectRoles').select2({
+    $("#selectRoles").select2({
         width: "100%",
-        multiple:"multiple",
+        multiple: "multiple",
         tags: true,
-        tokenSeparators: [',', ' '] 
-        
-
+        tokenSeparators: [",", " "],
     });
 
     $("#barrio_solicitante").select2({
@@ -271,7 +266,7 @@ $(document).ready(function () {
 
     // renderizar direccion
 
-    $('.modal1').on("change", function () {
+    $(".modal1").on("change", function () {
         var dd01 = document.getElementById("DD01").value;
         var dd02 = document.getElementById("DD02").value;
         var dd03 = document.getElementById("DD03").value;
@@ -281,11 +276,24 @@ $(document).ready(function () {
         var dd07 = document.getElementById("DD07").value;
         var dd08 = document.getElementById("DD08").value;
 
-document.getElementById("DD000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+"- " +dd06+dd07 +" "+dd08;
+        document.getElementById("DD000").value =
+            dd01 +
+            " " +
+            dd02 +
+            " " +
+            dd03 +
+            "# " +
+            dd04 +
+            dd05 +
+            "- " +
+            dd06 +
+            dd07 +
+            " " +
+            dd08;
     });
 
-     // segundo modal
-    $('.modal2').on("change", function () {
+    // segundo modal
+    $(".modal2").on("change", function () {
         var dd01 = document.getElementById("DD010").value;
         var dd02 = document.getElementById("DD020").value;
         var dd03 = document.getElementById("DD030").value;
@@ -295,8 +303,20 @@ document.getElementById("DD000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+"
         var dd07 = document.getElementById("DD070").value;
         var dd08 = document.getElementById("DD080").value;
 
-document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+"- " +dd06+dd07 +" "+dd08;
-            
+        document.getElementById("DD0000").value =
+            dd01 +
+            " " +
+            dd02 +
+            " " +
+            dd03 +
+            "# " +
+            dd04 +
+            dd05 +
+            "- " +
+            dd06 +
+            dd07 +
+            " " +
+            dd08;
     });
 
     // $("#btnDireccion").click(function () {
@@ -306,23 +326,21 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
     //     $("#direccion").val(direccion);
     // });
 
-     // parqueadero modal 1
+    // parqueadero modal 1
     $("#btnDireccion").click(function () {
-        
-         var direccion = $("#DD000").val();        
+        var direccion = $("#DD000").val();
         $("#ModalDirecciones").modal("hide");
         $("#direccion_solicitante").val("");
         $("#direccion_solicitante").val(direccion);
     });
 
-     // parqueadero modal 2
+    // parqueadero modal 2
     $("#btnDireccionEmpresas").click(function () {
-        
-        var direccion = $("#DD0000").val();        
-       $("#ModalDireccionesEmpresas").modal("hide");
-       $("#direccion_empresa").val("");
-       $("#direccion_empresa").val(direccion);
-   });
+        var direccion = $("#DD0000").val();
+        $("#ModalDireccionesEmpresas").modal("hide");
+        $("#direccion_empresa").val("");
+        $("#direccion_empresa").val(direccion);
+    });
 
     $("#matricula").change(function () {
         var input8 = document.getElementById("matricula").value;
@@ -622,7 +640,7 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
         maxFileSize: 10000,
     });
 
-     // file input parqueaderos
+    // file input parqueaderos
 
     $(".documentos_adjuntos").fileinput({
         theme: "fas",
@@ -665,70 +683,60 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
                     ": Activar para ordenar la columna de manera descendente",
             },
         },
-        responsive:true,
-        scrollX:        200,
+        responsive: true,
+        scrollX: 200,
         scrollCollapse: true,
-
     });
 
-     // tablas de exports
-    $('.tablas_export').ready(function(){
-        var radicado = $('#radicado').val();
-    
+    // tablas de exports
+    $(".tablas_export").ready(function () {
+        var radicado = $("#radicado").val();
 
-    $(".tablas_export").DataTable({
-        dom: "Bfrtip",
-        buttons: [
+        $(".tablas_export").DataTable({
+            dom: "Bfrtip",
+            buttons: [
+                {
+                    extend: "pdfHtml5",
+                    text: '<span class="govco-icon govco-icon-attached-p size-1x text-white"></span>',
+                    className: "btnpdf",
+                    titleAttr: "Exportar a Pdf",
+                    orientation: "landscape",
+                    title: "Trazabilidad Tramite #" + radicado,
+                },
+            ],
 
-            {
-                extend: 'pdfHtml5',
-                text : '<span class="govco-icon govco-icon-attached-p size-1x text-white"></span>',
-                className:'btnpdf',
-                titleAttr: 'Exportar a Pdf',
-                orientation: 'landscape',
-                title: 'Trazabilidad Tramite #'+ radicado }
-                
+            language: {
+                sProcessing: "Procesando...",
+                sLengthMenu: "Mostrar _MENU_ registros",
+                sZeroRecords: "No se encontraron resultados",
+                sEmptyTable: "Ningún dato disponible en esta tabla",
+                sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+                sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+                sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                sInfoPostFix: "",
+                sSearch: "Buscar:",
+                sUrl: "",
+                sInfoThousands: ",",
+                sLoadingRecords: "Cargando...",
+                oPaginate: {
+                    sFirst: "Primero",
+                    sLast: "Último",
+                    sNext: "Siguiente",
+                    sPrevious: "Anterior",
+                },
 
-
-
-        ],
-
-        language: {
-            sProcessing: "Procesando...",
-            sLengthMenu: "Mostrar _MENU_ registros",
-            sZeroRecords: "No se encontraron resultados",
-            sEmptyTable: "Ningún dato disponible en esta tabla",
-            sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
-            sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
-            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
-            sInfoPostFix: "",
-            sSearch: "Buscar:",
-            sUrl: "",
-            sInfoThousands: ",",
-            sLoadingRecords: "Cargando...",
-            oPaginate: {
-                sFirst: "Primero",
-                sLast: "Último",
-                sNext: "Siguiente",
-                sPrevious: "Anterior",
+                oAria: {
+                    sSortAscending:
+                        ": Activar para ordenar la columna de manera ascendente",
+                    sSortDescending:
+                        ": Activar para ordenar la columna de manera descendente",
+                },
             },
-
-            oAria: {
-                sSortAscending:
-                    ": Activar para ordenar la columna de manera ascendente",
-                sSortDescending:
-                    ": Activar para ordenar la columna de manera descendente",
-            },
-        },
-        responsive:true,
-        scrollX:        200,
-        scrollCollapse: true,
-
+            responsive: true,
+            scrollX: 200,
+            scrollCollapse: true,
+        });
     });
-
- });
-
-   
 
     // FUNCION PARA VALIDACION DE GROSERIAS
 
@@ -828,7 +836,6 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
     // FUNCION DE EXPERIENCIA BOTON FACIL
 
     $(".btn-facil").click(function () {
-
         var facil = $("#Facil").val();
         var textArea = $("#text-area").val();
 
@@ -875,7 +882,6 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
     // FUNCION DE EXPERIENCIA BOTON DIFICIL
 
     $(".btn-dificil").click(function () {
-        
         var Dificil = $("#Dificil").val();
         var textArea = $("#text-area").val();
 
@@ -921,127 +927,105 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
 
     // funcion checkbox
 
-    $('.group_check1').on('change', function() {
-        $('.group_check1').not(this).prop('checked', false);
-     });
-
-     // FUNCION PARA MOSTRAS CONTRASEÑA
-
-     $('#checkboxPassword-govco').click(function(){
-
-        if(this.checked){          
-          $('#password_ldap').attr('type', 'text');
-        }else{
-           $('#password_ldap').attr('type', 'password');
-        }
-       });
-
-       $(".estado").change(function () {
-       
-        var estado = document.getElementById("estado").value;      
-
-        if (estado == 'PENDIENTE') {
-          $('#documento_respuesta').attr('disabled', true); 
-          $('#documento_respuesta').attr('required', false); 
-                   
-            
-        }else if(estado == 'APROBADA'){
-            $('#documento_respuesta').attr('disabled', false);
-            $('#documento_respuesta').attr('required', true);
-
-        }else if(estado == 'RECHAZADA'){
-            $('#documento_respuesta').attr('disabled', false);
-            $('#documento_respuesta').attr('required', true);
-        }else{
-            $('#documento_respuesta').attr('disabled', true);
-            $('#documento_respuesta').attr('required', false);
-        }
-        $('#observaciones_espacio').focus();
-        
+    $(".group_check1").on("change", function () {
+        $(".group_check1").not(this).prop("checked", false);
     });
 
+    // FUNCION PARA MOSTRAS CONTRASEÑA
 
-    $('#myForm1').ready(function(){
-
-        var estado_solicitud = $('#estado_sol_espacio').val();
-        if(estado_solicitud == 'APROBADA' || estado_solicitud == 'RECHAZADA'){
-            $('#myBtnEspacio').attr('disabled', true);
-            $('#estado').attr('disabled', true);
-            $('#observaciones_espacio').attr('disabled', true);          
+    $("#checkboxPassword-govco").click(function () {
+        if (this.checked) {
+            $("#password_ldap").attr("type", "text");
+        } else {
+            $("#password_ldap").attr("type", "password");
         }
-
     });
 
-     // select categorizacion de parqueaderos
+    $(".estado").change(function () {
+        var estado = document.getElementById("estado").value;
+
+        if (estado == "PENDIENTE") {
+            $("#documento_respuesta").attr("disabled", true);
+            $("#documento_respuesta").attr("required", false);
+        } else if (estado == "APROBADA") {
+            $("#documento_respuesta").attr("disabled", false);
+            $("#documento_respuesta").attr("required", true);
+        } else if (estado == "RECHAZADA") {
+            $("#documento_respuesta").attr("disabled", false);
+            $("#documento_respuesta").attr("required", true);
+        } else {
+            $("#documento_respuesta").attr("disabled", true);
+            $("#documento_respuesta").attr("required", false);
+        }
+        $("#observaciones_espacio").focus();
+    });
+
+    $("#myForm1").ready(function () {
+        var estado_solicitud = $("#estado_sol_espacio").val();
+        if (estado_solicitud == "APROBADA" || estado_solicitud == "RECHAZADA") {
+            $("#myBtnEspacio").attr("disabled", true);
+            $("#estado").attr("disabled", true);
+            $("#observaciones_espacio").attr("disabled", true);
+        }
+    });
+
+    // select categorizacion de parqueaderos
 
     $("#estado_solicitud_parqueaderos").change(function () {
-        var estado = document.getElementById("estado_solicitud_parqueaderos").value;        
+        var estado = document.getElementById(
+            "estado_solicitud_parqueaderos"
+        ).value;
 
-        if (estado == 'PENDIENTE') {
-          $('#documento_respuesta').attr('disabled', true); 
-          $('#documento_respuesta').attr('required', false); 
-                   
-            
-        }else if(estado == 'APROBADA'){
-            $('#documento_respuesta').attr('disabled', false);
-            $('#documento_respuesta').attr('required', true);
-
-        }else if(estado == 'RECHAZADA'){
-            $('#documento_respuesta').attr('disabled', true);
-            $('#documento_respuesta').attr('required', false);
-        }else{
-            $('#documento_respuesta').attr('disabled', true);
-            $('#documento_respuesta').attr('required', false);
+        if (estado == "PENDIENTE") {
+            $("#documento_respuesta").attr("disabled", true);
+            $("#documento_respuesta").attr("required", false);
+        } else if (estado == "APROBADA") {
+            $("#documento_respuesta").attr("disabled", false);
+            $("#documento_respuesta").attr("required", true);
+        } else if (estado == "RECHAZADA") {
+            $("#documento_respuesta").attr("disabled", true);
+            $("#documento_respuesta").attr("required", false);
+        } else {
+            $("#documento_respuesta").attr("disabled", true);
+            $("#documento_respuesta").attr("required", false);
         }
-        $('#observaciones').focus();
-        
-    });
-     
-     // parqueaderos
-    $('.myFormDefault').ready(function(){
-
-        var estado_actual = $('.estado_actual').val();
-        
-        if(estado_actual == 'ENVIADA'){
-
-            $("#estado_solicitud_parqueaderos option[value='APROBADA']").hide();
-            // $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
-            
-        }else if(estado_actual== 'PENDIENTE'){
-
-            $("#estado_solicitud_parqueaderos option[value='APROBADA']").hide();
-            // $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
-
-        }else if(estado_actual == 'RESPUESTA-PLANEACION'){
-
-            $("#estado_solicitud_parqueaderos option[value='PENDIENTE']").hide();
-            $("#estado_solicitud_parqueaderos option[value='REVISION-PLANEACION']").hide();
-
-        }else if(estado_actual == 'REVISION-PLANEACION'){
-
-            $('#myBtn').attr('disabled', true);
-            $('#estado_solicitud_parqueaderos').attr('disabled', true);
-            $('#observaciones').attr('disabled', true);
-
-
-        }else{
-
-            $('#myBtn').attr('disabled', true); 
-            $('#estado_solicitud_parqueaderos').attr('disabled', true);         
-            $('#observaciones').attr('disabled', true);
-
-        }
-
+        $("#observaciones").focus();
     });
 
+    // parqueaderos
+    $(".myFormDefault").ready(function () {
+        var estado_actual = $(".estado_actual").val();
 
-        // FUNCION DE EXPERIENCIA GlOBAL BOTON FACIL
+        if (estado_actual == "ENVIADA") {
+            $("#estado_solicitud_parqueaderos option[value='APROBADA']").hide();
+            // $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
+        } else if (estado_actual == "PENDIENTE") {
+            $("#estado_solicitud_parqueaderos option[value='APROBADA']").hide();
+            // $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
+        } else if (estado_actual == "RESPUESTA-PLANEACION") {
+            $(
+                "#estado_solicitud_parqueaderos option[value='PENDIENTE']"
+            ).hide();
+            $(
+                "#estado_solicitud_parqueaderos option[value='REVISION-PLANEACION']"
+            ).hide();
+        } else if (estado_actual == "REVISION-PLANEACION") {
+            $("#myBtn").attr("disabled", true);
+            $("#estado_solicitud_parqueaderos").attr("disabled", true);
+            $("#observaciones").attr("disabled", true);
+        } else {
+            $("#myBtn").attr("disabled", true);
+            $("#estado_solicitud_parqueaderos").attr("disabled", true);
+            $("#observaciones").attr("disabled", true);
+        }
+    });
+
+    // FUNCION DE EXPERIENCIA GlOBAL BOTON FACIL
 
     $(".btn-facil-global").click(function () {
-        
         var facil = $("#btn-facil-global").val();
         var textArea = $("#text-area").val();
-        var modulo = $('.modulo').val();
+        var modulo = $(".modulo").val();
 
         $.ajaxSetup({
             headers: {
@@ -1056,7 +1040,7 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
             data: {
                 valor: facil,
                 sugerencias: textArea,
-                tramite: modulo
+                tramite: modulo,
             },
             success: function (response) {
                 // console.log(response);
@@ -1089,7 +1073,7 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
     $(".btn-dificil-global").click(function () {
         var Dificil = $("#btn-dificil-global").val();
         var textArea = $("#text-area").val();
-        var modulo = $('.modulo').val();
+        var modulo = $(".modulo").val();
 
         $.ajaxSetup({
             headers: {
@@ -1104,7 +1088,7 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
             data: {
                 valor: Dificil,
                 sugerencias: textArea,
-                tramite:modulo
+                tramite: modulo,
             },
             success: function (response) {
                 // console.log(response);
@@ -1134,332 +1118,284 @@ document.getElementById("DD0000").value = dd01+" "+dd02+" "+dd03+"# "+dd04+dd05+
 
     // scripts para eventos publicos
 
-    $('#tipo_persona').change(function () {
-      var tipo = $(this).val();
-      if(tipo == 1){
-          $('.caja_razon').addClass('d-none');
-          $('.caja_nombres').removeClass('d-none');
-          $('#nom_responsable').attr('required', true);          
-          $('#ape_responsable').attr('required', true);
-          $('#razon_responsable').attr('required', false);
-          $('#razon_responsable').val('');
-      }else{
-        $('.caja_razon').removeClass('d-none');
-        $('.caja_nombres').addClass('d-none');
-        $('#nom_responsable').attr('required', false);        
-        $('#ape_responsable').attr('required', false);
-        $('#nom_responsable').val('');        
-        $('#ape_responsable').val('');
-        $('#razon_responsable').attr('required', true);
-      }
-        
-
-
+    $("#tipo_persona").change(function () {
+        var tipo = $(this).val();
+        if (tipo == 1) {
+            $(".caja_razon").addClass("d-none");
+            $(".caja_nombres").removeClass("d-none");
+            $("#nom_responsable").attr("required", true);
+            $("#ape_responsable").attr("required", true);
+            $("#razon_responsable").attr("required", false);
+            $("#razon_responsable").val("");
+        } else {
+            $(".caja_razon").removeClass("d-none");
+            $(".caja_nombres").addClass("d-none");
+            $("#nom_responsable").attr("required", false);
+            $("#ape_responsable").attr("required", false);
+            $("#nom_responsable").val("");
+            $("#ape_responsable").val("");
+            $("#razon_responsable").attr("required", true);
+        }
     });
 
     //modal 1
     $("#btnDireccionEventos").click(function () {
-        
-        var direccion = $("#DD000").val();        
-       $("#ModalDireccionesEventos").modal("hide");
-       $("#dir_responsable_sol").val("");
-       $("#dir_responsable_sol").val(direccion);
-   });
+        var direccion = $("#DD000").val();
+        $("#ModalDireccionesEventos").modal("hide");
+        $("#dir_responsable_sol").val("");
+        $("#dir_responsable_sol").val(direccion);
+    });
 
-     // modal 2
-     $("#btnModalUbicacionEvento").click(function () {         
-        
-        var direccion_evento = $("#DD0000").val();        
-       $("#ModalUbicacion").modal("hide");
-       $("#ubicacion_evento").val("");
-       $("#ubicacion_evento").val(direccion_evento);
-   });
+    // modal 2
+    $("#btnModalUbicacionEvento").click(function () {
+        var direccion_evento = $("#DD0000").val();
+        $("#ModalUbicacion").modal("hide");
+        $("#ubicacion_evento").val("");
+        $("#ubicacion_evento").val(direccion_evento);
+    });
 
-   jQuery(function($) {
+    jQuery(function ($) {
+        $("#fecha_evento").ready(function () {
+            var date = moment().add(15, "days").format("YYYY-MM-DD");
+            //  $('#fecha_evento').val(date);
+            $("#fecha_evento").attr("min", date);
+        });
 
-   $('#fecha_evento').ready(function () {
-     var date = moment().add(15, "days").format('YYYY-MM-DD');
-    //  $('#fecha_evento').val(date);
-     $('#fecha_evento').attr("min", date);   
+        //   $('#fecha_evento').change(function () {
 
-   });
+        //    var date = moment($(this).val());
+        //    if(date.isoWeekday() == 7 || date.isoWeekday() == 6){
+        //        alert("Atención solo se pueden seleccionar dias habiles");
+        //        $('#fecha_evento').val('');
 
- //   $('#fecha_evento').change(function () {
+        //        return;
+        //    }
+        // });
 
- //    var date = moment($(this).val());
- //    if(date.isoWeekday() == 7 || date.isoWeekday() == 6){
- //        alert("Atención solo se pueden seleccionar dias habiles");
- //        $('#fecha_evento').val('');
+        $(".clockpicker").clockpicker({
+            placement: "top",
+            align: "left",
+            twelvehour: true,
+            donetext: "Aceptar",
+        });
+    });
 
- //        return;
- //    }
- // });
+    $(".barrios").select2({
+        width: "100%",
+        placeholder: "Seleccione Barrio..",
+    });
 
-   $('.clockpicker').clockpicker({
-    placement: 'top',
-    align: 'left',    
-    twelvehour: true,
-    donetext: 'Aceptar'
+    $("#estado_solicitud_eventos").change(function () {
+        var estado = document.getElementById("estado_solicitud_eventos").value;
 
-   });
+        if (estado == "PENDIENTE") {
+            $("#documento_respuesta_eventos").attr("disabled", true);
+            $("#documento_respuesta_eventos").attr("required", false);
+        } else if (estado == "APROBADA") {
+            $("#documento_respuesta_eventos").attr("disabled", false);
+            $("#documento_respuesta_eventos").attr("required", true);
+        } else if (estado == "RECHAZADA") {
+            $("#documento_respuesta_eventos").attr("disabled", false);
+            $("#documento_respuesta_eventos").attr("required", true);
+        } else {
+            $("#documento_respuesta_eventos").attr("disabled", true);
+            $("#documento_respuesta_eventos").attr("required", false);
+        }
+        $("#observaciones_eventos").focus();
+    });
 
-  })
+    $("#myForm_eventos").ready(function () {
+        var estado_solicitud = $(".estado_actual").val();
+        if (estado_solicitud == "APROBADA" || estado_solicitud == "RECHAZADA") {
+            $("#myBtn_eventos").attr("disabled", true);
+            $("#estado_solicitud_eventos").attr("disabled", true);
+            $("#observaciones_eventos").attr("disabled", true);
+        }
+    });
 
-   $(".barrios").select2({
-    width: "100%",
-    placeholder: "Seleccione Barrio.."
-  });
+    $("#cant_personas").change(function () {
+        var cantidad = $(this).val();
+        if (parseInt(cantidad) <= 50) {
+            $("#adj_conceptoCMGRD_arch").attr("required", false);
+            $("#adj_certificadoBomberos_arch").attr("required", false);
+            $("#adj_hospitalaria_arch").attr("required", false);
+            $(".caja-cmgrd").addClass("d-none");
+        } else if (parseInt(cantidad) > 50) {
+            $("#adj_conceptoCMGRD_arch").attr("required", true);
+            $("#adj_certificadoBomberos_arch").attr("required", true);
+            $("#adj_hospitalaria_arch").attr("required", false);
+            $(".caja-cmgrd").removeClass("d-none");
+        }
+    });
 
-  $("#estado_solicitud_eventos").change(function () {
+    $("#pub_ext").change(function () {
+        var publicidad = $(this).val();
+        if (publicidad == "SI") {
+            $("#adj_publicidad_arch").attr("required", true);
+            $(".caja_publicidad").removeClass("d-none");
+        } else if (publicidad == "NO") {
+            $("#adj_publicidad_arch").attr("required", false);
+            $(".caja_publicidad").addClass("d-none");
+        }
+    });
 
-    
-       
-    var estado = document.getElementById("estado_solicitud_eventos").value;      
+    $("#reproduccion_musica").change(function () {
+        var publicidad = $(this).val();
+        if (publicidad == "SI") {
+            $("#adj_derAutor_arch").attr("required", true);
+            $(".caja_derechos").removeClass("d-none");
+        } else if (publicidad == "NO") {
+            $("#adj_derAutor_arch").attr("required", false);
+            $(".caja_derechos").addClass("d-none");
+        }
+    });
 
-    if (estado == 'PENDIENTE') {
-      $('#documento_respuesta_eventos').attr('disabled', true); 
-      $('#documento_respuesta_eventos').attr('required', false); 
-               
-        
-    }else if(estado == 'APROBADA'){
-        $('#documento_respuesta_eventos').attr('disabled', false);
-        $('#documento_respuesta_eventos').attr('required', true);
+    // funcion para los forms ciudadanos
 
-    }else if(estado == 'RECHAZADA'){
-        $('#documento_respuesta_eventos').attr('disabled', false);
-        $('#documento_respuesta_eventos').attr('required', true);
-    }else{
-        $('#documento_respuesta_eventos').attr('disabled', true);
-        $('#documento_respuesta_eventos').attr('required', false);
-    }
-    $('#observaciones_eventos').focus();
-    
-});
+    // funcion general spinner de carga
 
-
-$('#myForm_eventos').ready(function(){
-
-    var estado_solicitud = $('.estado_actual').val();
-    if(estado_solicitud == 'APROBADA' || estado_solicitud == 'RECHAZADA'){
-        $('#myBtn_eventos').attr('disabled', true);
-        $('#estado_solicitud_eventos').attr('disabled', true);
-        $('#observaciones_eventos').attr('disabled', true);          
-    }
-
-});
-
-$('#cant_personas').change(function(){
-
-    var cantidad = $(this).val();
-    if(parseInt(cantidad) <= 50){
-        $('#adj_conceptoCMGRD_arch').attr('required', false);
-        $('#adj_certificadoBomberos_arch').attr('required', false);
-        $('#adj_hospitalaria_arch').attr('required', false);
-        $('.caja-cmgrd').addClass('d-none');           
-    }else if(parseInt(cantidad) > 50){
-        $('#adj_conceptoCMGRD_arch').attr('required', true);
-        $('#adj_certificadoBomberos_arch').attr('required', true);
-        $('#adj_hospitalaria_arch').attr('required', false);
-        $('.caja-cmgrd').removeClass('d-none');   
-
-    }
-
-});
-
-$('#pub_ext').change(function(){
-
-    var publicidad = $(this).val();
-    if(publicidad == 'SI'){
-        $('#adj_publicidad_arch').attr('required', true);      
-        $('.caja_publicidad').removeClass('d-none');           
-    }else if(publicidad == 'NO'){
-        $('#adj_publicidad_arch').attr('required', false);        
-        $('.caja_publicidad').addClass('d-none');   
-
-    }
-
-});
-
-$('#reproduccion_musica').change(function(){
-
-    var publicidad = $(this).val();
-    if(publicidad == 'SI'){
-        $('#adj_derAutor_arch').attr('required', true);      
-        $('.caja_derechos').removeClass('d-none');           
-    }else if(publicidad == 'NO'){
-        $('#adj_derAutor_arch').attr('required', false);        
-        $('.caja_derechos').addClass('d-none');   
-
-    }
-
-});
-
-
-// funcion para los forms ciudadanos
-
-// funcion general spinner de carga
-
-     $(".form-ciudadano").submit(function(e){
+    $(".form-ciudadano").submit(function (e) {
         var response = grecaptcha.getResponse();
 
-         if (response.length == 0) {
+        if (response.length == 0) {
             alert("Captcha no verificado");
             e.preventDefault();
             return;
-         }
+        }
         $(".btn_enviar_solicitud").addClass("d-none");
-        $('.btn_carga').removeClass('d-none');
-      });
+        $(".btn_carga").removeClass("d-none");
+    });
 
-     //metrolinea
+    //metrolinea
 
-      $(".select_general").select2({
+    $(".select_general").select2({
         width: "100%",
         placeholder: "Seleccione..",
     });
 
-    $('#ruta_frecuente').select2({
+    $("#ruta_frecuente").select2({
         placeholder: "Seleccione..",
         width: "100%",
-        multiple:"multiple",
+        multiple: "multiple",
         tags: false,
-        tokenSeparators: [',', ' ']    
-
+        tokenSeparators: [",", " "],
     });
 
-    $('#tipo_poblacion').change(function() {
-        var today = moment(new Date()).format('YYYY-MM-DD');
+    $("#tipo_poblacion").change(function () {
+        var today = moment(new Date()).format("YYYY-MM-DD");
         var tipo = $(this).val();
 
-        if(tipo == 'ESTUDIANTE-COLEGIO' || tipo == 'ESTUDIANTE-UNIVERSIDAD'){
-             
-             var entidad = $('#institucion_educativa');
-          
-            $('.caja_estudios').removeClass('d-none');
-            $('#institucion_educativa').attr('required', true);
-            $('.caja_discapacidad').addClass('d-none');
-            $('#discapacidad').attr('required', false);
-            $('.caja_certificadoEstudios').removeClass('d-none');
-            $('#archivo_certificadoEstudio').attr('required', true);
-            $('#fecha_nacimiento').attr('max', today);
-             $('.caja-deportistas').addClass('d-none');
-            $('#archivo_deportistas_artistas').attr('required', false);   
-            
-          
+        if (tipo == "ESTUDIANTE-COLEGIO" || tipo == "ESTUDIANTE-UNIVERSIDAD") {
+            var entidad = $("#institucion_educativa");
 
-        $.ajaxSetup({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-        });
+            $(".caja_estudios").removeClass("d-none");
+            $("#institucion_educativa").attr("required", true);
+            $(".caja_discapacidad").addClass("d-none");
+            $("#discapacidad").attr("required", false);
+            $(".caja_certificadoEstudios").removeClass("d-none");
+            $("#archivo_certificadoEstudio").attr("required", true);
+            $("#fecha_nacimiento").attr("max", today);
+            $(".caja-deportistas").addClass("d-none");
+            $("#archivo_deportistas_artistas").attr("required", false);
 
-        $.ajax({
-            type: "POST",
-            url: "/registro-metrolinea/entidades",
-            dataType: "json",
-            data: {
-                tipo: tipo
-                
-            },
-            success: function (response) {
-                
-                if (response.success) {
-                  $('#institucion_educativa').find('option').remove();
-                  entidad.append('<option value="">Seleccione..</option>')
-                 for (var instituciones of response.respuesta){
-                     entidad.append('<option value="'+instituciones+'">'+instituciones+'</option>');
-                 }
-                 
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+            });
 
-
-                   
-                } else {
-                    alert("Ha ocurrido un error al cargar los entidades educativas");
-                }
-            },
-            error: function () {
-                alert("error de petición ajax");
-            },
-        });
-
-
-
-
-        } else if(tipo == 'PERSONAS CON DISCAPACIDAD'){
-
-            $('.caja_discapacidad').removeClass('d-none');
-            $('#discapacidad').attr('required', true);
-            $('.caja_estudios').addClass('d-none');
-            $('#institucion_educativa').attr('required', false);  
-            $('.caja_certificadoEstudios').addClass('d-none');
-            $('#archivo_certificadoEstudio').attr('required', false);
-            $('#fecha_nacimiento').attr('max', today);
-            $('#archivo_discapacidad').attr('required', true);  
-             $('.caja-deportistas').addClass('d-none');
-            $('#archivo_deportistas_artistas').attr('required', false);      
-
-        }else if(tipo == 'ADULTO MAYOR'){          
-           $('#fecha_nacimiento').attr('max', '1960-12-31'); 
-            $('.caja-deportistas').addClass('d-none');
-            $('#archivo_deportistas_artistas').attr('required', false);
-            $('.caja_estudios').addClass('d-none');
-            $('#institucion_educativa').attr('required', false);  
-            $('.caja_certificadoEstudios').addClass('d-none');
-            $('#archivo_certificadoEstudio').attr('required', false);  
-            $('.caja_discapacidad').addClass('d-none');
-            $('#discapacidad').attr('required', false);      
-
-
-
-        }else if(tipo == 'DEPORTISTA-ARTISTA'){          
-            $('.caja-deportistas').removeClass('d-none');
-            $('#archivo_deportistas_artistas').attr('required', true);
-            $('.caja_estudios').addClass('d-none');
-            $('#institucion_educativa').attr('required', false);  
-            $('.caja_certificadoEstudios').addClass('d-none');
-            $('#archivo_certificadoEstudio').attr('required', false);
-            $('#fecha_nacimiento').attr('max', today);
-            $('.caja_discapacidad').addClass('d-none');
-            $('#discapacidad').attr('required', false);
-
-
-
-
-        }else{
-            $('.caja_discapacidad').addClass('d-none');
-            $('#discapacidad').attr('required', false);
-            $('.caja_estudios').addClass('d-none');
-            $('#institucion_educativa').attr('required', false); 
-            $('.caja_certificadoEstudios').addClass('d-none');
-            $('#archivo_certificadoEstudio').attr('required', false); 
-            $('#fecha_nacimiento').attr('max', today); 
-            $('#archivo_discapacidad').attr('required', false); 
-            $('.caja-deportistas').addClass('d-none');
-            $('#archivo_deportistas_artistas').attr('required', false);     
-  
-
-
+            $.ajax({
+                type: "POST",
+                url: "/registro-metrolinea/entidades",
+                dataType: "json",
+                data: {
+                    tipo: tipo,
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $("#institucion_educativa").find("option").remove();
+                        entidad.append(
+                            '<option value="">Seleccione..</option>'
+                        );
+                        for (var instituciones of response.respuesta) {
+                            entidad.append(
+                                '<option value="' +
+                                    instituciones +
+                                    '">' +
+                                    instituciones +
+                                    "</option>"
+                            );
+                        }
+                    } else {
+                        alert(
+                            "Ha ocurrido un error al cargar los entidades educativas"
+                        );
+                    }
+                },
+                error: function () {
+                    alert("error de petición ajax");
+                },
+            });
+        } else if (tipo == "PERSONAS CON DISCAPACIDAD") {
+            $(".caja_discapacidad").removeClass("d-none");
+            $("#discapacidad").attr("required", true);
+            $(".caja_estudios").addClass("d-none");
+            $("#institucion_educativa").attr("required", false);
+            $(".caja_certificadoEstudios").addClass("d-none");
+            $("#archivo_certificadoEstudio").attr("required", false);
+            $("#fecha_nacimiento").attr("max", today);
+            $("#archivo_discapacidad").attr("required", true);
+            $(".caja-deportistas").addClass("d-none");
+            $("#archivo_deportistas_artistas").attr("required", false);
+        } else if (tipo == "ADULTO MAYOR") {
+            $("#fecha_nacimiento").attr("max", "1960-12-31");
+            $(".caja-deportistas").addClass("d-none");
+            $("#archivo_deportistas_artistas").attr("required", false);
+            $(".caja_estudios").addClass("d-none");
+            $("#institucion_educativa").attr("required", false);
+            $(".caja_certificadoEstudios").addClass("d-none");
+            $("#archivo_certificadoEstudio").attr("required", false);
+            $(".caja_discapacidad").addClass("d-none");
+            $("#discapacidad").attr("required", false);
+        } else if (tipo == "DEPORTISTA-ARTISTA") {
+            $(".caja-deportistas").removeClass("d-none");
+            $("#archivo_deportistas_artistas").attr("required", true);
+            $(".caja_estudios").addClass("d-none");
+            $("#institucion_educativa").attr("required", false);
+            $(".caja_certificadoEstudios").addClass("d-none");
+            $("#archivo_certificadoEstudio").attr("required", false);
+            $("#fecha_nacimiento").attr("max", today);
+            $(".caja_discapacidad").addClass("d-none");
+            $("#discapacidad").attr("required", false);
+        } else {
+            $(".caja_discapacidad").addClass("d-none");
+            $("#discapacidad").attr("required", false);
+            $(".caja_estudios").addClass("d-none");
+            $("#institucion_educativa").attr("required", false);
+            $(".caja_certificadoEstudios").addClass("d-none");
+            $("#archivo_certificadoEstudio").attr("required", false);
+            $("#fecha_nacimiento").attr("max", today);
+            $("#archivo_discapacidad").attr("required", false);
+            $(".caja-deportistas").addClass("d-none");
+            $("#archivo_deportistas_artistas").attr("required", false);
         }
-
     });
 
-    $('#tiene_sisben').change(function(){
+    $("#tiene_sisben").change(function () {
         var sisben = $(this).val();
-        if(sisben == 'SI'){
-            $('.caja_docSisben').removeClass('d-none');
-            $('#archivo_docSisben').attr('required', true);
-            $('.caja-certificadoVecindad ').addClass('d-none');
-            $('#archivo_certiVencidad').attr('required', false);
-
-        }else{
-
-            $('.caja_docSisben').addClass('d-none');
-            $('#archivo_docSisben').attr('required', false);
-            $('.caja-certificadoVecindad ').removeClass('d-none');
-            $('#archivo_certiVencidad').attr('required', true);
-
+        if (sisben == "SI") {
+            $(".caja_docSisben").removeClass("d-none");
+            $("#archivo_docSisben").attr("required", true);
+            $(".caja-certificadoVecindad ").addClass("d-none");
+            $("#archivo_certiVencidad").attr("required", false);
+        } else {
+            $(".caja_docSisben").addClass("d-none");
+            $("#archivo_docSisben").attr("required", false);
+            $(".caja-certificadoVecindad ").removeClass("d-none");
+            $("#archivo_certiVencidad").attr("required", true);
         }
-
     });
 
     $(".documentos_adjuntos_metrolinea").fileinput({
@@ -1473,132 +1409,379 @@ $('#reproduccion_musica').change(function(){
         maxFileSize: 3000,
     });
 
-
-    $('#estrato_socioeconomico').change(function(){
+    $("#estrato_socioeconomico").change(function () {
         var estrato = $(this).val();
-        if(estrato == 4 || estrato == 5 || estrato == 6){
-
-        alert('ATENCION !! ESTOS ESTRATOS NO SON BENEFICIARIOS DEL PROGRAMA');
-         window.location.href = 'https://www.bucaramanga.gov.co/beneficio-metrolinea/';
-         $("#FormMetrolinea").trigger("reset");
-            
-
+        if (estrato == 4 || estrato == 5 || estrato == 6) {
+            alert(
+                "ATENCION !! ESTOS ESTRATOS NO SON BENEFICIARIOS DEL PROGRAMA"
+            );
+            window.location.href =
+                "https://www.bucaramanga.gov.co/beneficio-metrolinea/";
+            $("#FormMetrolinea").trigger("reset");
         }
-
     });
 
-
-
-    $('#fecha_nacimiento').ready(function(){    
-        var today = moment(new Date()).format('YYYY-MM-DD');
-        $('#fecha_nacimiento').attr('max', today); 
+    $("#fecha_nacimiento").ready(function () {
+        var today = moment(new Date()).format("YYYY-MM-DD");
+        $("#fecha_nacimiento").attr("max", today);
     });
 
-    $('#fecha_nacimiento').change(function(){
+    $("#fecha_nacimiento").change(function () {
         var fecha = moment($(this).val());
         var today = moment(new Date());
-        var difference = today.diff(fecha, 'year');
-       if(difference < 6){
-         alert('ATENCION !! Niños menores de 6 años no pueden ser registrados en el programa');
-         window.location.href = 'https://www.bucaramanga.gov.co/beneficio-metrolinea/';
-         $("#FormMetrolinea").trigger("reset");
-         
-       }else if(difference < 18){
-           $('.caja_acudiente').removeClass('d-none');
-           $('#nombre_acudiente').attr('required', true);
-           $('.caja_docAcudiente').removeClass('d-none');
-           $('#archivo_docAcudiente').attr('required', true);
-       }else if(difference >= 18){
-        $('.caja_acudiente').addClass('d-none');
-        $('#nombre_acudiente').attr('required', false);
-        $('.caja_docAcudiente').addClass('d-none');
-           $('#archivo_docAcudiente').attr('required', false);
-
-       } 
-       $('#edad').val(difference);
-
-
+        var difference = today.diff(fecha, "year");
+        if (difference < 6) {
+            alert(
+                "ATENCION !! Niños menores de 6 años no pueden ser registrados en el programa"
+            );
+            window.location.href =
+                "https://www.bucaramanga.gov.co/beneficio-metrolinea/";
+            $("#FormMetrolinea").trigger("reset");
+        } else if (difference < 18) {
+            $(".caja_acudiente").removeClass("d-none");
+            $("#nombre_acudiente").attr("required", true);
+            $(".caja_docAcudiente").removeClass("d-none");
+            $("#archivo_docAcudiente").attr("required", true);
+        } else if (difference >= 18) {
+            $(".caja_acudiente").addClass("d-none");
+            $("#nombre_acudiente").attr("required", false);
+            $(".caja_docAcudiente").addClass("d-none");
+            $("#archivo_docAcudiente").attr("required", false);
+        }
+        $("#edad").val(difference);
     });
 
     // barra accesibilidad
-$(".min-fontsize").click(function() {
+    $(".min-fontsize").click(function () {
+        var fuente = $("#body").css("font-size");
+        console.log(fuente);
+        var fuente_suma = parseInt(fuente) - 2;
+        var fuente_px = fuente_suma + "px";
+        if (fuente_suma <= 12) {
+            $("*").css("font-size", "12px");
+        } else {
+            console.log(fuente_suma);
+            $("*").css("font-size", fuente_px);
+        }
+    });
+    $(".max-fontsize").click(function () {
+        var fuente = $("#body").css("font-size");
+        console.log(fuente);
+        var fuente_suma = parseInt(fuente) + 2;
+        var fuente_px = fuente_suma + "px";
+        if (fuente_suma >= 22) {
+            $("*").css("font-size", "22px");
+        } else {
+            console.log(fuente_suma);
+            $("*").css("font-size", fuente_px);
+        }
+    });
 
-    var fuente = $("#body").css("font-size");
-    console.log(fuente);
-    var fuente_suma = parseInt(fuente) - 2;
-    var fuente_px = fuente_suma + 'px';
-    if (fuente_suma <= 12) {
-       $("*").css("font-size", '12px');
-    } else {
-       console.log(fuente_suma);
-       $("*").css("font-size", fuente_px);
-    }
+    $(".contrast-ref").click(function () {
+        var clase = $("#body").attr("class");
+        var color = "#3366CC";
+        var color2 = "white";
 
+        if (clase == "all") {
+            $("#body").removeClass("all");
+            $("#myForm").css("background-color", "white");
+            $("#nav-header").css("background-color", color);
+            $("#nav-secondary").css("background-color", color2);
+            $(".card-cabecera").attr(
+                "style",
+                "background-color: #3366CC!important;"
+            );
+            $(".div_principal").attr("id", "div_img");
+            $("ol").attr("style", "background-color: #FFFFFF!important;");
+            $("label").attr("style", "color: #4B4B4B!important;");
+            //    $('.all button').attr('style', 'background-color:#FFFFFF!important');
+        } else {
+            $("#body").addClass("all");
+            $("#myForm").css("background-color", "black");
+            $("#nav-header").css("background-color", "black");
+            $("#nav-secondary").css("background-color", "black");
+            $(".card-cabecera").attr(
+                "style",
+                "background-color: black!important;"
+            );
+            $(".div_principal").attr("id", "");
+            $("ol").attr("style", "background-color: black!important;");
+            $("label").attr("style", "color: #FFFFFF!important;");
+            //    $('.all button').attr('style', 'background-color:#000000!important');
+        }
+    });
 
- });
- $(".max-fontsize").click(function() {
+    $(".compartir-info-metro").click(function () {
+        var compartir = $(this).val();
+        if (compartir == "NO") {
+            alert(
+                "Apreciado ciudadano en el evento de NO autorizar compartir sus datos, soy consciente de que mi información no podrá ser compartida con terceros por lo tanto no se podrá revisar su solicitud para acceder al beneficio"
+            );
+        }
+    });
 
-    var fuente = $("#body").css("font-size");
-    console.log(fuente);
-    var fuente_suma = parseInt(fuente) + 2;
-    var fuente_px = fuente_suma + 'px';
-    if (fuente_suma >= 22) {
-       $("*").css("font-size", '22px');
-    } else {
-       console.log(fuente_suma);
-       $("*").css("font-size", fuente_px);
-    }
+    // ESPECTACULOS Publicos
+    $("#tipo_persona_espec").change(function () {
+        var tipo = $(this).val();
+        if (tipo == "N") {
+            $(".caja_razon").addClass("d-none");
+            $(".caja_nombres").removeClass("d-none");
+            $("#nom_solicitante").attr("required", true);
+            $("#ape_solicitante").attr("required", true);
+            $("#razon_social").attr("required", false);
+            $("#razon_social").val("");
+            $('#tipo_identificacion option[value="C.C."]').attr(
+                "selected",
+                true
+            );
+        } else {
+            $(".caja_razon").removeClass("d-none");
+            $(".caja_nombres").addClass("d-none");
+            $("#nom_solicitante").attr("required", false);
+            $("#ape_solicitante").attr("required", false);
+            $("#nom_solicitante").val("");
+            $("#ape_solicitante").val("");
+            $("#razon_social").attr("required", true);
+            $('#tipo_identificacion option[value="NIT"]').attr(
+                "selected",
+                true
+            );
+        }
+    });
 
+    $("#id_evento").change(function () {
+        var tipo_evento = $(this).val();
+        console.log(tipo_evento);
+        if (tipo_evento == 2) {
+            $(".caja-fecha-fin").removeClass("d-none");
+            $("#fecha_fin_evento").attr("required", true);
+        } else {
+            $(".caja-fecha-fin").addClass("d-none");
+            $("#fecha_fin_evento").attr("required", false);
+        }
+    });
 
- });
+    $(".form-ciudadano-espectaculos").submit(function (e) {
+        e.preventDefault();
+        var response = grecaptcha.getResponse();
+        if (response.length == 0) {
+            Swal.fire("Captcha no verificado");
+            return;
+        }
 
- $(".contrast-ref").click(function() {
+        form = new FormData($(".form-ciudadano-espectaculos")[0]);
 
-    var clase = $('#body').attr("class");
-    var color = '#3366CC';
-    var color2 = 'white';
+        let direccion_notificacion = document.getElementById("direccion_solicitante").value;
+        let lugar_evento = document.getElementById("direccion_empresa").value;
+        var archivo_rut = $("#archivo_rut")[0].files;
+        var archivo_camara = $("#archivo_camara")[0].files;
+        var archivo_boleteria = $("#archivo_boleteria")[0].files;
+        var archivo_copia_cedula = $("#archivo_copia_cedula")[0].files;
+        var archivo_solicitud = $("#archivo_solicitud")[0].files;
 
-    if (clase == 'all') {
-       $('#body').removeClass("all");
-       $('#myForm').css('background-color', 'white');
-       $('#nav-header').css('background-color', color);
-       $('#nav-secondary').css('background-color', color2);
-       $('.card-cabecera').attr('style', 'background-color: #3366CC!important;');
-       $('.div_principal').attr('id','div_img');
-       $('ol').attr('style', 'background-color: #FFFFFF!important;');
-       $('label').attr('style', 'color: #4B4B4B!important;');
-    //    $('.all button').attr('style', 'background-color:#FFFFFF!important');
+        var table = document
+            .getElementById("tablaBoleteria")
+            .getElementsByTagName("tbody")[0]; // devuelve el tbody
+        var rowLength = table.rows.length; // retorna el numero de rows
 
+        let arr = [];
+        if (rowLength == 0) {
+            Swal.fire(
+                "No ha agregado ningun tipo de boleteria a la tabla de boleteria."
+            );
+            return;
+        }
 
+        if (direccion_notificacion.length == 0) {
+            Swal.fire("Debes completar el campo direccion de notificación");
+            return;
+        }
 
-    } else {
-       $('#body').addClass("all");
-       $('#myForm').css('background-color', 'black');
-       $('#nav-header').css('background-color', 'black');
-       $('#nav-secondary').css('background-color','black');
-       $('.card-cabecera').attr('style', 'background-color: black!important;');
-       $('.div_principal').attr('id','');  
-       $('ol').attr('style', 'background-color: black!important;');
-       $('label').attr('style', 'color: #FFFFFF!important;');
-    //    $('.all button').attr('style', 'background-color:#000000!important');
-             
+        if (lugar_evento.length == 0) {
+            Swal.fire("Debes completar el campo ubicación del evento");
+            return;
+        }
 
-    }
+        for (var i = 0; i < rowLength; i += 1) {
+            var row = table.rows[i];
+            arr[i] = {
+                clase_boleta: row.cells[0].dataset.tb,
+                valor: row.cells[1].dataset.vb,
+                numero_boletas_emitidas: row.cells[2].dataset.cantidad,
+            };
+        }
 
- });
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
 
- $('.compartir-info-metro').click(function(){
+        form.append("archivo_rut", archivo_rut);
+        form.append("archivo_camara", archivo_camara);
+        form.append("archivo_boleteria", archivo_boleteria);
+        form.append("archivo_copia_cedula", archivo_copia_cedula);
+        form.append("archivo_solicitud", archivo_solicitud);
+        form.append("boletas", JSON.stringify(arr));
 
-    var compartir = $(this).val();
-    if(compartir == 'NO'){
-        alert('Apreciado ciudadano en el evento de NO autorizar compartir sus datos, soy consciente de que mi información no podrá ser compartida con terceros por lo tanto no se podrá revisar su solicitud para acceder al beneficio');
-    }
+        $.ajax({
+            type: "POST",
+            url: "/espectaculos-publicos/store",
+            data: form,
+            contentType: false,
+            cache: false,
+            processData: false,
 
+            beforeSend: function () {
+                $("#loadMe").modal({
+                    backdrop: "static", //remove ability to close modal with click
+                    keyboard: false, //remove option to close with keyboard
+                    show: true, //Display loader!
+                });
+            },
 
+            success: function (response) {
+                if (response.success) {
+                    $('#loadMe').modal('hide');
+                    $(".form-ciudadano-espectaculos")[0].reset();
+                    window.location.href = '/espectaculos-publicos/confirmacion'
+                    
+                } else if (response.validaciones) {
+                    $('#loadMe').modal('hide');
+                    Swal.fire({
+                        icon: "error",
+                        title: "Atencion!",
+                        text: response.validaciones,
+                        timer: 5000,
+                    });
+                    $(".form-ciudadano-espectaculos")[0].reset();
+                } else {
+                    $('#loadMe').modal('hide');
+                    printErrorMsg(response.error);
+                }
+            },
+            error: function () {
+                alert("error de petición ajax");
+            },
+        }).done(function(){
+            $('#loadMe').modal('hide');
+        });
 
- });
-   
+        function printErrorMsg(msg) {
+            $(".print-error-msg").find("ul").html("");
+            $(".print-error-msg").css("display", "block");
+            $.each(msg, function (key, value) {
+                $(".print-error-msg")
+                    .find("ul")
+                    .append("<li>" + value + "</li>");
+            });
+            var href = $("#a-top").attr("href");
+            window.location.href = href;
+        }
+    });
+
+    $("#fecha_inicio_evento").ready(function () {
+        var today = moment(new Date()).format("YYYY-MM-DD");
+        $("#fecha_inicio_evento").attr("min", today);
+        $("#fecha_fin_evento").attr("min", today);
+    });
+
+    $("#fecha_fin_evento").change(function () {
+        var fecha_inicio = $("#fecha_inicio_evento").val();
+        var fecha_final = $("#fecha_fin_evento").val();
+
+        if (fecha_final < fecha_inicio) {
+            Swal.fire(
+                "La fecha final no puede ser menor a la fecha inicial del evento"
+            );
+            $("#fecha_fin_evento").val("");
+        }
+    });
+
+    $('.valor_boleteria').ready(function (){
+        $('.valor_boleteria').each(function () {
+            var input = $(this).text();
+           var valor_convertido =  new Intl.NumberFormat("es-CO").format(input);          
+           $(this).text('$'+valor_convertido);              
      
+        });      
+    });
+
+    $('#valor_poliza').change(function (){        
+        var valor = $(this).val();
+        if(isNaN(valor)){
+            $(this).val('');
+            $('#valor_poliza_cheque').val('');
+            $(this).focus();
+        }else{
+        var valor_convertido =  new Intl.NumberFormat("es-CO").format(valor);
+        $('#valor_poliza_cheque').val(valor);
+        $(this).val('$'+valor_convertido); 
+        }          
+    });
+
+    $(".form-espectaculos").ready(function () {
+        var estado_actual = $("#estado_espectaculos_hidden").val();
+        
+
+        if (estado_actual == "ENVIADA") {
+            $("#estado_espectaculos option[value='EVENTO_REALIZADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_APROBADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_FINALIZADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_NO_REALIZADO']").hide();
+            $("#estado_espectaculos option[value='ACTO_REVOCADO']").hide();
+            // $("#estado_espectaculos option[value='EVENTO_CANCELADO']").hide();
+            // $("#estado_espectaculos option[value='RECHAZADA']").hide();
+        }else if(estado_actual == "DOCUMENTOS_ACTUALIZADOS" || estado_actual == "PENDIENTE"){
+
+            $("#estado_espectaculos option[value='EVENTO_REALIZADO']").hide();
+            // $("#estado_espectaculos option[value='EVENTO_APROBADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_FINALIZADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_NO_REALIZADO']").hide();
+            $("#estado_espectaculos option[value='ACTO_REVOCADO']").hide();
+        }else if (estado_actual == "ENTREGA_GARANTIA"){
+            $("#estado_espectaculos option[value='ENTREGA_GARANTIA']").hide();
+            $("#estado_espectaculos option[value='EVENTO_REALIZADO']").hide();
+            // $("#estado_espectaculos option[value='EVENTO_APROBADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_FINALIZADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_NO_REALIZADO']").hide();
+            $("#estado_espectaculos option[value='ACTO_REVOCADO']").hide();
+            $("#estado_espectaculos option[value='PENDIENTE']").hide();
+
+        }
+            // $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
+        // } else if (estado_actual == "PENDIENTE") {
+        //     $("#estado_espectaculos option[value='APROBADA']").hide();
+        //     // $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
+        // } else if (estado_actual == "RESPUESTA-PLANEACION") {
+        //     $("#estado_solicitud_parqueaderos option[value='PENDIENTE']").hide();
+        //     $(
+        //         "#estado_solicitud_parqueaderos option[value='REVISION-PLANEACION']"
+        //     ).hide();
+        // } else if (estado_actual == "REVISION-PLANEACION") {
+        //     $("#myBtn").attr("disabled", true);
+        //     $("#estado_solicitud_parqueaderos").attr("disabled", true);
+        //     $("#observaciones").attr("disabled", true);
+        // } else {
+        //     $("#myBtn").attr("disabled", true);
+        //     $("#estado_solicitud_parqueaderos").attr("disabled", true);
+        //     $("#observaciones").attr("disabled", true);
+        // }
+    });
+
+    $('#estado_espectaculos').change(function(){
+        var estado = $(this).val();
+        if(estado =='ENTREGA_GARANTIA'){
+            $('.caja-garantia').removeClass('d-none');
+            $('.garantia').attr('required', true);
+        }else{
+            $('.caja-garantia').addClass('d-none');
+            $('.garantia').attr('required', false);
+        }
+
+
+
+    });
+
     
-      
 }); // FIN DOCUMENT READY

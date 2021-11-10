@@ -72,9 +72,28 @@ Route::post('/registro-metrolinea/updateDocs', 'MetrolineaController@updateDocs'
 
 
 
+
 // RUTAS DE PUBLICIDAD EXTERIOR
 
 Route::get('/publicidad-exterior', 'PublicidadController@index')->name('publicidad.index');
+
+
+//RUTAS DE ESPECTACULOS Publicos
+Route::get('/espectaculos-publicos', 'EspectaculosController@index')->name('espectaculos.index');
+Route::post('/espectaculos-publicos/store', 'EspectaculosController@store')->name('espectaculos.store');
+Route::get('/espectaculos-publicos/confirmacion', 'EspectaculosController@confirmacion')->name('espectaculos.confirmacion');
+Route::get('/espectaculos-publicos/finalizar', 'EspectaculosController@end')->name('espectaculos.finalizar');
+Route::post('/espectaculos-publicos/consulta','EspectaculosController@consulta')->name('espectaculos.consulta');
+Route::get('/espectaculos-publicos/detalle/{id}', 'EspectaculosController@detalle')->name('espectaculos.detalle');
+Route::post('/espectaculos-publicos/updateDocs', 'EspectaculosController@updateDocs')->name('espectaculo.updateDocs');
+
+
+
+
+//PRUEBAS
+Route::get('/pruebas', 'EspectaculosController@pruebas')->name('pruebas.pruebas');
+
+
 
 
 
@@ -151,9 +170,30 @@ Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|SEC_GOBIERNO|edit
     Route::get('/tramites/interior/eventos','InteriorController@eventosIndex')->name('interior.eventos.index');
     Route::get('/tramites/interior/evento/{id}','InteriorController@eventoDetalle')->name('interior.eventos.detalle');
     Route::post('tramites/interior/eventos/update/', 'InteriorController@eventosUpdate' )->name('interior.eventos.update');
+
     
     
 });
+
+// RUTAS DE HACIENDA PARA VER TRAMITES
+Route::group(['middleware' => ['role:SUPER-ADMIN|HACIENDA-SFI']], function () {
+    Route::get('/tramites/hacienda','HaciendaController@index')->name('hacienda.index');
+});
+
+Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|HACIENDA-SFI|editar-tramite']], function () { 
+    Route::get('/tramites/hacienda/espectaculos','HaciendaController@espectaculoIndex')->name('hacienda.espectaculos.index');
+    Route::get('/tramites/hacienda/espectaculos/{id}','HaciendaController@espectaculoDetalle')->name('hacienda.espectaculos.detalle');
+    Route::post('tramites/hacienda/espectaculos/update/', 'HaciendaController@espectaculoUpdate' )->name('hacienda.espectaculos.update');
+    
+    // // tramite de eventos
+    // Route::get('/tramites/interior/eventos','InteriorController@eventosIndex')->name('interior.eventos.index');
+    // Route::get('/tramites/interior/evento/{id}','InteriorController@eventoDetalle')->name('interior.eventos.detalle');
+    // Route::post('tramites/interior/eventos/update/', 'InteriorController@eventosUpdate' )->name('interior.eventos.update');
+
+    
+    
+});
+
 
 
 

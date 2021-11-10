@@ -34,6 +34,7 @@ class PlaneacionController extends Controller
         $sEnviadas = EspacioPublico::where('estado_solicitud', 'ENVIADA')->get();
         $sProgreso = EspacioPublico::where('estado_solicitud', 'EN PROGRESO')->get();
         $sPendientes = EspacioPublico::where('estado_solicitud', 'PENDIENTE')->get();
+        $sEstudio = EspacioPublico::where('estado_solicitud', 'EN ESTUDIO')->get();
         $sAprobadas = EspacioPublico::where('estado_solicitud', 'APROBADA')->get();
         $sRechazadas = EspacioPublico::where('estado_solicitud', 'RECHAZADA')->get();
         $porCerrar =  EspacioPublico::where('estado_solicitud', 'PENDIENTE')->where('fecha_pendiente' ,'<',DB::raw('DATE_ADD(NOW(),INTERVAL 5 DAY)'))->get()->count();        
@@ -42,8 +43,9 @@ class PlaneacionController extends Controller
         $count_pendientes = $sPendientes->count();
         $count_aprobadas = $sAprobadas->count();
         $count_rechazadas = $sRechazadas->count();
+        $count_enEstudio = $sEstudio->count();
 
-        return view('tramites.planeacion.espacio.index', compact('sEnviadas', 'sProgreso', 'sPendientes', 'sAprobadas', 'sRechazadas', 'count_enviadas', 'count_progreso', 'count_pendientes', 'count_aprobadas', 'count_rechazadas', 'porCerrar'));
+        return view('tramites.planeacion.espacio.index', compact('sEnviadas', 'sProgreso', 'sPendientes', 'sAprobadas', 'sRechazadas', 'count_enviadas', 'count_progreso', 'count_pendientes', 'count_aprobadas', 'count_rechazadas', 'porCerrar', 'sEstudio' , 'count_enEstudio'));
     }
 
     public function detalleSolicitud($id)
@@ -127,6 +129,56 @@ class PlaneacionController extends Controller
                 'nombres' => $datos->nom_responsable . ' ' . $datos->ape_responsable,
                 'mensaje' => $request->observaciones_solicitud,
                 'Subject' => 'Cita para solicitud de Intervención de Espacio Publico N°' . $datos->radicado,
+                'documento' => 'NO',
+                'fecha_pendiente' => $date_30,
+                'radicado'  => $datos->radicado,
+                'estado' => $request->estado_solicitud
+            ];
+            // actualizar
+
+            $datos->estado_solicitud = $request->estado_solicitud;
+            $datos->observaciones_solicitud = $request->observaciones_solicitud;
+            $datos->fecha_actuacion = $date;
+            $datos->fecha_pendiente = $date_30;
+            $datos->act_documentos = null;
+
+            if ($datos->save()) {
+
+                $auditoria = Auditoria::create([
+                    'usuario' => $request->username,
+                    'proceso_afectado'=> 'Radicado-'.$datos->radicado,
+                    'tramite' =>'LICENCIA DE INTERVENCION DE ESPACIO PUBLICO PARA LOCALIZACION DE EQUIPAMIENTO',
+                    'radicado' => $datos->radicado,
+                    'accion'=>'update a estado '.$request->estado_solicitud,
+                    'observacion'=>$request->observaciones_solicitud
+                    
+
+                ]);
+
+                Mail::to($datos->email_responsable)->send(new EnvioNotificacion($detalleCorreo));
+                Alert::success('Operacion Exitosa', 'Se actualizado exitosamente el estado del tramite en el sistema');
+                return redirect()->route('espacio.index');
+            } else {
+
+                Alert::error('Error', 'Ha ocurrido un erro al registrar la actualizacion de la solicitud');
+                return redirect()->route('espacio.index');
+            }
+        }elseif ($request->estado_solicitud == 'EN ESTUDIO') {
+
+            $this->validate($request, [
+                "observaciones_solicitud" => 'required',
+                "estado_solicitud" => 'required'
+            ]);
+
+            $date = date('Y-m-d');
+            //sumo 30 días
+            $date_30 = NULL;
+
+
+            $detalleCorreo = [
+                'nombres' => $datos->nom_responsable . ' ' . $datos->ape_responsable,
+                'mensaje' => $request->observaciones_solicitud,
+                'Subject' => 'Solicitud en Estudio de Intervención de Espacio Publico N°' . $datos->radicado,
                 'documento' => 'NO',
                 'fecha_pendiente' => $date_30,
                 'radicado'  => $datos->radicado,

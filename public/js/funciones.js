@@ -151,6 +151,12 @@ function Direccion(n){
         return false;
 }
 
+//  function Valores(valor){
+//    console.log(valor);
+//   valor_convertido = new Intl.NumberFormat("es-CO").format(valor);
+//   return valor_convertido;
+//  }
+
 // funcion campo date: maximo
 
     var today = new Date();
@@ -167,3 +173,144 @@ function Direccion(n){
     // today = yyyy+'-'+mm+'-'+dd;
     // document.getElementById("fecha_matricula").setAttribute("max", today);
 
+// funcion para agregar tabla 
+
+function agregarFila() {
+
+  // Swal.fire('Any fool can use a computer')
+  let tipo_boleteria = document.getElementById('tipo_boleteria').value;
+  let valor_boleteria = document.getElementById('valor_boleteria').value;
+  let cantidad_boleteria = document.getElementById('cantidad_boleteria').value;
+  let table = document.getElementById("tablaBoleteria"); 
+  var tbodyRowCount = table.tBodies[0].rows.length;
+  var id_table = 1 +tbodyRowCount;
+  
+  
+
+  
+  
+  let valor_boletas = new Intl.NumberFormat("es-CO").format(valor_boleteria);
+
+  if (tipo_boleteria.length == 0) {    
+   Swal.fire('Debes completar el campo tipo de boleteria')
+     return;
+  }
+
+  if (valor_boleteria.length == 0) {
+    Swal.fire('Debes completar el campo valor de boleteria')
+    return;
+  }
+
+  if (cantidad_boleteria.length == 0) {
+    Swal.fire('Debes completar el campo Numero de boleteria')
+    return;
+  }
+
+  if(valor_boleteria.startsWith("0")){
+    valor_boleteria = "0";
+ }
+ if(cantidad_boleteria.startsWith("0")){
+  cantidad_boleteria = "0";
+}
+
+  
+
+  document.getElementById("tablaBoleteria").getElementsByTagName('tbody')[0].insertRow(-1).innerHTML =
+     `<tr id="boleta_${id_table}">
+        <td data-tb="${tipo_boleteria}" id="boleta_${id_table}">
+           ${tipo_boleteria}
+        </td>
+        <td data-vb="${valor_boleteria}">
+           $${valor_boletas}
+        </td>   
+        <td data-cantidad="${cantidad_boleteria}">
+        ${cantidad_boleteria}
+        </td>        
+        <td>
+           <div class="row">
+              <div class="col">
+              <div class="btn-group" role="group" aria-label="Basic example">
+              <a onClick="editarFila('${tipo_boleteria}',${valor_boleteria},${cantidad_boleteria},${id_table})" class="btn btn-success btn-xs btn-sm col text-white">
+                    Editar
+                 </a>
+                 <a onClick="eliminarFila(this)" class="btn btn-danger btn-xs btn-sm col text-white">
+                    Eliminar
+                 </a>
+                 </div>
+              </div>
+           </div>
+        </td>
+     </tr>`;
+  $("#tipo_boleteria").val('');
+  $("#valor_boleteria").val('');
+  $("#cantidad_boleteria").val('');
+
+  // let total_oculto = Number(total) + Number(subtotal);
+  // let suma_total = new Intl.NumberFormat("es-CO").format(total_oculto);
+  // $('#total').val(suma_total);
+  // $('#total_oculto').val(total_oculto);
+  $('#ModalBoleteria').modal('hide');
+ 
+}
+
+function eliminarFila(fila) {  
+
+  Swal.fire({
+    title: 'ESTAS SEGURO DE ELIMINAR ESTE REGISTRO?',
+    text: "Este cambio es irreversible",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3772FF',
+    cancelButtonColor: '#A80521',
+    confirmButtonText: 'Si, eliminar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fila.closest("tr").remove();
+      return;  
+     
+    }
+  })
+  
+  
+
+}
+
+function editarFila(tipo,valor,cantidad,id_fila) {  
+  
+  $('#ModalBoleteria').modal('show');
+  $('#btnBoleteria').addClass('d-none');
+  $('#btnEditBoleteria').removeClass('d-none');  
+  $('#tipo_boleteria').val(tipo);
+  $('#valor_boleteria').val(valor);
+  $('#cantidad_boleteria').val(cantidad);
+  $('#parametro').val(id_fila);
+
+}
+function updateFila(){
+
+ 
+  let parametro = document.getElementById('parametro').value;
+  $('#boleta_'+parametro).parent().remove();
+  agregarFila();
+
+   
+
+}
+
+function borrarCampos(){
+  $("#tipo_boleteria").val('');
+  $("#valor_boleteria").val('');
+  $("#cantidad_boleteria").val('');
+  return;
+
+  
+}
+function openModal(){
+  $("#tipo_boleteria").val('');
+  $("#valor_boleteria").val('');
+  $("#cantidad_boleteria").val('');
+  $('#ModalBoleteria').modal('show');
+  $('#btnBoleteria').removeClass('d-none');
+  $('#btnEditBoleteria').addClass('d-none');
+
+}

@@ -147,6 +147,11 @@
                   <a href="{{route('interior.index')}}" class="nav-link">INTERIOR</a>
                  </li> 
                  @endrole
+                 @hasrole('HACIENDA-SFI|SUPER-ADMIN')
+                 <li class="nav-item">
+                  <a href="{{route('hacienda.index')}}" class="nav-link">HACIENDA</a>
+                 </li> 
+                 @endrole
               </ul>
            </div>
         </div>
