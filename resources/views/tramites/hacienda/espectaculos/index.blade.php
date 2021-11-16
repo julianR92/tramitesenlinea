@@ -70,11 +70,11 @@
                         <li class="nav-item">
                             <a class="nav-link" id="estudio-tab" data-toggle="tab" href="#estudio" role="tab" aria-controls="estudio" aria-selected="false">Documentos Actualizados <span class="badge badge-primary">{{$count_enEstudio}}</span></a>
                         </li>
-                        {{-- <li class="nav-item">
-                        <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Aprobadas <span class="badge badge-primary">{{$count_aprobadas}}</span></a>
-                        </li> --}}
                         <li class="nav-item">
-                            <a class="nav-link" id="rechazadas-tab" data-toggle="tab" href="#rechazadas" role="tab" aria-controls="rechazadas" aria-selected="false">Rechazadas <span class="badge badge-primary">{{$count_rechazadas}}</span></a>
+                        <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Aprobadas <span class="badge badge-primary">{{$count_aprobadas}}</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="rechazadas-tab" data-toggle="tab" href="#rechazadas" role="tab" aria-controls="rechazadas" aria-selected="false">Liquidación <span class="badge badge-primary">{{$count_rechazadas}}</span></a>
                             </li>
                     </ul>
                 
@@ -84,7 +84,7 @@
                         <div class="col-md-12 pt-4">
                             <div id="container_table" class="table-pagination-govco">
                                 <table id="DataTables_Table_0"
-                                    class="table display table-responsive-md table-responsive-md tablas" width="100%"
+                                    class="table display table-responsive-md table-responsive-md tablas-espectaculos" width="100%"
                                     style="text-align: left!important;">
                                     <thead>
                                         <tr>
@@ -137,7 +137,7 @@
                         
                         <div class="col-md-12 pt-4">
                             <div id="container_table" class="table-pagination-govco">
-                                <table id="DataTables_Table_0" class="table display table-responsive-md  tablas" width="100%" style="text-align: left!important;">
+                                <table id="DataTables_Table_0" class="table display table-responsive-md  tablas-espectaculos" width="100%" style="text-align: left!important;">
                                     <thead>
                                         <tr>
                                             <th style="color: #004884;">Radicado</th>
@@ -189,7 +189,7 @@
                        <div class="col-md-12 pt-4">
                         <div id="container_table" class="table-pagination-govco">
                             <table id="DataTables_Table_0"
-                                class="table display table-responsive-md table-responsive-md tablas" width="100%"
+                                class="table display table-responsive-md table-responsive-md tablas-espectaculos" width="100%"
                                 style="text-align: left!important;">
                                 <thead>
                                     <tr>
@@ -247,7 +247,7 @@
                <div class="col-md-12 pt-4">
                 <div id="container_table" class="table-pagination-govco">
                     <table id="DataTables_Table_0"
-                        class="table display table-responsive-md table-responsive-md tablas" width="100%"
+                        class="table display table-responsive-md table-responsive-md tablas-espectaculos" width="100%"
                         style="text-align: left!important;">
                         <thead>
                             <tr>
@@ -296,50 +296,48 @@
 
 
 
-                    {{-- <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                    <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
 
                         
                        <div class="col-md-12 pt-4">
                         <div id="container_table" class="table-pagination-govco">
                             <table id="DataTables_Table_0"
-                                class="table display table-responsive-md table-responsive-md tablas" width="100%"
+                                class="table display table-responsive-md table-responsive-md tablas-espectaculos" width="100%"
                                 style="text-align: left!important;">
                                 <thead>
                                     <tr>
                                         <th style="color: #004884;">Radicado</th>
-                                        <th style="color: #004884;">Modalidad</th>
-                                        <th style="color: #004884;">Construccion- - Direccion</th>
-                                        <th style="color: #004884;">Nombre Solicitante</th>
-                                        <th style="color: #004884;">Identificación Solicitante</th>
-                                        <th style="color: #004884;;">Teléfono Solicitante</th>
-                                        <th style="color: #004884;;">Correo Solicitante</th>
+                                        <th style="color: #004884;">Responsable Espectaculo</th>
+                                        <th style="color: #004884;">Nombre del evento</th>
+                                        <th style="color: #004884;">Lugar Evento</th>
+                                        <th style="color: #004884;">Fecha del evento</th>
+                                        <th style="color: #004884;;">Telefono</th>                                            
                                         <th style="color: #004884;;">Detalle</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($sAprobadas as $solicitudesAP)
-                                        <tr>
-                                            <td>{{ $solicitudesAP->radicado }}</td>
-                                            <td>{{ $solicitudesAP->modalidad }}</td>
-                                            <td>{{ $solicitudesAP->construccion }} - {{$solicitudesAP->direccion_predio}}</td>
-                                            <td>{{ $solicitudesAP->nom_responsable }} {{$solicitudesAP->ape_responsable}}</td>
-                                            <td>{{ $solicitudesAP->ide_responsable }}</td>
-                                            <td>{{ $solicitudesAP->tel_responsable }}</td>
-                                            <td>{{ $solicitudesAP->email_responsable }}</td>
-                                            <td>
-                                                <div class="btn-group" role="group">
-                                                    <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('espacio.detalle', $solicitudesAP->id)}}">
-                                                        <span class="govco-icon govco-icon-attached-n"></span>
-                                                        <span class="btn-govco-text">Detalles</span></a>
-                                                        
-                                                        <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesAP->radicado , 'tramite' => $tramite] )}}">
-                                                            <span class="govco-icon govco-icon-analytic-cn"></span>
-                                                            <span class="btn-govco-text text-sm">Trazabilidad</span></a>
-                                                
-                                                </div>
-                                            </td>
-
-                                        </tr>
+                                    <tr>
+                                        <td>{{ $solicitudesAP->radicado }}</td>
+                                         <td>{{ $solicitudesAP->nombre_o_razon }}</td>
+                                         <td>{{ $solicitudesAP->nombre_evento }}</td>
+                                         <td>{{ $solicitudesAP->lugar_evento }}</td>
+                                         <td>{{ $solicitudesAP->fecha_inicio_evento }} - {{$solicitudesAP->fecha_inicio_evento}}</td>                                               
+                                         <td>{{ $solicitudesAP->telefono_movil }}</td>
+                                     
+                                     <td>
+                                         <div class="btn-group" role="group">
+                                             <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('hacienda.espectaculos.detalle', $solicitudesAP->id)}}">
+                                                 <span class="govco-icon govco-icon-attached-n"></span>
+                                                 <span class="btn-govco-text">Detalles</span></a>                                                       
+                                                 <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesAP->radicado , 'tramite' => $tramite] )}}">
+                                                     <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                     <span class="btn-govco-text text-sm">Trazabilidad</span></a>                                           
+                                         
+                                         </div>
+                                     </td>
+        
+                                 </tr>
                                     @endforeach
 
                                 </tbody>
@@ -349,13 +347,13 @@
                         </div>
                     </div>
                     
-                    </div> --}}
+                    </div>
                     <div class="tab-pane" id="rechazadas" role="tabpanel" aria-labelledby="rechazadas-tab">
                         {{-- TABLA DE RECHAZADAS --}}
                        <div class="col-md-12 pt-4">
                         <div id="container_table" class="table-pagination-govco">
                             <table id="DataTables_Table_0"
-                                class="table display table-responsive-md table-responsive-md tablas" width="100%"
+                                class="table display table-responsive-md table-responsive-md tablas-espectaculos" width="100%"
                                 style="text-align: left!important;">
                                 <thead>
                                     <tr>
@@ -405,9 +403,354 @@
                 </div>
 
 
+                {{-- SEGUNDO PANEL --}}
+
+
+                <div class="tabs-govco col-md-12 animate__animated animate__bounceInRight pt-5">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                        <a class="nav-link active" id="cancel-tab" data-toggle="tab" href="#cancel" role="tab" aria-controls="cancel" aria-selected="true">En cancelación <span class="badge badge-primary">{{$count_canceladas}}</span></a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" id="revoca-tab" data-toggle="tab" href="#revoca" role="tab" aria-controls="revoca" aria-selected="false">Acto Revocado<span class="badge badge-primary">{{$count_revoca}}</span></a>
+                        </li>
+                        {{-- <li class="nav-item">
+                        <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Pendientes <span class="badge badge-primary">{{$count_pendientes}}</span></a>
+                        </li> --}}
+                        {{-- <li class="nav-item">
+                            <a class="nav-link" id="estudio-tab" data-toggle="tab" href="#estudio" role="tab" aria-controls="estudio" aria-selected="false">Documentos Actualizados <span class="badge badge-primary">{{$count_enEstudio}}</span></a>
+                        </li> --}}
+                        {{-- <li class="nav-item">
+                        <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Aprobadas <span class="badge badge-primary">{{$count_aprobadas}}</span></a>
+                        </li> --}}
+                        {{-- <li class="nav-item">
+                            <a class="nav-link" id="rechazadas-tab" data-toggle="tab" href="#rechazadas" role="tab" aria-controls="rechazadas" aria-selected="false">liquidación <span class="badge badge-primary">{{$count_rechazadas}}</span></a>
+                        </li> --}}
+                    </ul>
+                
+                    <div class="tab-content">
+                    <div class="tab-pane active" id="cancel" role="tabpanel" aria-labelledby="cancel-tab">
+                      
+                        <div class="col-md-12 pt-4">
+                            <div id="container_table" class="table-pagination-govco">
+                                <table id="DataTables_Table_0"
+                                    class="table display table-responsive-md table-responsive-md tablas-espectaculos" width="100%"
+                                    style="text-align: left!important;">
+                                    <thead>
+                                        <tr>
+                                            <th style="color: #004884;">Radicado</th>
+                                            <th style="color: #004884;">Responsable Espectaculo</th>
+                                            <th style="color: #004884;">Nombre del evento</th>
+                                            <th style="color: #004884;">Lugar Evento</th>
+                                            <th style="color: #004884;">Fecha del evento</th>
+                                            <th style="color: #004884;;">Telefono</th>                                            
+                                            <th style="color: #004884;;">Detalle</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($sCanceladas as $solicitudesCancel)
+                                            <tr>
+                                                <td>{{ $solicitudesCancel->radicado }}</td>
+                                                <td>{{ $solicitudesCancel->nombre_o_razon }}</td>
+                                                <td>{{ $solicitudesCancel->nombre_evento }}</td>
+                                                <td>{{ $solicitudesCancel->lugar_evento }}</td>
+                                                <td>{{ $solicitudesCancel->fecha_inicio_evento }} - {{$solicitudesCancel->fecha_inicio_evento}}</td>                                               
+                                                <td>{{ $solicitudesCancel->telefono_movil }}</td>
+                                                
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('hacienda.espectaculos.detalle', $solicitudesCancel->id)}}">
+                                                            <span class="govco-icon govco-icon-attached-n"></span>
+                                                            <span class="btn-govco-text">Detalles</span></a>
+
+                                                            <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesCancel->radicado , 'tramite' => $tramite] )}}">
+                                                                <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                                <span class="btn-govco-text text-sm">Trazabilidad</span></a>
+                                                                                                      
+                                                    
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                        </div>
+                        
+                    </div>
+                    {{-- ACTO REVOCADOS --}}
+                    <div class="tab-pane" id="revoca" role="tabpanel" aria-labelledby="revoca-tab">
+                                               
+                        <div class="col-md-12 pt-4">
+                            <div id="container_table" class="table-pagination-govco">
+                                <table id="DataTables_Table_0" class="table display table-responsive-md  tablas-espectaculos" width="100%" style="text-align: left!important;">
+                                    <thead>
+                                        <tr>
+                                            <th style="color: #004884;">Radicado</th>
+                                            <th style="color: #004884;">Responsable Espectaculo</th>
+                                            <th style="color: #004884;">Nombre del evento</th>
+                                            <th style="color: #004884;">Lugar Evento</th>
+                                            <th style="color: #004884;">Fecha del evento</th>
+                                            <th style="color: #004884;;">Telefono</th>                                            
+                                            <th style="color: #004884;;">Detalle</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($sActoRevoca as $solicitudesRevoca)
+                                            <tr>
+                                                <td>{{ $solicitudesRevoca->radicado }}</td>
+                                                <td>{{ $solicitudesRevoca->nombre_o_razon }}</td>
+                                                <td>{{ $solicitudesRevoca->nombre_evento }}</td>
+                                                <td>{{ $solicitudesRevoca->lugar_evento }}</td>
+                                                <td>{{ $solicitudesRevoca->fecha_inicio_evento }} - {{$solicitudesRevoca->fecha_inicio_evento}}</td>                                               
+                                                <td>{{ $solicitudesRevoca->telefono_movil }}</td>
+                                                
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('hacienda.espectaculos.detalle', $solicitudesRevoca->id)}}">
+                                                            <span class="govco-icon govco-icon-attached-n"></span>
+                                                            <span class="btn-govco-text">Detalles</span></a>
+
+                                                            <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesRevoca->radicado , 'tramite' => $tramite] )}}">
+                                                                <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                                <span class="btn-govco-text text-sm">Trazabilidad</span></a>
+                                                                                                      
+                                                    
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                        </div>
+                       
+                    </div>
+                    {{-- <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                      
+                       <div class="col-md-12 pt-4">
+                        <div id="container_table" class="table-pagination-govco">
+                            <table id="DataTables_Table_0"
+                                class="table display table-responsive-md table-responsive-md tablas-espectaculos" width="100%"
+                                style="text-align: left!important;">
+                                <thead>
+                                    <tr>
+                                            <th style="color: #004884;">Radicado</th>
+                                            <th style="color: #004884;">Responsable Espectaculo</th>
+                                            <th style="color: #004884;">Nombre del evento</th>
+                                            <th style="color: #004884;">Lugar Evento</th>
+                                            <th style="color: #004884;">Fecha del evento</th>
+                                            <th style="color: #004884;;">Telefono</th>                                            
+                                            <th style="color: #004884;;">Detalle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($sPendientes as $solicitudesPE)
+                                        <tr>
+                                               <td>{{ $solicitudesPE->radicado }}</td>
+                                                <td>{{ $solicitudesPE->nombre_o_razon }}</td>
+                                                <td>{{ $solicitudesPE->nombre_evento }}</td>
+                                                <td>{{ $solicitudesPE->lugar_evento }}</td>
+                                                <td>{{ $solicitudesPE->fecha_inicio_evento }} - {{$solicitudesPE->fecha_inicio_evento}}</td>                                               
+                                                <td>{{ $solicitudesPE->telefono_movil }}</td>
+                                            
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('hacienda.espectaculos.detalle', $solicitudesPE->id)}}">
+                                                        <span class="govco-icon govco-icon-attached-n"></span>
+                                                        <span class="btn-govco-text">Detalles</span></a>                                                       
+                                                        <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesPE->radicado , 'tramite' => $tramite] )}}">
+                                                            <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                            <span class="btn-govco-text text-sm">Trazabilidad</span></a>
+
+                                                            
+    
+
+                                                
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+                   
+                </div>  --}}
+
             
+            {{-- <div class="tab-pane" id="estudio" role="tabpanel" aria-labelledby="estudio-tab">
+
+               
+               <div class="col-md-12 pt-4">
+                <div id="container_table" class="table-pagination-govco">
+                    <table id="DataTables_Table_0"
+                        class="table display table-responsive-md table-responsive-md tablas-espectaculos" width="100%"
+                        style="text-align: left!important;">
+                        <thead>
+                            <tr>
+                                <th style="color: #004884;">Radicado</th>
+                                <th style="color: #004884;">Responsable Espectaculo</th>
+                                <th style="color: #004884;">Nombre del evento</th>
+                                <th style="color: #004884;">Lugar Evento</th>
+                                <th style="color: #004884;">Fecha del evento</th>
+                                <th style="color: #004884;;">Telefono</th>                                            
+                                <th style="color: #004884;;">Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($sEstudio as $solicitudesES)
+                            <tr>
+                                <td>{{ $solicitudesES->radicado }}</td>
+                                 <td>{{ $solicitudesES->nombre_o_razon }}</td>
+                                 <td>{{ $solicitudesES->nombre_evento }}</td>
+                                 <td>{{ $solicitudesES->lugar_evento }}</td>
+                                 <td>{{ $solicitudesES->fecha_inicio_evento }} - {{$solicitudesES->fecha_inicio_evento}}</td>                                               
+                                 <td>{{ $solicitudesES->telefono_movil }}</td>
+                             
+                             <td>
+                                 <div class="btn-group" role="group">
+                                     <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('hacienda.espectaculos.detalle', $solicitudesES->id)}}">
+                                         <span class="govco-icon govco-icon-attached-n"></span>
+                                         <span class="btn-govco-text">Detalles</span></a>                                                       
+                                         <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesES->radicado , 'tramite' => $tramite] )}}">
+                                             <span class="govco-icon govco-icon-analytic-cn"></span>
+                                             <span class="btn-govco-text text-sm">Trazabilidad</span></a>                                           
+                                 
+                                 </div>
+                             </td>
+
+                         </tr>
+                            @endforeach
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            </div>
+           
+            </div> --}}
 
 
+
+                    {{-- <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+
+                        
+                       <div class="col-md-12 pt-4">
+                        <div id="container_table" class="table-pagination-govco">
+                            <table id="DataTables_Table_0"
+                                class="table display table-responsive-md table-responsive-md tablas-espectaculos" width="100%"
+                                style="text-align: left!important;">
+                                <thead>
+                                    <tr>
+                                        <th style="color: #004884;">Radicado</th>
+                                        <th style="color: #004884;">Responsable Espectaculo</th>
+                                        <th style="color: #004884;">Nombre del evento</th>
+                                        <th style="color: #004884;">Lugar Evento</th>
+                                        <th style="color: #004884;">Fecha del evento</th>
+                                        <th style="color: #004884;;">Telefono</th>                                            
+                                        <th style="color: #004884;;">Detalle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($sAprobadas as $solicitudesAP)
+                                    <tr>
+                                        <td>{{ $solicitudesAP->radicado }}</td>
+                                         <td>{{ $solicitudesAP->nombre_o_razon }}</td>
+                                         <td>{{ $solicitudesAP->nombre_evento }}</td>
+                                         <td>{{ $solicitudesAP->lugar_evento }}</td>
+                                         <td>{{ $solicitudesAP->fecha_inicio_evento }} - {{$solicitudesAP->fecha_inicio_evento}}</td>                                               
+                                         <td>{{ $solicitudesAP->telefono_movil }}</td>
+                                     
+                                     <td>
+                                         <div class="btn-group" role="group">
+                                             <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('hacienda.espectaculos.detalle', $solicitudesAP->id)}}">
+                                                 <span class="govco-icon govco-icon-attached-n"></span>
+                                                 <span class="btn-govco-text">Detalles</span></a>                                                       
+                                                 <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesAP->radicado , 'tramite' => $tramite] )}}">
+                                                     <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                     <span class="btn-govco-text text-sm">Trazabilidad</span></a>                                           
+                                         
+                                         </div>
+                                     </td>
+        
+                                 </tr>
+                                    @endforeach
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+                    
+                    </div> --}}
+                     {{-- <div class="tab-pane" id="rechazadas" role="tabpanel" aria-labelledby="rechazadas-tab">
+                       
+                       <div class="col-md-12 pt-4">
+                        <div id="container_table" class="table-pagination-govco">
+                            <table id="DataTables_Table_0"
+                                class="table display table-responsive-md table-responsive-md tablas-espectaculos" width="100%"
+                                style="text-align: left!important;">
+                                <thead>
+                                    <tr>
+                                        <th style="color: #004884;">Radicado</th>
+                                        <th style="color: #004884;">Responsable Espectaculo</th>
+                                        <th style="color: #004884;">Nombre del evento</th>
+                                        <th style="color: #004884;">Lugar Evento</th>
+                                        <th style="color: #004884;">Fecha del evento</th>
+                                        <th style="color: #004884;;">Telefono</th>                                            
+                                        <th style="color: #004884;;">Detalle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($sRechazadas as $solicitudesRE)
+                                        <tr>
+                                               <td>{{ $solicitudesRE->radicado }}</td>
+                                                <td>{{ $solicitudesRE->nombre_o_razon }}</td>
+                                                <td>{{ $solicitudesRE->nombre_evento }}</td>
+                                                <td>{{ $solicitudesRE->lugar_evento }}</td>
+                                                <td>{{ $solicitudesRE->fecha_inicio_evento }} - {{$solicitudesPE->fecha_inicio_evento}}</td>                                               
+                                                <td>{{ $solicitudesRE->telefono_movil }}</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <a type="button" class="btn-symbolic-govco align-column-govco" href="{{route('espacio.detalle', $solicitudesRE->id)}}">
+                                                        <span class="govco-icon govco-icon-attached-n"></span>
+                                                        <span class="btn-govco-text">Detalles</span></a>
+                                                        
+                                                        <a type="button" class="btn-symbolic-govco align-column-govco pl-0 ml-0" href="{{route('tramite.trazabilidad', ['radicado'=>$solicitudesRE->radicado , 'tramite' => $tramite] )}}">
+                                                            <span class="govco-icon govco-icon-analytic-cn"></span>
+                                                            <span class="btn-govco-text text-sms">Trazabilidad</span></a>
+                                                
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+                 
+                    </div>  --}}
+                    </div>
+                </div>          
             </div>
         </div>
 

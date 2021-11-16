@@ -85,12 +85,23 @@
 
                        @endif
 
-                       @if($solicitud->estado_solicitud == 'APROBADA')
+                       @if($solicitud->estado_solicitud == 'EVENTO_APROBADO')
                        
                        <div class="col-md-6">  
                         <div class="form-group">
-                        <h5>Acto administrativo de respuesta</h5>
-                          <a href="http://tramitesenlinea.test/{{$solicitud->adjunto_respuesta}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                        <h5>Acto administrativo de aprobación de evento</h5>
+                          <a href="http://tramitesenlinea.test/{{$solicitud->adj_acto_administrativo}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                       </div>
+                       </div>
+
+                       @endif
+
+                       @if($solicitud->estado_solicitud == 'ACTO_REVOCADO')
+                       
+                       <div class="col-md-6">  
+                        <div class="form-group">
+                        <h5>Acto administrativo revocatorio</h5>
+                          <a href="http://tramitesenlinea.test/{{$solicitud->adj_acto_revocatorio}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
                        </div>
                        </div>
 

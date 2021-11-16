@@ -207,6 +207,43 @@
 
                     @endif
 
+                    @if($solicitud->adj_evento_cancelado != null)
+                    
+                    <tr>
+                        
+                        <td  colspan="3"><strong>Oficio de Cancelación:</strong><br>
+                            <a href="http://tramitesenlinea.test/{{$solicitud->adj_evento_cancelado}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                        </td>
+                       
+
+                    </tr>
+
+
+                    @endif
+
+                    @if($solicitud->adj_acto_administrativo != null)
+                    
+                    <tr>
+                        
+                        <td><strong>Acto administrativo:</strong><br>
+                            <a href="http://tramitesenlinea.test/{{$solicitud->adj_acto_administrativo}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                        </td>
+                        @if($solicitud->adj_acto_revocatorio != null)
+                        <td colspan="2"><strong>Acto administrativo revocatorio:</strong><br>
+                            <a href="http://tramitesenlinea.test/{{$solicitud->adj_acto_revocatorio}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                        </td>
+                        @else
+                        <td colspan="2"><strong></strong><br>
+                            
+                        </td>
+                        @endif
+                       
+
+                    </tr>
+
+
+                    @endif
+
                     <tr style="background-color:#004884">
                         <td colspan="3" style="background-color:#004884; color:white">Administración del Tramite</td>
                     </tr>
@@ -223,8 +260,8 @@
                                          <p style="color: #FFAB00;font-weight:bold">DOCUMENTOS ACTUALIZADOS<span class="govco-icon govco-icon-edit-p  size-1x"></span></p>
                                          @elseif($solicitud->estado_solicitud == 'APROBADA')
                                          <p style="color: #069169;font-weight:bold">APROBADA<span class="govco-icon govco-icon-like size-1x"></span></p>
-                                         @elseif($solicitud->estado_solicitud == 'RECHAZADA')
-                                         <p style="color: #A80521;font-weight:bold">RECHAZADA<span class="govco-icon govco-icon-x-n size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'EVENTO_CANCELADO')
+                                         <p style="color: #A80521;font-weight:bold">SOLICITUD CANCELADA<span class="govco-icon govco-icon-x-n size-1x"></span></p>
                                        @endif
                             
                         </td>  
@@ -278,8 +315,9 @@
                                     <option value="EVENTO_APROBADO">SOLICITUD APROBADA</option>
                                     <option value="EVENTO_REALIZADO">EVENTO REALIZADO</option>
                                     <option value="EVENTO_NO_REALIZADO">EVENTO NO REALIZADO</option>
-                                    <option value="ACTO_REVOCADO">ACTO REVOCADO</option>
+                                    <option value="ACTO_REVOCADO">ACTO REVOCATORIO</option>
                                     <option value="EVENTO_FINALIZADO">EVENTO FINALIZADO</option>
+                                    <option value="DEVOLUCION_GARANTIA">DEVOLUCION DE GARANTIA</option>
                                     <option value="RECHAZADA">SOLICITUD RECHAZADA</option>
                                     <option value="EVENTO_CANCELADO">EVENTO CANCELADO</option>
                                     
@@ -369,6 +407,21 @@
                             </div>
                         </td>
 
+
+                    </tr>
+
+                    <tr class="caja-acto-revoca d-none">
+                        <td>
+                            <div class="form-group">
+                                <label for="arch_acto_revocatorio">Adjunte Acto Administrativo Revocatorio*</label>
+                                <input type="file" accept="application/pdf" name="arch_acto_revocatorio" id="arch_acto_revocatorio" class="form-control @error('arch_acta_reunion') is-invalid @enderror">
+                                @error('arch_acto_revocatorio')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            </div>
+                        </td>
 
                     </tr>
 

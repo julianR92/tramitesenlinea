@@ -686,6 +686,7 @@ $(document).ready(function () {
         responsive: true,
         scrollX: 200,
         scrollCollapse: true,
+        pageLength: 3
     });
 
     // tablas de exports
@@ -1730,6 +1731,7 @@ $(document).ready(function () {
             $("#estado_espectaculos option[value='EVENTO_FINALIZADO']").hide();
             $("#estado_espectaculos option[value='EVENTO_NO_REALIZADO']").hide();
             $("#estado_espectaculos option[value='ACTO_REVOCADO']").hide();
+            $("#estado_espectaculos option[value='DEVOLUCION_GARANTIA']").hide();
             // $("#estado_espectaculos option[value='EVENTO_CANCELADO']").hide();
             // $("#estado_espectaculos option[value='RECHAZADA']").hide();
         }else if(estado_actual == "DOCUMENTOS_ACTUALIZADOS" || estado_actual == "PENDIENTE"){
@@ -1747,6 +1749,37 @@ $(document).ready(function () {
             $("#estado_espectaculos option[value='EVENTO_NO_REALIZADO']").hide();
             $("#estado_espectaculos option[value='ACTO_REVOCADO']").hide();
             $("#estado_espectaculos option[value='PENDIENTE']").hide();
+            $("#estado_espectaculos option[value='DEVOLUCION_GARANTIA']").hide();
+
+        }else if(estado_actual == "EVENTO_APROBADO"){
+
+            $("#estado_espectaculos option[value='ENTREGA_GARANTIA']").hide();
+            // $("#estado_espectaculos option[value='EVENTO_REALIZADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_APROBADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_FINALIZADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_NO_REALIZADO']").hide();
+            $("#estado_espectaculos option[value='ACTO_REVOCADO']").hide();
+            $("#estado_espectaculos option[value='PENDIENTE']").hide();
+            $("#estado_espectaculos option[value='RECHAZADA']").hide();
+            $("#estado_espectaculos option[value='DEVOLUCION_GARANTIA']").hide();
+
+
+
+        }else if(estado_actual == 'EVENTO_CANCELADO'){
+
+            $("#estado_espectaculos option[value='ENTREGA_GARANTIA']").hide();
+            $("#estado_espectaculos option[value='EVENTO_REALIZADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_APROBADO']").hide();
+            // $("#estado_espectaculos option[value='EVENTO_FINALIZADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_NO_REALIZADO']").hide();
+            // $("#estado_espectaculos option[value='ACTO_REVOCADO']").hide();
+            $("#estado_espectaculos option[value='PENDIENTE']").hide();
+            $("#estado_espectaculos option[value='RECHAZADA']").hide();
+            $("#estado_espectaculos option[value='EVENTO_CANCELADO']").hide();
+
+
+
+
 
         }
             // $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
@@ -1774,14 +1807,67 @@ $(document).ready(function () {
         if(estado =='ENTREGA_GARANTIA'){
             $('.caja-garantia').removeClass('d-none');
             $('.garantia').attr('required', true);
+
+
+        }else if(estado =='EVENTO_APROBADO'){
+            $('.caja-acto ').removeClass('d-none');
+            $('#arch_acto_administrativo').attr('required', true);
+
+
+        }else if(estado =='ACTO_REVOCADO'){
+
+            $('.caja-acto-revoca').removeClass('d-none');
+            $('#arch_acto_revocatorio').attr('required', true);
+
+
         }else{
+            $('.caja-acto ').addClass('d-none');
+            $('#arch_acto_administrativo').attr('required', false);
             $('.caja-garantia').addClass('d-none');
             $('.garantia').attr('required', false);
+            $('.caja-acto-revoca').addClass('d-none');
+            $('#arch_acto_revocatorio').attr('required', false);
         }
 
 
 
     });
+
+    $(".tablas-espectaculos").DataTable({
+        language: {
+            sProcessing: "Procesando...",
+            sLengthMenu: "Mostrar _MENU_ registros",
+            sZeroRecords: "No se encontraron resultados",
+            sEmptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+            sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sInfoPostFix: "",
+            sSearch: "Buscar:",
+            sUrl: "",
+            sInfoThousands: ",",
+            sLoadingRecords: "Cargando...",
+            oPaginate: {
+                sFirst: "Primero",
+                sLast: "Último",
+                sNext: "Siguiente",
+                sPrevious: "Anterior",
+            },
+
+            oAria: {
+                sSortAscending:
+                    ": Activar para ordenar la columna de manera ascendente",
+                sSortDescending:
+                    ": Activar para ordenar la columna de manera descendente",
+            },
+        },
+        responsive: true,
+        // scrollX: 200,
+        scrollCollapse: true,
+        pageLength: 3
+    });
+
+    
 
     
 }); // FIN DOCUMENT READY

@@ -86,6 +86,9 @@ Route::get('/espectaculos-publicos/finalizar', 'EspectaculosController@end')->na
 Route::post('/espectaculos-publicos/consulta','EspectaculosController@consulta')->name('espectaculos.consulta');
 Route::get('/espectaculos-publicos/detalle/{id}', 'EspectaculosController@detalle')->name('espectaculos.detalle');
 Route::post('/espectaculos-publicos/updateDocs', 'EspectaculosController@updateDocs')->name('espectaculo.updateDocs');
+Route::get('/espectaculos-publicos/cancelar/{id}', 'EspectaculosController@cancelar')->name('espectaculos.cancelar');
+Route::post('/espectaculos-publicos/cancelarSolicitud/', 'EspectaculosController@cancelarSolicitud')->name('espectaculos.cancelarSolicitud');
+
 
 
 

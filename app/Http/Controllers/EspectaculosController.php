@@ -381,6 +381,132 @@ class EspectaculosController extends Controller
 
     }
 
+    public function cancelar($id){
+
+        $solicitud = EspectaculosPublicos::FindOrFail(Crypt::decrypt($id));
+
+        $hoy = date("Y-m-d");
+        $date_3 = date("Y-m-d", strtotime($solicitud->fecha_inicio_evento . "-3 day"));
+        $estado = $solicitud->estado_solicitud;
+        $radicado = $solicitud->radicado;
+        $id = $solicitud->id;
+        
+        if($solicitud->estado_solicitud == 'ENVIADA'){
+          return view('tramites.espectaculos.cancelar', compact('estado','radicado', 'id'));
+
+        }else if($solicitud->estado_solicitud == 'PENDIENTE' || $solicitud->estado_solicitud == 'ENTREGA_GARANTIA' || $solicitud->estado_solicitud == 'EVENTO_APROBADO' || $solicitud->estado_solicitud == 'DOCUMENTOS_ACTUALIZADOS'){
+
+            if($hoy >= $date_3){
+
+                Alert::error('Error', 'No es posible cancelar la solicitud N°-'.$solicitud->radicado.'debido a que se encuentra menos de 3 DIAS  de realizarse el evento');
+               return redirect()->route('espectaculos.index');
+
+            }else{
+                return view('tramites.espectaculos.cancelar', compact('estado','radicado', 'id'));            }
+
+
+        }else{
+            Alert::error('Error', 'No es posible cancelar la solicitud N°-'.$solicitud->radicado.' debido a que se encuentra en una etapa avanzada del tramite');
+            return redirect()->route('espectaculos.index');
+
+        }    
+        
+       
+
+
+    }
+
+    public function cancelarSolicitud(Request $request){
+
+        $solicitud = EspectaculosPublicos::FindOrFail($request->id);
+         
+        if($request->estado_solicitud=='ENVIADA'){
+        $this->validate($request, [
+            "observaciones" => 'required',            
+        ]);
+        }else{
+            $this->validate($request, [
+                "observaciones" => 'required',
+                "arch_evento_cancelado"=>'required',        
+            ]);
+
+        }
+
+        $date = date('Y-m-d');
+        $ruta = null;
+        if($request->arch_evento_cancelado || $request->arch_evento_cancelado != null){
+
+            $adjunto1 = $request->file('arch_evento_cancelado')->storeAs('documentos_espectaculos/' . $solicitud->radicado, 'OFICIO-CANCELACION-' . $solicitud->radicado . '.pdf');
+            $ruta = 'storage/documentos_espectaculos/' . $solicitud->radicado . '/OFICIO-CANCELACION-' . $solicitud->radicado . '.pdf'; 
+        }
+
+        $detalleCorreo = [
+            'nombres' => $solicitud->nombre_o_razon,
+            'mensaje' => 'Usted ha realizado una solicitud de cancelación ahora la oficina de impuestos    municipales de secretaria de hacienda validara esta solicitud',
+            'Subject' => 'Solicitud de cancelación  N°' . $solicitud->radicado,
+            'documento'=> 'NO',
+            'fecha_pendiente' => null,
+            'radicado'  => $solicitud->radicado,
+            'estado' => 'SOLICITUD EN CANCELACION',
+            'id'=> Crypt::encrypt($request->id)               
+
+        ];
+
+        $detalleCorreo_fun = [
+            'nombres' => ' Funcionario xxx',
+            'radicado' => $solicitud->radicado,
+            'Subject' => 'Cancelacion de Solicitud No'.$solicitud->radicado,
+            'documento'=> 'NO',
+            'fecha_pendiente' => null,            
+            'estado' => 'FUNCIONARIO',
+            'mensaje'=> 'El solicitante cancela solicitud por motivos de: '.$request->observaciones.''
+        ];
+        $correo_funcionario = 'ojrincon@bucaramanga.gov.co';
+
+
+       $solicitud->observaciones = 'MOTIVO DE CANCELACION: '.$request->observaciones;
+       $solicitud->fecha_pendiente = null;
+       $solicitud->fecha_actuacion = $date;
+       $solicitud->adj_evento_cancelado = $ruta;      
+       $solicitud->estado_solicitud = 'EVENTO_CANCELADO';
+
+       if ($solicitud->save()) {
+
+        $auditoria = Auditoria::create([
+            'usuario' => $solicitud->numero_identificacion,
+            'proceso_afectado' => 'Radicado-' . $solicitud->radicado,
+            'tramite'=>'ESPECTACULOS PUBLICOS',
+            'radicado'=> $solicitud->radicado,
+            'accion' => 'actualización de estado del tramite a EVENTO_CANCELADO',
+            'observacion'=>'Ciudadano realiza cancelacion de solicitud por motivo de: '.$request->observaciones
+
+        ]);
+
+        Mail::to($solicitud->email_responsable)->send(new NotificacionEspectaculos($detalleCorreo));
+        Mail::to($correo_funcionario)->send(new NotificacionEspectaculos($detalleCorreo_fun));
+     Alert::success('Operacion Exitosa', 'Se realizado la solicitud de cancelación exitosamente en el sistema');
+        return redirect()->route('espectaculos.index');
+    } else {
+
+        Alert::error('Error', 'Ha ocurrido un error al registrar la cancelación de la solicitud');
+        return redirect()->route('espectaculos.index');
+    }
+
+
+             
+
+
+
+        
+
+
+
+
+
+
+        
+    }
+
     public function pruebas(){
 
         $data = DB::connection('sqlsrv')->table('BARRIOS')->select()->get();

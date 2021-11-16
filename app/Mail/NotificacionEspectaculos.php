@@ -32,6 +32,13 @@ class NotificacionEspectaculos extends Mailable
     {
         if($this->detalleCorreo['documento'] == 'NO'){
             return  $this->subject($this->detalleCorreo['Subject'])->view('emails.notificacion_espectaculos');
+            }else if($this->detalleCorreo['documento'] == 'SI'){
+                $path = public_path('storage/documentos_espectaculos/'.$this->detalleCorreo['radicado'].'/ACTO-ADMINISTRATIVO-RAD-'.$this->detalleCorreo['radicado'].'.pdf');
+                return  $this->subject($this->detalleCorreo['Subject'])->view('emails.notificacion_espectaculos')->attach($path);
+            }else{
+                $path = public_path('storage/documentos_espectaculos/'.$this->detalleCorreo['radicado'].'/ACTO-ADMINISTRATIVO-REVOCADO-RAD-'.$this->detalleCorreo['radicado'].'.pdf');
+                return  $this->subject($this->detalleCorreo['Subject'])->view('emails.notificacion_espectaculos')->attach($path);
+
             }
     }
 }

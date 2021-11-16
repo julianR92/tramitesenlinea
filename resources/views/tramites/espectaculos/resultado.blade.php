@@ -80,25 +80,45 @@
                                          <p style="color: #F3561F;font-weight:bold">GARANTIA ENTREGADA<span class="govco-icon govco-icon-document-n size-1x"></span></p>
                                          @elseif($solicitud->estado_solicitud == 'REVISION-PLANEACION' || $solicitud->estado_solicitud == 'RESPUESTA-PLANEACION')
                                          <p style="color: #F3561F;font-weight:bold">EN PROGRESO<span class="govco-icon govco-icon-reload-n size-1x"></span></p>
-                                         @elseif($solicitud->estado_solicitud == 'APROBADA')
+                                         @elseif($solicitud->estado_solicitud == 'EVENTO_APROBADO')
                                          <p style="color: #069169;font-weight:bold">APROBADA<span class="govco-icon govco-icon-like size-1x"></span></p>
-                                         @elseif($solicitud->estado_solicitud == 'RECHAZADA')
-                                         <p style="color: #A80521;font-weight:bold">RECHAZADA<span class="govco-icon govco-icon-x-n size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'EVENTO_CANCELADO')
+                                         <p style="color: #A80521;font-weight:bold">EVENTO EN CANCELACION<span class="govco-icon govco-icon-x-n size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'ACTO_REVOCADO')
+                                         <p style="color: #4B4B4B;font-weight:bold">ACTO REVOCADO<span class="govco-icon govco-icon-left-arrow-cn size-1x"></span></p>
                                        @endif</td>
                                        <td>{{$solicitud->created_at}}</td>
                                        <td>
                                         @if ($solicitud->estado_solicitud == 'ENVIADA')
-                                        <a href="{{route('espectaculos.detalle', Crypt::encrypt($solicitud->id))}}" class="btn-symbolic-govco align-column-govco">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a href="{{route('espectaculos.detalle', Crypt::encrypt($solicitud->id))}}" class="btn-symbolic-govco align-column-govco" role="button">
                                             <span class="govco-icon govco-icon-search-cn"></span>
-                                            <span class="btn-govco-text">Detalle</span>
-                                        </a>
+                                            <span class="btn-govco-text">Detalle</span></a>
+
+                                            <a href="{{route('espectaculos.cancelar', Crypt::encrypt($solicitud->id))}}" class="btn-symbolic-govco align-column-govco btn-eliminar" role="button" onclick="return confirm('¿Esta seguro de cancelar esta solicitud ?')">
+                                                <span class="govco-icon govco-icon-x-cn"></span>
+                                                <span class="btn-govco-text">Cancelar</span>
+                                            </a>
+
+                                        </div>
+                                        
                                         @elseif($solicitud->estado_solicitud == 'REVISION-PLANEACION' || $solicitud->estado_solicitud == 'RESPUESTA-PLANEACION')
                                         <small>TRÁMITE EN CONCEPTO TÉCNICO</small>
                                         @else
-                                        <a href="{{route('espectaculos.detalle', Crypt::encrypt($solicitud->id))}}" class="btn-symbolic-govco align-column-govco">
-                                            <span class="govco-icon govco-icon-search-cn"></span>
-                                            <span class="btn-govco-text">Detalle</span>
-                                        </a>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a href="{{route('espectaculos.detalle', Crypt::encrypt($solicitud->id))}}" class="btn-symbolic-govco align-column-govco" role="button">
+                                                <span class="govco-icon govco-icon-search-cn"></span>
+                                                <span class="btn-govco-text">Detalle</span></a>
+    
+                                                <a href="{{route('espectaculos.cancelar', Crypt::encrypt($solicitud->id))}}" class="btn-symbolic-govco align-column-govco btn-eliminar" role="button" onclick="return confirm('¿Esta seguro de cancelar esta solicitud ?')">
+                                                    <span class="govco-icon govco-icon-x-cn"></span>
+                                                    <span class="btn-govco-text">Cancelar</span>
+                                                </a>
+    
+                                            </div>
+                                            
+
+                                        
 
                                         @endif
                                         
