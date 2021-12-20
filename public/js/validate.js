@@ -1728,12 +1728,12 @@ $(document).ready(function () {
         if (estado_actual == "ENVIADA") {
             $("#estado_espectaculos option[value='EVENTO_REALIZADO']").hide();
             $("#estado_espectaculos option[value='EVENTO_APROBADO']").hide();
-            $("#estado_espectaculos option[value='EVENTO_FINALIZADO']").hide();
+            // $("#estado_espectaculos option[value='EVENTO_FINALIZADO']").hide();
             $("#estado_espectaculos option[value='EVENTO_NO_REALIZADO']").hide();
             $("#estado_espectaculos option[value='ACTO_REVOCADO']").hide();
             $("#estado_espectaculos option[value='DEVOLUCION_GARANTIA']").hide();
             // $("#estado_espectaculos option[value='EVENTO_CANCELADO']").hide();
-            // $("#estado_espectaculos option[value='RECHAZADA']").hide();
+            $("#estado_espectaculos option[value='RECHAZADA']").hide();
         }else if(estado_actual == "DOCUMENTOS_ACTUALIZADOS" || estado_actual == "PENDIENTE"){
 
             $("#estado_espectaculos option[value='EVENTO_REALIZADO']").hide();
@@ -1781,6 +1781,42 @@ $(document).ready(function () {
 
 
 
+        }else if(estado_actual== 'ACTO_REVOCADO'){
+
+            $("#estado_espectaculos option[value='ENTREGA_GARANTIA']").hide();
+            $("#estado_espectaculos option[value='EVENTO_REALIZADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_APROBADO']").hide();
+            // $("#estado_espectaculos option[value='EVENTO_FINALIZADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_NO_REALIZADO']").hide();
+            $("#estado_espectaculos option[value='ACTO_REVOCADO']").hide();
+            $("#estado_espectaculos option[value='PENDIENTE']").hide();
+            $("#estado_espectaculos option[value='RECHAZADA']").hide();
+            $("#estado_espectaculos option[value='EVENTO_CANCELADO']").hide();
+            // $("#estado_espectaculos option[value='DEVOLUCION_GARANTIA']").hide();
+
+
+        }else if(estado_actual== 'DEVOLUCION_GARANTIA'){
+
+            $("#estado_espectaculos option[value='ENTREGA_GARANTIA']").hide();
+            $("#estado_espectaculos option[value='EVENTO_REALIZADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_APROBADO']").hide();
+            // $("#estado_espectaculos option[value='EVENTO_FINALIZADO']").hide();
+            $("#estado_espectaculos option[value='EVENTO_NO_REALIZADO']").hide();
+            $("#estado_espectaculos option[value='ACTO_REVOCADO']").hide();
+            $("#estado_espectaculos option[value='PENDIENTE']").hide();
+            $("#estado_espectaculos option[value='RECHAZADA']").hide();
+            $("#estado_espectaculos option[value='EVENTO_CANCELADO']").hide();
+             $("#estado_espectaculos option[value='DEVOLUCION_GARANTIA']").hide();
+
+
+        }else if(estado_actual == 'EVENTO_FINALIZADO'){
+
+            $('#observaciones_espectaculos').attr('disabled', true);
+            $('#estado_espectaculos').attr('disabled', true);
+            $('#myBtnEspectaculos').attr('disabled', true);
+
+
+
         }
             // $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
         // } else if (estado_actual == "PENDIENTE") {
@@ -1804,13 +1840,15 @@ $(document).ready(function () {
 
     $('#estado_espectaculos').change(function(){
         var estado = $(this).val();
+        console.log(estado);
         if(estado =='ENTREGA_GARANTIA'){
             $('.caja-garantia').removeClass('d-none');
             $('.garantia').attr('required', true);
 
 
         }else if(estado =='EVENTO_APROBADO'){
-            $('.caja-acto ').removeClass('d-none');
+            
+            $('.caja-acto').removeClass('d-none');
             $('#arch_acto_administrativo').attr('required', true);
 
 
@@ -1820,6 +1858,14 @@ $(document).ready(function () {
             $('#arch_acto_revocatorio').attr('required', true);
 
 
+        }else if(estado == 'DEVOLUCION_GARANTIA'){
+
+            $('.caja-acta-reunion').removeClass('d-none');
+            $('#arch_actReu_revocatorio').attr('required', true);
+
+
+
+
         }else{
             $('.caja-acto ').addClass('d-none');
             $('#arch_acto_administrativo').attr('required', false);
@@ -1827,6 +1873,8 @@ $(document).ready(function () {
             $('.garantia').attr('required', false);
             $('.caja-acto-revoca').addClass('d-none');
             $('#arch_acto_revocatorio').attr('required', false);
+            $('.caja-acta-reunion').addClass('d-none');
+            $('#arch_actReu_revocatorio').attr('required', false);
         }
 
 

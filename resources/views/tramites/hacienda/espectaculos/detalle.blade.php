@@ -198,9 +198,18 @@
                             <a href="http://tramitesenlinea.test/{{$solicitud->adj_documentoGarantia}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
                         </td>
 
-                        <td colspan="2"><strong>Acta de reunion de entrega:</strong><br>
+                        <td><strong>Acta de reunion de entrega:</strong><br>
                             <a href="http://tramitesenlinea.test/{{$solicitud->adj_acta_reunion}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
                         </td>
+                        @if($solicitud->adj_actReu_revocatorio !=null)
+
+                        <td><strong>Acta de reunion de devolución:</strong><br>
+                            <a href="http://tramitesenlinea.test/{{$solicitud->adj_actReu_revocatorio}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                        </td>
+
+                        @else
+                        <td></td>
+                        @endif
 
                     </tr>
 
@@ -262,6 +271,12 @@
                                          <p style="color: #069169;font-weight:bold">APROBADA<span class="govco-icon govco-icon-like size-1x"></span></p>
                                          @elseif($solicitud->estado_solicitud == 'EVENTO_CANCELADO')
                                          <p style="color: #A80521;font-weight:bold">SOLICITUD CANCELADA<span class="govco-icon govco-icon-x-n size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'ACTO_REVOCADO')
+                                         <p style="color: #4B4B4B;font-weight:bold">ACTO ADMINISTRATIVO REVOCADO<span class="govco-icon govco-icon-left-arrow-cn size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'DEVOLUCION_GARANTIA')
+                                         <p style="color: #F3561F;font-weight:bold">GARANTIA DEVUELTA<span class="govco-icon govco-icon-document-n size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'EVENTO_FINALIZADO')
+                                         <p style="color: #000000;font-weight:bold">SOLICITUD CERRADA<span class="govco-icon govco-icon-legal size-1x"></span></p>
                                        @endif
                             
                         </td>  
@@ -316,7 +331,7 @@
                                     <option value="EVENTO_REALIZADO">EVENTO REALIZADO</option>
                                     <option value="EVENTO_NO_REALIZADO">EVENTO NO REALIZADO</option>
                                     <option value="ACTO_REVOCADO">ACTO REVOCATORIO</option>
-                                    <option value="EVENTO_FINALIZADO">EVENTO FINALIZADO</option>
+                                    <option value="EVENTO_FINALIZADO">SOLICITUD CERRADA</option>
                                     <option value="DEVOLUCION_GARANTIA">DEVOLUCION DE GARANTIA</option>
                                     <option value="RECHAZADA">SOLICITUD RECHAZADA</option>
                                     <option value="EVENTO_CANCELADO">EVENTO CANCELADO</option>
@@ -333,7 +348,7 @@
                         <td colspan="2">
                             <div class="form-group">
                              <label for="observaciones">Observaciones*</label>
-                                 <textarea name="observaciones_solicitud" id="observaciones_espacio" onkeypress="return Observaciones(event)"  maxlength="500" class="form-control  @error('observaciones_solicitud') is-invalid @enderror" id="observaciones" cols="2" rows="3" required></textarea>
+                                 <textarea name="observaciones_solicitud" id="observaciones_espectaculos" onkeypress="return Observaciones(event)"  maxlength="500" class="form-control  @error('observaciones_solicitud') is-invalid @enderror" cols="2" rows="3" required></textarea>
                                  @error('observaciones_solicitud')
                                 <span class="invalid-feedback" role="alert">
                                     <strong class="text-danger">{{ $message }}</strong>
@@ -410,6 +425,21 @@
 
                     </tr>
 
+                    <tr class="caja-acto d-none">
+                        <td>
+                            <div class="form-group">
+                                <label for="arch_acto_administrativo">Adjunte Acto Administrativo*</label>
+                                <input type="file" accept="application/pdf" name="arch_acto_administrativo" id="arch_acto_administrativo" class="form-control @error('arch_acta_reunion') is-invalid @enderror">
+                                @error('arch_acto_administrativo')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            </div>
+                        </td>
+
+                    </tr>
+
                     <tr class="caja-acto-revoca d-none">
                         <td>
                             <div class="form-group">
@@ -424,6 +454,22 @@
                         </td>
 
                     </tr>
+
+                    <tr class="caja-acta-reunion d-none">
+                        <td>
+                            <div class="form-group">
+                                <label for="arch_actReu_revocatorio">Adjuntar Acta de Reunion*</label>
+                                <input type="file" accept="application/pdf" name="arch_actReu_revocatorio" id="arch_actReu_revocatorio" class="form-control @error('arch_acta_reunion') is-invalid @enderror">
+                                @error('arch_actReu_revocatorio')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            </div>
+                        </td>
+
+                    </tr>
+
 
                     <tr>
                         {{-- <td>
@@ -443,7 +489,7 @@
                                 <input type="hidden" id="estado_espectaculos_hidden" value="{{$solicitud->estado_solicitud}}">
                                 <input type="hidden" name="username" value="{{auth()->user()->username}}">
                                 <input type="hidden" name="id" value="{{$solicitud->id}}">
-                                <button type="submit"  onclick="return confirm('¿Esta seguro de generar esta respuesta ?')"  id="myBtnEspacio" class="btn btn-round btn-middle btn-outline-info btn_enviar_solicitud"  id="Boton">Actualizar estado</button>
+                                <button type="submit"  onclick="return confirm('¿Esta seguro de generar esta respuesta ?')"  id="myBtnEspectaculos" class="btn btn-round btn-middle btn-outline-info btn_enviar_solicitud"  id="Boton">Actualizar estado</button>
                                 <button style="font-size:15px;" class="btn btn-round btn-middle btn_carga d-none" type="button" disabled><span class="spinner-grow spinner-grow-sm text-primary" role="status" aria-hidden="true"></span> Actualizando estado...</button>
                                 <a href="{{url('/tramites/hacienda/espectaculos')}}" class="btn btn-round btn-high">Volver</a>
                                

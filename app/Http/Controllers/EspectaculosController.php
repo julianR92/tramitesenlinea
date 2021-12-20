@@ -6,8 +6,10 @@ use App\Barrio;
 use App\EspectaculosPublicos;
 use App\Boletas;
 use App\Auditoria;
+use App\NitEspectaculos;
 use App\Mail\NotificacionEspectaculos;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -490,31 +492,74 @@ class EspectaculosController extends Controller
 
         Alert::error('Error', 'Ha ocurrido un error al registrar la cancelación de la solicitud');
         return redirect()->route('espectaculos.index');
-    }
-
-
-             
-
-
-
-        
-
-
-
-
-
-
-        
+    }       
     }
 
     public function pruebas(){
 
-        $data = DB::connection('sqlsrv')->table('BARRIOS')->select()->get();
+        $date= date('Y-m-d');
+        // $unicos_espectaculos =EspectaculosPublicos::where('fecha_inicio_evento','<=', $date)->where('estado_solicitud', 'EVENTO_APROBADO')->where('evento_id', 2)->get();
+        $solicitudes = NitEspectaculos::where('fecha_limite_liquidacion' ,'<',$date)->where('estado', 'LIQUIDACION')->get();        
+        return $solicitudes;
+        // return $unicos_espectaculos;
+        // $datefin = '2021-11-30';
+        // $dateInicio = '2021-11-27';
 
-        return $data;
+        // // $newDate = date("Ymd", strtotime($dateInicio));
+
+        // // return $newDate;
+
+        // $period = CarbonPeriod::create($dateInicio, $datefin);
+
+        // foreach ($period as $date) {
+
+        //     echo $date->format('Y-m-d').'<br>';
+            
+
+        // }
+
+        // $date1 = Carbon::parse($datefin);
+        // $date2 = Carbon::parse($dateInicio);
+
+        // $diff = $date1->diffInDays($date2);
+
+        // return $diff;
+
+        
+
+
+
+
+        // $buscaNit = DB::connection('sqlsrv')->table('nit')->where('nit', '987654')->where('estado', 'activo')->get();
+
+        // if($buscaNit->count()<= 0){           
+            
+        //     $consulta = DB::connection('sqlsrv')->table('nit')->insertGetId(
+        //         array('nit'=> '986551',
+        //               'razon_social' => 'Andres productions',
+        //               'estado'=> 'activo',
+        //               'fecha_registro'=> date('Y-d-m H:i:s')
+        //     ));
+
+        //     return $consulta;
+            
+            // $buscarMae = DB::connection('sqlsrv')->table('mae_impuestos')->where('nit', '91078541')->where('id_modulo', 26)->get();
+            
+            // DB::connection('sqlsrv')->table('nit')->insert(
+            //     array('nit'=> '91078541',
+            //           'razon_social' => 'Andres productions',
+            //           'estado'=> 'activo',
+            //           'fecha_registro'=> date('Y-d-m H:i:s')
+            // ));
+
+
+            
+            
+                       
+        }
 
 
 
     }
 
-}
+

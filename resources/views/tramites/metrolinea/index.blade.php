@@ -162,7 +162,7 @@
                                 <input value="{{ old('documento_usuario') }}" type="text"
                                     class="form-control document_validate  @error('documento_usuario') is-invalid @enderror"
                                     name="documento_usuario" id="documento_usuario" maxlength="15" minlength="4" required
-                                    onkeypress="return Numeros(event)">
+                                    onkeypress="return Email(event)">
                                 @error('documento_usuario')
                                     <span class="invalid-feedback" role="alert">
                                         <strong class="text-danger">{{ $message }}</strong>

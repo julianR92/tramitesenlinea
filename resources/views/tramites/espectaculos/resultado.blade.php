@@ -86,6 +86,10 @@
                                          <p style="color: #A80521;font-weight:bold">EVENTO EN CANCELACION<span class="govco-icon govco-icon-x-n size-1x"></span></p>
                                          @elseif($solicitud->estado_solicitud == 'ACTO_REVOCADO')
                                          <p style="color: #4B4B4B;font-weight:bold">ACTO REVOCADO<span class="govco-icon govco-icon-left-arrow-cn size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'DEVOLUCION_GARANTIA')
+                                         <p style="color: #F3561F;font-weight:bold">GARANTIA DEVUELTA<span class="govco-icon govco-icon-document-n size-1x"></span></p>
+                                         @elseif($solicitud->estado_solicitud == 'EVENTO_FINALIZADO')
+                                         <p style="color: #000000;font-weight:bold">SOLICITUD CERRADA<span class="govco-icon govco-icon-legal size-1x"></span></p>
                                        @endif</td>
                                        <td>{{$solicitud->created_at}}</td>
                                        <td>

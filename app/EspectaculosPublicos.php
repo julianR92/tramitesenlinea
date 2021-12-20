@@ -9,6 +9,7 @@ class EspectaculosPublicos extends Model
     protected $connection = 'sqlsrv';
     protected $table = 'espectaculos_publicos';
     protected $primaryKey = 'id';
+   
 
     protected $fillable=[
         "evento_id",
@@ -54,4 +55,8 @@ class EspectaculosPublicos extends Model
         
 
       ];
+
+      public function getDateFormat(){
+        return 'Y-d-m H:i:s';
+        }
 }

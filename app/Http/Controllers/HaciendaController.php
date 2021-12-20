@@ -37,6 +37,8 @@ class HaciendaController extends Controller
         $sRechazadas = EspectaculosPublicos::where('estado_solicitud', 'RECHAZADA')->get();
         $sCanceladas = EspectaculosPublicos::where('estado_solicitud', 'EVENTO_CANCELADO')->get();
         $sActoRevoca = EspectaculosPublicos::where('estado_solicitud', 'ACTO_REVOCADO')->get();
+        $sDevolucion = EspectaculosPublicos::where('estado_solicitud', 'DEVOLUCION_GARANTIA')->get();
+        $sCerradas = EspectaculosPublicos::where('estado_solicitud', 'EVENTO_FINALIZADO')->get();
         $porCerrar =  EspectaculosPublicos::where('estado_solicitud', 'PENDIENTE')->where('fecha_pendiente' ,'<',DB::raw('DATEADD(day,5, CONVERT (date, GETDATE()))'))->get()->count();        
         $count_enviadas = $sEnviadas->count();
         $count_garantias = $sGarantia->count();
@@ -46,8 +48,10 @@ class HaciendaController extends Controller
         $count_enEstudio = $sEstudio->count();
         $count_canceladas = $sCanceladas->count();
         $count_revoca = $sActoRevoca->count();
+        $count_devolucion = $sDevolucion->count();
+        $count_cerradas = $sCerradas->count();
 
-        return view('tramites.hacienda.espectaculos.index', compact('sEnviadas', 'sPendientes','sRechazadas', 'count_enviadas', 'count_pendientes', 'count_rechazadas', 'porCerrar','sGarantia', 'count_garantias', 'sEstudio', 'count_enEstudio','sAprobadas', 'count_aprobadas', 'sCanceladas', 'count_canceladas', 'sActoRevoca', 'count_revoca' ));
+        return view('tramites.hacienda.espectaculos.index', compact('sEnviadas', 'sPendientes','sRechazadas', 'count_enviadas', 'count_pendientes', 'count_rechazadas', 'porCerrar','sGarantia', 'count_garantias', 'sEstudio', 'count_enEstudio','sAprobadas', 'count_aprobadas', 'sCanceladas', 'count_canceladas', 'sActoRevoca', 'count_revoca','sDevolucion', 'count_devolucion', 'sCerradas', 'count_cerradas'));
 
 
 
@@ -196,7 +200,7 @@ class HaciendaController extends Controller
              
 
 
-        }else if($request->estado_solicitud == 'EVENTO_APROBADO'){
+        }else if($request->estado_solicitud == 'EVENTO_APROBADO'){          
 
             $this->validate($request, [
                 "observaciones_solicitud" => 'required',
@@ -245,6 +249,50 @@ class HaciendaController extends Controller
     
                     ]);
 
+            // guardado tabla de declaraciones
+            $buscaNit = DB::connection('sqlsrv')->table('nit')->where('nit',  $datos->numero_identificacion)->where('estado', 'activo')->get();
+
+             if($buscaNit->count()<= 0){         
+            
+              DB::connection('sqlsrv')->table('nit')->insert(
+                array('nit'=> $datos->numero_identificacion,
+                      'razon_social' => $datos->nombre_o_razon,
+                      'estado'=> 'activo',
+                      'fecha_registro'=> date('Y-d-m H:i:s')
+            ));      
+                          
+            }
+
+            $buscarMae = DB::connection('sqlsrv')->table('mae_impuestos')->where('nit',  $datos->numero_identificacion)->where('id_modulo', 26)->get();
+
+            if($buscarMae->count() <=0 ){
+
+               $insertMae =  DB::connection('sqlsrv')->table('mae_impuestos')->insertGetId(
+                    array('nit'=> $datos->numero_identificacion,
+                          'id_modulo' => 26,
+                          'nombre'=> $datos->nombre_o_razon,
+                          'tipo_persona' => $datos->tipo_persona,
+                          'direccion'=> $datos->direccion_notificacion.'-'.$datos->barrio_notificacion,
+                          'telefono_fijo'=>$datos->telefono_movil,
+                          'telefono_celular'=>$datos->telefono_movil,
+                          'correo_notificacion'=>$datos->email_responsable,
+                          'direccion_notificacion'=>$datos->direccion_notificacion.'-'.$datos->barrio_notificacion,
+                          'fecha_registro'=> date('Y-d-m H:i:s')
+                )); 
+                     
+                DB::connection('sqlsrv')->table('datos_contacto')->insert(
+                    array('id_mae_impuestos' => $insertMae,
+                          'correo_notificacion' => $datos->email_responsable,
+                          'direccion_notificacion' =>$datos->direccion_notificacion.'-'.$datos->barrio_notificacion,
+                          'telefono_contacto'=>$datos->telefono_movil,
+                          'fecha_registro'=> date('Y-d-m H:i:s')                    
+                ));             
+
+            }    
+
+            // envia correo
+                      
+                  
                     Mail::to($datos->email_responsable)->send(new NotificacionEspectaculos($detalleCorreo));
                     Alert::success('Operacion Exitosa', 'Se actualizado exitosamente el estado del tramite en el sistema');
                     return redirect()->route('hacienda.espectaculos.index');
@@ -323,6 +371,120 @@ class HaciendaController extends Controller
                 return redirect()->route('hacienda.espectaculos.index');
             }
 
+
+
+
+
+        }else if ($request->estado_solicitud == 'DEVOLUCION_GARANTIA'){
+
+            $this->validate($request, [
+                "observaciones_solicitud" => 'required',
+                "estado_solicitud" => 'required' ,
+                "arch_actReu_revocatorio"=>'required'              
+            ]);
+
+            $date = date('Y-m-d');
+
+            $detalleCorreo = [
+                'nombres' => $datos->nombre_o_razon,
+                'mensaje' => $request->observaciones_solicitud,
+                'Subject' => 'Devolucion de Garantia de Espectáculo Publico con Radicado N°' . $datos->radicado,
+                'documento' => 'SI-DEVOLUCION',
+                'fecha_pendiente' => null,
+                'radicado'  => $datos->radicado,
+                'estado' => $request->estado_solicitud
+            ];
+
+              //mover documento a storage
+              $adjunto1 = $request->file('arch_actReu_revocatorio')->storeAs('documentos_espectaculos/' . $datos->radicado, 'DEVOLUCION-GARANTIA-' . $datos->radicado . '.pdf');
+
+              //crear ruta de guardado
+              $ruta_guardado = 'storage/documentos_espectaculos/' . $datos->radicado . '/DEVOLUCION-GARANTIA-' . $datos->radicado . '.pdf';
+
+              if ($adjunto1) {
+                // actualizar
+
+                $datos->estado_solicitud = $request->estado_solicitud;
+                $datos->observaciones = $request->observaciones_solicitud;
+                $datos->fecha_actuacion = $date;
+                $datos->fecha_pendiente = null;
+                $datos->adj_actReu_revocatorio = $ruta_guardado;
+                $datos->estado_documentos = null;
+                
+
+                if ($datos->save()) {
+                    //auditoria
+                    $auditoria = Auditoria::create([
+                        'usuario' => $request->username,
+                        'proceso_afectado'=> 'Radicado-'.$datos->radicado,
+                        'tramite' =>'ESPECTACULOS PUBLICOS',
+                        'radicado' => $datos->radicado,
+                        'accion'=>'update a estado '.$request->estado_solicitud,
+                        'observacion'=>$request->observaciones_solicitud
+    
+                    ]);
+
+                    Mail::to($datos->email_responsable)->send(new NotificacionEspectaculos($detalleCorreo));
+                    Alert::success('Operacion Exitosa', 'Se actualizado exitosamente el estado del tramite en el sistema');
+                    return redirect()->route('hacienda.espectaculos.index');
+                } else {
+
+                    Alert::error('Error', 'Ha ocurrido un error al registrar la actualizacion de la solicitud');
+                    return redirect()->route('hacienda.espectaculos.index');
+                }
+            } else {
+
+                Alert::error('Error', 'Ocurrio un error al cargar el archivo al servidor');
+                return redirect()->route('hacienda.espectaculos.index');
+            }
+
+        }else if($request->estado_solicitud == 'EVENTO_FINALIZADO'){
+
+            $this->validate($request, [
+                "observaciones_solicitud" => 'required',
+                "estado_solicitud" => 'required' ,
+                            
+            ]);
+
+            $date = date('Y-m-d');
+
+            $detalleCorreo = [
+                'nombres' => $datos->nombre_o_razon,
+                'mensaje' => $request->observaciones_solicitud,
+                'Subject' => 'Solicitud Cerrada de Espectaculos Publicos Rad N°' . $datos->radicado,
+                'documento' => 'NO',
+                'fecha_pendiente' => null,
+                'radicado'  => $datos->radicado,
+                'estado' => $request->estado_solicitud
+            ];
+
+            $datos->estado_solicitud = $request->estado_solicitud;
+            $datos->observaciones = $request->observaciones_solicitud;
+            $datos->fecha_actuacion = $date;
+            $datos->fecha_pendiente = null;           
+            $datos->estado_documentos = null;
+
+
+            if ($datos->save()) {
+                //auditoria
+                $auditoria = Auditoria::create([
+                    'usuario' => $request->username,
+                    'proceso_afectado'=> 'Radicado-'.$datos->radicado,
+                    'tramite' =>'ESPECTACULOS PUBLICOS',
+                    'radicado' => $datos->radicado,
+                    'accion'=>'update a estado '.$request->estado_solicitud,
+                    'observacion'=>$request->observaciones_solicitud
+
+                ]);
+
+                Mail::to($datos->email_responsable)->send(new NotificacionEspectaculos($detalleCorreo));
+                Alert::success('Operacion Exitosa', 'Se actualizado exitosamente el estado del tramite en el sistema');
+                return redirect()->route('hacienda.espectaculos.index');
+            } else {
+
+                Alert::error('Error', 'Ha ocurrido un error al registrar la actualizacion de la solicitud');
+                return redirect()->route('hacienda.espectaculos.index');
+            }
 
 
 
