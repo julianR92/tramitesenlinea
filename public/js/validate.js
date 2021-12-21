@@ -946,15 +946,19 @@ $(document).ready(function () {
         var estado = document.getElementById("estado").value;
 
         if (estado == "PENDIENTE") {
+            $('#caja_visita').addClass('d-none');
             $("#documento_respuesta").attr("disabled", true);
             $("#documento_respuesta").attr("required", false);
         } else if (estado == "APROBADA") {
+            $('#caja_visita').removeClass('d-none');
             $("#documento_respuesta").attr("disabled", false);
             $("#documento_respuesta").attr("required", true);
         } else if (estado == "RECHAZADA") {
+            $('#caja_visita').addClass('d-none');
             $("#documento_respuesta").attr("disabled", false);
             $("#documento_respuesta").attr("required", true);
         } else {
+            $('#caja_visita').removeClass('d-none');
             $("#documento_respuesta").attr("disabled", true);
             $("#documento_respuesta").attr("required", false);
         }

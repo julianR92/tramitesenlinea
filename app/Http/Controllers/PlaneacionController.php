@@ -136,6 +136,16 @@ class PlaneacionController extends Controller
             ];
             // actualizar
 
+            if($request->documento_visita || $request->documento_visita != null){                
+            $adjunto10 = $request->file('documento_visita')->storeAs('Respuestas/' . $datos->radicado, 'Concepto-visita-tecnica-' . $datos->radicado . '.pdf');
+            //crear ruta de guardado
+            $ruta_guardado_visita = 'storage/Respuestas/' . $datos->radicado . '/Concepto-visita-tecnica-' . $datos->radicado . '.pdf';
+
+            $datos->documento_visita =  $ruta_guardado_visita;   
+
+
+            }
+
             $datos->estado_solicitud = $request->estado_solicitud;
             $datos->observaciones_solicitud = $request->observaciones_solicitud;
             $datos->fecha_actuacion = $date;
@@ -185,6 +195,16 @@ class PlaneacionController extends Controller
                 'estado' => $request->estado_solicitud
             ];
             // actualizar
+
+            if($request->documento_visita || $request->documento_visita != null){                
+                $adjunto10 = $request->file('documento_visita')->storeAs('Respuestas/' . $datos->radicado, 'Concepto-visita-tecnica-' . $datos->radicado . '.pdf');
+                //crear ruta de guardado
+                $ruta_guardado_visita = 'storage/Respuestas/' . $datos->radicado . '/Concepto-visita-tecnica-' . $datos->radicado . '.pdf';
+    
+                $datos->documento_visita =  $ruta_guardado_visita;   
+    
+    
+                }
 
             $datos->estado_solicitud = $request->estado_solicitud;
             $datos->observaciones_solicitud = $request->observaciones_solicitud;
@@ -244,6 +264,16 @@ class PlaneacionController extends Controller
 
             if ($adjunto1) {
                 // actualizar
+
+                if($request->documento_visita || $request->documento_visita != null){                
+                    $adjunto10 = $request->file('documento_visita')->storeAs('Respuestas/' . $datos->radicado, 'Concepto-visita-tecnica-' . $datos->radicado . '.pdf');
+                    //crear ruta de guardado
+                    $ruta_guardado_visita = 'storage/Respuestas/' . $datos->radicado . '/Concepto-visita-tecnica-' . $datos->radicado . '.pdf';
+        
+                    $datos->documento_visita =  $ruta_guardado_visita;   
+        
+        
+                    }
 
                 $datos->estado_solicitud = $request->estado_solicitud;
                 $datos->observaciones_solicitud = $request->observaciones_solicitud;

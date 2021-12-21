@@ -219,6 +219,16 @@
                            
                         </td>
                     </tr>
+                    @if($solicitud->documento_visita != null)
+                    <tr>
+                        <td colspan="3"><strong>Concepto Visita:</strong><br>
+                            <a href="/{{$solicitud->documento_visita}}" target="_blank">Descargar documento</a>&nbsp;&nbsp;<i class="fa fa-download"></i>
+                        </td>
+
+
+                    </tr>
+
+                    @endif
                     
                     {{-- aqui va el form --}}
                     <form method="POST" class="form-ciudadano" action="{{route('espacio.update')}}"  enctype="multipart/form-data" id="myForm1">
@@ -255,6 +265,22 @@
                             
                             </div>
                         </td>
+                    </tr>
+                    <tr id="caja_visita" class="d-none">
+                        <td colspan="1">
+                            <div class="form-group">
+                                <label for="documento_visita">Cargar Concepto de Visita Tecnica &nbsp; (es opcional)</label>
+                                <input type="file" accept="application/pdf" name="documento_visita" id="documento_visita" class="form-control @error('observaciones_solicitud') is-invalid @enderror">
+                                @error('documento_visita')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            </div>
+
+                        </td>
+                        <td colspan="2"></td>
+
                     </tr>
 
                     <tr>
