@@ -152,6 +152,11 @@
                   <a href="{{route('hacienda.index')}}" class="nav-link">HACIENDA</a>
                  </li> 
                  @endrole
+                 @hasrole('SALUD|SUPER-ADMIN|SEC SALUD')
+                 <li class="nav-item">
+                  <a href="{{route('salud.index')}}" class="nav-link">SALUD</a>
+                 </li> 
+                 @endrole
               </ul>
            </div>
         </div>

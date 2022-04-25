@@ -24,8 +24,7 @@ $(document).ready(function () {
     $(".name_validate").change(function () {
         $(this).each(function () {
             var input1 = $(this).val();
-            var ValInput1 = input1.match(
-                /^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ ]{3,20}$/
+            var ValInput1 = input1.match(/^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ ]{3,20}$/
             );
             if (ValInput1 == null) {
                 alert(
@@ -129,6 +128,26 @@ $(document).ready(function () {
             }
         });
     });
+
+      /*============================================================================
+    =            input de  telefono fijo      minlength = 7
+                id = "number_validate"        maxlength =10
+    ============================================================================*/
+
+    $(".age_validate").change(function () {
+        $(this).each(function () {
+            var input8 = $(this).val();
+            var ValInput8 = input8.match(/^[0-9]{1,2}$/);
+            if (ValInput8 == null) {
+                alert(
+                    "No se permiten letras, caracteres especiales, se permiten maximo 2(dos) digitos"
+                );
+                $(this).focus();
+                $(this).val("");
+            }
+        });
+    });
+
 
     /*============================================================================
     =            input de  telefono movil     minlength = 10
@@ -656,6 +675,7 @@ $(document).ready(function () {
     // DATATABLES
 
     $(".tablas").DataTable({
+        "order": [[ 0, "desc" ]],
         language: {
             sProcessing: "Procesando...",
             sLengthMenu: "Mostrar _MENU_ registros",
@@ -1919,6 +1939,284 @@ $(document).ready(function () {
         pageLength: 3
     });
 
+
+    /// POT
+
+    $('#barrio_pot').change(function() {
+
+        var codigo = $(this).val();
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/planeacion/encuesta-pot/barrios",
+            dataType: "json",
+            data: {
+                codigo: codigo,
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('#comuna').val(response.respuesta.nombre);                   
+                } else {
+                    alert("Ha ocurrido un error al cargar las comunas");
+                }
+            },
+            error: function () {
+                alert("error de petición ajax");
+            },
+        });
+        
+
+    });
+
+    $('#vereda').change(function() {
+
+        var codigo = $(this).val();
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/planeacion/encuesta-pot/veredas",
+            dataType: "json",
+            data: {
+                codigo: codigo,
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('#corregimiento').val(response.respuesta.nombre);                   
+                } else {
+                    alert("Ha ocurrido un error al cargar las comunas");
+                }
+            },
+            error: function () {
+                alert("error de petición ajax");
+            },
+        });
+        
+
+    });
+
+    $("#observacion_pot").keyup(function(){
+        var input8 = document.getElementById("observacion_pot").value;
+
+        const palabras = [
+            "HPTA",
+            "HPTS",
+            "HP",
+            "MIERDA",
+            "IJUEPUTAS",
+            "HIJOS DE PUTA",
+            "HIJUEPUTAS",
+            "GONORREA",
+            "MALPARIOS",
+            "SU PUTA",
+            "MP",
+            "FUCK",
+            "HUEVON",
+            "WEBON",
+            "WEBA",
+            "GARBIMBA",
+            "SAPO",
+            "PERRO",
+            "LICHIGO",
+            "VICHIRO",
+            "TOCHE",
+            "PINGO",
+            "ZUNGA",
+            "SUNGA",
+            "PEGUELAGARTO",
+            "BABOSO",
+            "ARRASTRADO",
+            "BOBO",
+            "BOBALICON",
+            "BAZOFIA",
+            "CARE CHIMBA",
+            "CARECHIMBA",
+            "CAREMONDA",
+            "CARE E MONDA",
+            "CULIPRONTA",
+            "COSCORRIA",
+            "FUFA",
+            "FUFURUFA",
+            "FUFA",
+            "SARNA",
+            "GARNUPIA",
+            "GONORRIENTO",
+            "IDIOTA",
+            "IMBECIL",
+            "HUEVA",
+            "WEBA",
+            "GUEBA",
+            "LAMBON",
+            "JETON",
+            "LOCA",
+            "MALPARIDOS",
+            "MORRONGA",
+            "MARICON",
+            "ÑERO",
+            "MUERGANO",
+            "PENDEJO",
+            "PICHURRIA",
+            "PIROBO",
+            "PREPAGO",
+            "PUTA",
+            "TONTO",
+            "TONTARRON",
+            "ZORRA",
+            "ZURIPANTA",
+            "CULO",
+            "TORTOLO",
+            "CATRE",
+            "DOBLE",
+            "PEDORREO",
+            "HIJO DE SU GRANDISIMA MADRE",
+        ];
+        var groseria;
+
+        for (groseria of palabras) {
+            var ValInput8 = input8.indexOf(groseria);
+            console.log(ValInput8);
+            if (ValInput8 > -1) {
+                alert("Este lenguaje NO es adecuado para escribir opiniones");
+                window.location.href = "https://www.bucaramanga.gov.co/pot-bga/";
+                $(this).val('');
+                $('.form-control').val('');
+            }
+        }
+        
+    $("#count").text("Caracateres restantes:" + (300 - $(this).val().length));
+      });
+
+     $('#tema').change(function(){
+        var tema = $(this).val();
+        var subtext = $('option:selected', this).attr('subtext');
+        
+        if(tema == ''){
+            $('.caja-observacion').addClass('d-none');           
+            $('#observacion_label').text('');
+            $('#subtext').text('');
+            $('#observacion_pot').attr('required', false);
+    
+        }else{
+
+        $('.caja-observacion').removeClass('d-none');
+        $('.caja-observacion').addClass('animate__backInDown');
+        $('#observacion_label').text($(this).val());
+        $('#subtext').text(subtext);
+        $('#observacion_pot').attr('required', true);
+        }
+
+
+
+
+     });
+
+     $('#documento_usuario').change(function(){
+        var codigo = $(this).val();
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/planeacion/encuesta-pot/validacionDocumento",
+            dataType: "json",
+            data: {
+                codigo: codigo,
+            },
+            success: function (response) {
+                if (response.success) {
+                    if(response.respuesta>0) {
+                        Swal.fire('El numero de documento:' +codigo+ ' ya realizo una opinion del POT');
+                        window.location.href = 'https://www.bucaramanga.gov.co/pot-bga/';
+
+                    }            
+                } else {
+                    alert("Ha ocurrido un error al cargar las comunas");
+                }
+            },
+            error: function () {
+                alert("error de petición ajax");
+            },
+        });
+
+
+     });
+
+
+    //  function animateValue(id, start, end, duration) {
+
+    //     if (start === end) return;
+    //     var range = end - start;
+    //     var current = start;
+    //     var increment = end > start? 1 : -1;
+    //     var stepTime = Math.abs(Math.floor(duration / range));
+    //     var obj = document.getElementById(id);       
+    //     var timer = setInterval(function() {
+    //         current += increment;
+    //         obj.innerHTML = current;
+    //         if (current == end) {
+    //             clearInterval(timer);
+    //         }
+    //     }, stepTime);
+    // }
+    // var final = document.getElementById('conteo').innerText; 
+    // animateValue("conteo", 0, final, 5000);
+
+    //tablas pgirt
+
+    $(".pgirh").ready(function () {
+    $(".tablas-pgirh").DataTable({
+        "order": [[ 0, "desc" ]],
+        language: {
+            sProcessing: "Procesando...",
+            sLengthMenu: "Mostrar _MENU_ registros",
+            sZeroRecords: "No se encontraron resultados",
+            sEmptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+            sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sInfoPostFix: "",
+            sSearch: "Buscar:",
+            sUrl: "",
+            sInfoThousands: ",",
+            sLoadingRecords: "Cargando...",
+            oPaginate: {
+                sFirst: "Primero",
+                sLast: "Último",
+                sNext: "Siguiente",
+                sPrevious: "Anterior",
+            },
+
+            oAria: {
+                sSortAscending:
+                    ": Activar para ordenar la columna de manera ascendente",
+                sSortDescending:
+                    ": Activar para ordenar la columna de manera descendente",
+            },
+        },
+        responsive: true,
+        scrollX: 200,
+        scrollCollapse: true,
+        pageLength: 10
+    });
+
+  });
+
+  
+
+    
     
 
     

@@ -6,6 +6,9 @@ use App\EspacioPublico;
 use App\Auditoria;
 use App\Parqueadero;
 use App\AuditoriaParqueadero;
+use App\Barrio;
+use App\Pot;
+use App\Vereda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EnvioNotificacion;
@@ -15,11 +18,12 @@ use Illuminate\Support\Facades\Crypt;
 use PDF;
 
 
+
 class PlaneacionController extends Controller
 {
     public function __construct()
-    {
-        $this->middleware('auth');
+    {  
+    $this->middleware('auth' ,['except' => ['indexPot', 'barriosComunas', 'veredaCorregimiento', 'validacionDocumento', 'potStore', 'confirmacionPot']]);
     }
 
     public function index()
@@ -410,4 +414,78 @@ class PlaneacionController extends Controller
         return view('tramites.planeacion.parqueaderos.auditoria', compact('solicitud'));
 
     }
+    
+    //POT
+    public function indexPot(){
+        
+        $conteo = Pot::all()->count();
+        $Barrios = Barrio::all();
+        $veredas = Vereda::all();
+        return view('tramites.planeacion.pot.index' , compact('Barrios', 'conteo', 'veredas'));
+    }
+
+    public function barriosComunas(Request $request){   
+           
+           $dataBarrio = Barrio::where('codigo', $request->codigo)->first();
+            $comuna = DB::table('comuna')->where('codigo', $dataBarrio->codigo_comuna)->first();
+            $resp = ["success" => true ,"respuesta" => $comuna];
+            return response()->json($resp);   
+           
+   }
+
+   public function veredaCorregimiento(Request $request){
+    $dataVereda = Vereda::where('codigo', $request->codigo)->first();
+    $corregimiento = DB::table('corregimiento')->where('codigo', $dataVereda->codigo_corregimiento)->first();
+    $resp = ["success" => true ,"respuesta" => $corregimiento];
+    return response()->json($resp);
+
+
+
+   }
+
+   public function validacionDocumento(Request $request){
+    
+    
+    $dataCount = Pot::where('documento_usuario', $request->codigo)->count();   
+    $resp = ["success" => true ,"respuesta" => $dataCount];
+    return response()->json($resp);
+
+
+   }
+
+   public function potStore(Request $request){
+
+      
+    $this->validate($request, [
+        "documento_usuario" => "required|unique:opinion_pot",
+        "nombre_usuario" => "required",
+        "apellido_usuario" => "required",        
+        "edad" => "required",
+        "correo_electronico" => "required",
+        "tema" => "required",
+        "observacion" => "required|max:300",       
+        "tratamiento_datos"=> "required",
+        "acepto_terminos"=> "required",
+        "confirmo_mayorEdad"=> "required",
+        "compartir_informacion"=> "required"         
+              
+    ]);
+
+    $solicitud = $request->all();
+    // return $solicitud;
+    $saveSolicitud = Pot::create($solicitud);
+    $request->session()->flash('radicado_id', $request->documento_usuario);    
+    return redirect()->route('pot.confirmacion');
+
+   }
+
+   public function confirmacionPot()    
+    {
+        return view('tramites.planeacion.pot.confirmacion');
+
+    }
+
+
+   
+
 }

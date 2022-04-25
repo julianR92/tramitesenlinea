@@ -338,7 +338,7 @@ class EspectaculosController extends Controller
         ];
 
         $detalleCorreo_fun = [
-            'nombres' => ' Funcionario xxx',
+            'nombres' => ' Funcionario',
             'radicado' => $solicitud->radicado,
             'Subject' => 'Actualización de documentos en solicitud No'.$solicitud->radicado,
             'documento'=> 'NO',
@@ -499,8 +499,67 @@ class EspectaculosController extends Controller
 
         $date= date('Y-m-d');
         // $unicos_espectaculos =EspectaculosPublicos::where('fecha_inicio_evento','<=', $date)->where('estado_solicitud', 'EVENTO_APROBADO')->where('evento_id', 2)->get();
-        $solicitudes = NitEspectaculos::where('fecha_limite_liquidacion' ,'<',$date)->where('estado', 'LIQUIDACION')->get();        
-        return $solicitudes;
+        $solicitudes = NitEspectaculos::where('estado' ,'PAGADO')->select('espectaculo_id',DB::raw('count(id) as total'))->groupBy('espectaculo_id')->get();     
+          if($solicitudes){
+          foreach($solicitudes as $solicitud){
+           $contador = NitEspectaculos::where('espectaculo_id', $solicitud->espectaculo_id)->count();
+
+           if($contador==$solicitud->total){
+            $espectaculo = EspectaculosPublicos::FindOrFail($solicitud->espectaculo_id);
+
+            $auditoria = Auditoria::create([
+    
+                "usuario" => 'SISTEMA',
+                "proceso_afectado" => 'Radicado-'.$espectaculo->radicado,
+                "accion"=> 'Update a ESTADO PAGO_REALIZADO',
+                "tramite"=>'ESPECTACULOS PUBLICOS',
+                "radicado" => $espectaculo->radicado,
+                "observacion" => 'Solicitud No '.$espectaculo->radicado. 'se aplico el pago correctamente el estado de la solicitud avanza a la siguiente etapa'    
+    
+            ]);
+
+            $detalleCorreo = [
+                'nombres' => $espectaculo->nombre_o_razon,
+                'mensaje' => 'Su Solicitud No '.$espectaculo->radicado. ' se aplico el pago correctamente el estado de la solicitud avanza a la siguiente etapa',
+                'Subject' => 'Pago Aplicado Rad-N°' . $espectaculo->radicado,
+                'documento' => 'NO',                
+                'fecha_pendiente' => null,
+                'radicado'  => $espectaculo->radicado,
+                'estado' => 'PAGO APLICADO',
+                'id'=> Crypt::encrypt($espectaculo->id) 
+            ];
+
+            $detalleCorreo_fun = [
+                'nombres' => ' Funcionario',
+                'radicado' => $espectaculo->radicado,
+                'Subject' => 'Pago Aplicado Solicitud Espectaculos Publicos No-'.$espectaculo->radicado,
+                'documento'=> 'NO',
+                'fecha_pendiente' => null,            
+                'estado' => 'FUNCIONARIO',
+                'mensaje'=> 'En La solicitud No -'. $espectaculo->radicado.' se aplico el pago correctamente'
+            ];
+            $correo_funcionario = 'julianrincon9230@gmail.com';
+    
+            Mail::to($espectaculo->email_responsable)->send(new NotificacionEspectaculos($detalleCorreo));
+            Mail::to($correo_funcionario)->send(new NotificacionEspectaculos($detalleCorreo_fun));
+
+            $espectaculo->observaciones ='Se aplico el pago correctamente el estado de la solicitud avanza a la siguiente etapa' ;
+            $espectaculo->fecha_actuacion = $date;
+            $espectaculo->estado_solicitud = 'PAGO_REALIZADO';                 
+            $espectaculo->save(); 
+
+
+           $updateNit= NitEspectaculos::where("espectaculo_id", $solicitud->espectaculo_id)->update(["estado" => "PAGO-FINALIZADO"]);
+            
+            
+            
+             
+            
+           }
+           
+
+        }
+      }
         // return $unicos_espectaculos;
         // $datefin = '2021-11-30';
         // $dateInicio = '2021-11-27';

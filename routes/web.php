@@ -71,6 +71,18 @@ Route::get('/registro-metrolinea/detalle/{id}', 'MetrolineaController@detalle')-
 Route::post('/registro-metrolinea/updateDocs', 'MetrolineaController@updateDocs')->name('metrolinea.updateDocs');
 
 
+// RUTAS DE ENCUESTA POT
+
+Route::get('/planeacion/encuesta-pot','PlaneacionController@indexPot')->name('pot.index');
+Route::post('/planeacion/encuesta-pot/barrios','PlaneacionController@barriosComunas')->name('pot.barrios');
+Route::post('/planeacion/encuesta-pot/veredas','PlaneacionController@veredaCorregimiento')->name('pot.veredas');
+Route::post('/planeacion/encuesta-pot/validacionDocumento','PlaneacionController@validacionDocumento')->name('pot.documento');
+Route::post('/planeacion/encuesta-pot/store','PlaneacionController@potStore')->name('pot.store');
+Route::get('/planeacion/encuesta-pot/confirmacion','PlaneacionController@confirmacionPot')->name('pot.confirmacion');
+
+
+
+
 
 
 // RUTAS DE PUBLICIDAD EXTERIOR
@@ -196,6 +208,28 @@ Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|HACIENDA-SFI|edit
     
     
 });
+
+
+//RUTAS PARA SALUD
+//publicidad parte salud
+Route::group(['middleware' => ['role:SUPER-ADMIN|SALUD|SEC SALUD']], function () {
+    Route::get('/tramites/salud','SaludController@index')->name('salud.index');
+ });
+
+ Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|SEC SALUD|editar-tramite']], function () {
+    //tramite publicdad exterior
+    // Route::get('/tramites/salud/publicidad','PublicidadAdmin@salud')->name('salud.publicidad.index');
+   // Route::get('/tramites/salud/publicidad/detalle/{id}','PublicidadAdmin@detalle')->name('salud.publicidad.detalle');
+    //Route::post('/tramites/salud/publicidad/','SaludController@publicidadUpdate')->name('salud.publicidad.update');
+
+    //PGIRH
+     Route::get('/tramites/salud/pgirh','SaludController@indexEmpresas')->name('salud.pgirh.index');
+     Route::get('/tramites/salud/pgirh/reportes/{id}','SaludController@reportesEmpresas')->name('salud.pgirh.reportes');
+     Route::get('/tramites/salud/pgirh/excel/{id}/{empresa}/{nit}/{gestor}','SaludController@excelDetalle')->name('salud.pgirh.detalle');
+
+     
+
+ });
 
 
 
