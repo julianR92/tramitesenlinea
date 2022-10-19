@@ -38,7 +38,8 @@ class ParqueaderosController extends Controller
     }
 
     public function store(Request $request){
-
+          
+        // return $request;
       // validacion campos requeridos
       $this->validate($request, [
         "nom_solicitante" => "required",

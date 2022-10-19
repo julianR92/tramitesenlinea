@@ -36,6 +36,7 @@ class Metrolinea extends Model
         "ruta_frecuente",
         "trabaja_actualmente",
         "discapacidad",
+        "entrega_tarjeta",
         "adj_documentoIdentidad",
         "adj_certiVecindad",
         "adj_certificadoEstudio",

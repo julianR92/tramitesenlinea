@@ -61,8 +61,7 @@ class EspectaculosController extends Controller
 
         $QuerySolicitud = EspectaculosPublicos::where($request->tipo_parametro, $request->parametro)->get();
 
-        if ($QuerySolicitud->count() > 0) {
-            
+        if ($QuerySolicitud->count() > 0) {            
             // return $QuerySolicitud;
             return view('tramites.espectaculos.resultado', compact('QuerySolicitud'));
         } else {

@@ -505,6 +505,25 @@
                                     </span>
                                 @enderror
                             </div>
+                            <div class="col-md-12 pl-1 pr-1 pt-3">
+                                <label for="entrega_tarjeta" class="form-label">Lugar de entrega de Tarjeta* </label>
+                                <select class="form-control  @error('entrega_tarjeta') is-invalid @enderror" name="entrega_tarjeta" id="tiene_sisben"
+                                    required>
+                                    <option value="">Seleccione</option>
+                                    <option value="Punto Digital Café Madrid">Punto Digital Café Madrid -  Carrera 8C # 34 ANB, lote 6, local B. Barrio Café Madrid.
+                                    </option>
+                                    <option value="Punto Digital Promoción Social">Punto Digital Promoción Social -  Carrera 22 # 1 – 25, Barrio San Cristóbal.
+                                    </option>
+                                    <option value="Estación de Metrolínea Provenza">Estación de Metrolínea Provenza.</option>
+                                    
+                                    
+                                </select>
+                                @error('entrega_tarjeta')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
 
 
                                                                

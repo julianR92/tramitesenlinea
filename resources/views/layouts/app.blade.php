@@ -16,6 +16,7 @@
    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
    <link rel="stylesheet" type="text/css" href="{{asset('css/step.css')}}">
+   <link rel="stylesheet" type="text/css" href="{{asset('css/inputfile.min.css')}}">
 
    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
 
@@ -193,6 +194,14 @@
    </div>
 </div>
 
+<div class="scroll-to-top show-scrollTop">
+   <button type="button" class="ir-arriba">
+       <span class="govco-icon govco-icon-shortu-arrow-n btn-svg-up-hover">
+       </span>
+       <span class="label-button-star-up"> <h6 class="mt-2">Volver a arriba</h6>  </span>
+   </button>
+</div>
+
 
      
 
@@ -219,6 +228,7 @@
     {{-- moment js --}}
     <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
     <!--- cdn  GOV.CO --->
+    <script type="text/javascript"  src="{{ asset('js/inputfile.js') }}"></script>
     <script type="text/javascript"  src="{{ asset('js/funciones.js') }}"></script>
     <script type="text/javascript"  src="{{ asset('js/validate.js') }}"></script>
    <script type="text/javascript"  src="{{ asset('js/utils.js') }}"></script>

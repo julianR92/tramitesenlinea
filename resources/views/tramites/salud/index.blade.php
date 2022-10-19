@@ -83,6 +83,28 @@
                     </div>
                 </div>
 
+                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                    <div class="card govco-card animate__animated animate__flipInX" style="max-height: 500px!important">
+                        <div class="card-header govco-card-header">
+                            <h4>
+                                Autorización de la certificación de discapacidad</h4>
+                        </div>
+
+                        <div class="card-body">
+                            <p style="text-align: justify"><br><br><br><br><br>
+                                </p>
+                        </div>
+                        <div class="card-footer govco-card-footer govco-center mt-3">
+
+                            <a class="btn-low-mix-govco align-column-govco"
+                                href="{{route('salud.discapacidad.index')}}">
+                                <span class="btn-mix-govco__title">Ver mas detalles</span>
+                                <span class="btn-mix-govco__icon govco-icon govco-icon-simpled-arrow"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 

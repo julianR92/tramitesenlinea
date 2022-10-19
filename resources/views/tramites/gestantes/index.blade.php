@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Categorización de Parqueaderos')
+@section('title', 'Familia Lactante')
 @section('content')
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -11,20 +11,20 @@
             <div class="px-0 col-md-9 col-xs-12 col-sm-12">
                 <nav aria-label="Miga de pan" style="max-height: 20px;">
                     <ol class="breadcrumb" style="background-color: #FFFFFF;">
-                        <li class="breadcrumb-item ml-3 ml-md-0" tabindex="1">
-                            <a style="color: #004fbf;" class="breadcrumb-text" tabindex="1" href="https://www.gov.co/home/">Inicio</a>
+                        <li class="breadcrumb-item ml-3 ml-md-0">
+                            <a style="color: #004fbf;" class="breadcrumb-text" href="https://www.gov.co/home/">Inicio</a>
                         </li>
-                        <li class="breadcrumb-item " tabindex="2">
+                        <li class="breadcrumb-item ">
                             <div class="image-icon">
                                 <span class="breadcrumb govco-icon govco-icon-shortr-arrow" style="height: 22px;"></span>
-                                <a style="color: #004fbf;" class="breadcrumb-text" href="#" tabindex="2">Tramites y servicios</a>
+                                <a style="color: #004fbf;" class="breadcrumb-text" href="#">Tramites y servicios</a>
                             </div>
                         </li>
-                        <li class="breadcrumb-item " tabindex="3">
+                        <li class="breadcrumb-item ">
                             <div class="image-icon">
-                                <span class="breadcrumb govco-icon govco-icon-shortr-arrow" tabindex="3" style="height: 22px;"></span>
+                                <span class="breadcrumb govco-icon govco-icon-shortr-arrow" style="height: 22px;"></span>
                                 <p class="ml-3 ml-md-0 "><b style="color: #004fbf;text-transform: none;">
-                                        Categorización Parqueaderos
+                                        Salas amigas de la familia lactante
                                     </b></p>
                             </div>
                         </li>
@@ -57,16 +57,18 @@
                                             class="circle_dos">4</span> Respuesta</p>
                                 </div>
 
+                                
+
                             </div>
                         </div>
                     </div>
-                     <div>
-                    <form action="{{ route('parqueaderos.store') }}" method="POST" id="myForm" enctype="multipart/form-data"
+
+                    <form action="{{ route('familia.store') }}" method="POST" id="myForm" enctype="multipart/form-data"
                         class="form-ciudadano">
                         @csrf
                         <div class="card govco-card border-0 shadow-none" style="border-radius: 0px;">
 
-                            <h1 class="headline-xl-govco">Categorización de Parqueaderos</h1>
+                            <h1 class="headline-xl-govco">Salas Amigas de la Familia Lactante en el Entorno Laboral</h1>
 
                             <div class="alert-primary-govco alert alert-dismissible fade show mt-3"
                                 aria-label="Alerta informativa">
@@ -76,10 +78,7 @@
                                     <span class="govco-icon govco-icon-bell-sound-p size-2x"></span>
                                     <span class="headline-l-govco">Importante</span>
                                 </div>
-                                <p style="text-align: justify"> Este trámite tiene el objetivo de clasificar y categorizar
-                                    mediante acto administrativo los parqueaderos públicos ubicados en el Municipio de
-                                    Bucaramanga, ajustándose al procedimiento en sus diferentes etapas de legalización, en
-                                    cumplimiento del Decreto 073 de 1985. </p>
+                                <p style="text-align: justify"> Las salas amigas de la familia lactante en el entorno laboral, son espacios cálidos y amables, ubicados en entidades públicas y privadas que ofrecen las condiciones adecuadas para la extracción y conservación de la leche materna bajo normas técnicas de seguridad. </p>
                             </div>
                             @if ($errors->any())
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -96,17 +95,47 @@
 
                         </div>
 
-                        <h3 class="headline-l-govco mt-3 pl-0">1. Datos Generales de la Solicitud</h3>
+                        <h3 class="headline-l-govco mt-3 pl-0">1. Datos Generales</h3>
 
                         <div class="row form-group mt-2">
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="nom_solicitante" class="form-label">Nombres del Solicitante y/o Responsable
-                                    * </label>
-                                <input value="{{ old('nom_solicitante') }}" type="text"
-                                    class="form-control name_validate  @error('nom_solicitante') is-invalid @enderror"
-                                    name="nom_solicitante" id="nom_solicitante" maxlength="25" minlength="4" required
+                            <div class="col-md-4 pl-1 pr-1 pt-3">
+                                <label for="nit" class="form-label">NIT*
+                                </label>
+                                <input value="{{ old('nit') }}" type="text"
+                                    class="form-control document_validate  @error('nit') is-invalid @enderror"
+                                    name="nit" id="nit" maxlength="15"
+                                    minlength="4" required onkeypress="return Numeros(event)">
+                                @error('nit')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-md-8 pl-1 pr-1 pt-3">
+                                <label for="razon_social" class="form-label">Razon Social* </label>
+                                <input value="{{ old('razon_social') }}" type="text"
+                                    class="form-control razon_social  @error('razon_social') is-invalid @enderror"
+                                    name="razon_social" id="razon_social" maxlength="100" minlength="4" required
                                     onkeypress="return Letras(event)" onkeyup="aMayusculas(this.value,this.id)">
-                                @error('nom_solicitante')
+                                @error('razon_social')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-12 pl-1 pt-3">
+
+                                <label for="direccion" class="form-label">Dirección o Nomenclatura de la
+                                    Entidad* </label><button type="button" class="btn btn-link"><span
+                                        style="text-transform: lowercase; font-size: 12px;" class="text-primary"
+                                        data-toggle="modal" data-target="#ModalDirecciones">(Clic para insertar
+                                        direccion)</span></button>
+                                <input type="text" value="{{ old('direccion') }}"
+                                    class="form-control  @error('direccion') is-invalid @enderror"
+                                    name="direccion" id="direccion_solicitante" maxlength="120" required
+                                    readonly>
+                                @error('direccion')
                                     <span class="invalid-feedback" role="alert">
                                         <strong class="text-danger">{{ $message }}</strong>
                                     </span>
@@ -114,13 +143,15 @@
                             </div>
 
                             <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="ape_solicitante" class="form-label">Apellidos del Solicitante y/o
-                                    Responsable * </label>
-                                <input value="{{ old('ape_solicitante') }}" type="text"
-                                    class="form-control name_validate  @error('ape_solicitante') is-invalid @enderror"
-                                    name="ape_solicitante" id="ape_solicitante" maxlength="25" minlength="4" required
-                                    onkeypress="return Letras(event)" onkeyup="aMayusculas(this.value,this.id)">
-                                @error('ape_solicitante')
+                                <label for="barrio" class="form-label">Barrio* </label>
+                                <select name="barrio" id="barrio_solicitante"
+                                    class="form-control @error('barrio') is-invalid @enderror" required>
+                                    <option value=""></option>
+                                    @foreach ($Barrios as $barrio)
+                                        <option value="{{ $barrio->nombre }}">{{ $barrio->nombre }}</option>
+                                    @endforeach
+                                </select>
+                                @error('barrio')
                                     <span class="invalid-feedback" role="alert">
                                         <strong class="text-danger">{{ $message }}</strong>
                                     </span>
@@ -128,6 +159,58 @@
                             </div>
 
                             <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="telefono_empresa" class="form-label">Teléfono / Celular Entidad* </label>
+                                <input value="{{ old('telefono_empresa') }}" type="text"
+                                    class="form-control  @error('telefono_empresa') is-invalid @enderror number_validate"
+                                    name="telefono_empresa" id="telefono_empresa" maxlength="10" minlength="7" required
+                                    onkeypress="return Numeros(event)">
+                                @error('telefono_empresa')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="correo_electronico" class="form-label">Correo Electronico Entidad*
+                                </label>
+                                <input value="{{ old('correo_electronico') }}" type="mail"
+                                    class="form-control  @error('correo_electronico') is-invalid @enderror email_validate"
+                                    name="correo_electronico" id="correo_electronico" required>
+                                @error('correo_electronico')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="nom_representante" class="form-label">Nombres del Representante Legal * </label>
+                                <input value="{{ old('nom_representante') }}" type="text"
+                                    class="form-control name_validate  @error('nom_representante') is-invalid @enderror"
+                                    name="nom_representante" id="nom_representante" maxlength="25" minlength="4" required
+                                    onkeypress="return Letras(event)" onkeyup="aMayusculas(this.value,this.id)">
+                                @error('nom_representante')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                                <label for="ape_representante" class="form-label">Apellidos del Representante Legal * </label>
+                                <input value="{{ old('ape_representante') }}" type="text"
+                                    class="form-control name_validate  @error('ape_representante') is-invalid @enderror"
+                                    name="ape_representante" id="ape_representante" maxlength="25" minlength="4" required
+                                    onkeypress="return Letras(event)" onkeyup="aMayusculas(this.value,this.id)">
+                                @error('ape_representante')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            {{-- <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="tipo_documento" class="form-label">Tipo de Documento * </label>
                                 <select class="form-control  @error('tipo_documento') is-invalid @enderror"
                                     name="tipo_documento" id="tipo_documento" required>
@@ -142,8 +225,8 @@
                                         <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                            </div> --}}
+                            {{-- <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="identificacion_solicitante" class="form-label">Numero de Identificacion*
                                 </label>
                                 <input value="{{ old('identificacion_solicitante') }}" type="text"
@@ -155,68 +238,9 @@
                                         <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
-                            <div class="col-md-12 pl-1 pt-3">
-
-                                <label for="direccion_solicitante" class="form-label">Dirección o Nomenclatura del
-                                    Responsable* </label><button type="button" class="btn btn-link"><span
-                                        style="text-transform: lowercase; font-size: 12px;" class="text-primary"
-                                        data-toggle="modal" data-target="#ModalDirecciones">(Clic para insertar
-                                        direccion)</span></button>
-                                <input type="text" value="{{ old('direccion_solicitante') }}"
-                                    class="form-control  @error('direccion_solicitante') is-invalid @enderror"
-                                    name="direccion_solicitante" id="direccion_solicitante" maxlength="120" required
-                                    readonly>
-                                @error('direccion_solicitante')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="barrio_solicitante" class="form-label">Barrio* </label>
-                                <select name="barrio_solicitante" id="barrio_solicitante"
-                                    class="form-control @error('barrio_solicitante') is-invalid @enderror" required>
-                                    <option value=""></option>
-                                    @foreach ($Barrios as $barrio)
-                                        <option value="{{ $barrio->nombre }}">{{ $barrio->nombre }}</option>
-                                    @endforeach
-                                </select>
-                                @error('barrio_solicitante')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="tel_solicitante" class="form-label">Teléfono / Celular * </label>
-                                <input value="{{ old('tel_solicitante') }}" type="text"
-                                    class="form-control  @error('tel_solicitante') is-invalid @enderror number_validate"
-                                    name="tel_solicitante" id="tel_solicitante" maxlength="10" minlength="7" required
-                                    onkeypress="return Numeros(event)">
-                                @error('tel_solicitante')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
-                                <label for="email_responsable" class="form-label">Correo Electronico Responsable *
-                                </label>
-                                <input value="{{ old('email_responsable') }}" type="mail"
-                                    class="form-control  @error('email_responsable') is-invalid @enderror email_validate"
-                                    name="email_responsable" id="email_responsable" required>
-                                @error('email_responsable')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong class="text-danger">{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                            </div>                   --}}
+                           
+                            {{-- <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="email_confirmado" class="form-label">Confirme su correo* </label>
                                 <input type="mail" onpaste="return false;"
                                     class="form-control  @error('email_confirmado') is-invalid @enderror email_validate"
@@ -226,9 +250,9 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-12 pl-1 pt-3">
+                            {{-- <div class="col-md-12 pl-1 pt-3">
 
                                 <label for="nombre_empresa" class="form-label">Nombre del parqueadero a categorizar*
                                 </label>
@@ -241,9 +265,9 @@
                                         <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-12 pl-1 pt-3">
+                            {{-- <div class="col-md-12 pl-1 pt-3">
 
                                 <label for="direccion_empresa" class="form-label">Dirección de parqueadero a
                                     categorizar. * </label><button type="button" class="btn btn-link"><span
@@ -258,9 +282,9 @@
                                         <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                            {{-- <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="barrio_empresa" class="form-label">Barrio* </label>
                                 <select name="barrio_empresa" id="barrio_empresa"
                                     class="form-control @error('barrio_empresa') is-invalid @enderror" required>
@@ -274,9 +298,9 @@
                                         <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-6 pl-1 pr-1 pt-3">
+                            {{-- <div class="col-md-6 pl-1 pr-1 pt-3">
                                 <label for="tel_empresa" class="form-label">Teléfono/Celular * </label>
                                 <input value="{{ old('tel_empresa') }}" type="text"
                                     class="form-control  @error('tel_empresa') is-invalid @enderror number_validate"
@@ -287,74 +311,48 @@
                                         <strong class="text-danger">{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
-
-                            <h3 class="headline-l-govco mt-3 pl-0">2. Documentos Adjuntos de la Solicitud</h3>
-
-                            <div class="col-md-12 pl-1 pr-1 pt-3">
-
-                                <div class="form-group">                                  
-                                        <label for="input-file-simple-label">
-                                            <strong>Archivo de camara de comercio (minimo 3 meses de antiguedad): </strong> <br />
-                                            <span>Tipo de archivo permitido .PDF hasta de 10MB</span>
-                                         </label>
-                                        
-                                    <div class="custom-file file-govco">
-                                       <input type="file" accept="application/pdf"  name="archivo_camara_rut" class="custom-file-input input-file-govco" id="archivo_camara_rut" onchange="uploadHandler(event,'archivo_camara_rut')" required/>
-                                       <label class="custom-file-label label-file-govco @error('archivo_camara_rut') is-invalid @enderror"  ondrop="dropHandler(event, 'archivo_camara_rut')" ondragover="dragOverHandler(event, 'archivo_camara_rut')"  for="archivo_camara_rut"><span class="govco-icon govco-icon-attached-n size-2x"></span>
-                                        Arrastre aquí su archivo o haga click para añadir.</label>
-                                       @error('archivo_camara_rut')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong class="text-danger">{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                 </div>
-                            </div>
-
-                           
-
-                            <div class="col-md-12 pl-1 pr-1 pt-3">
-                                <div class="form-group">                                  
-                                    <label for="input-file-simple-label">
-                                        <strong>Archivo de planos aprobados:* </strong> <br />
-                                        <span>Tipo de archivo permitido .PDF hasta de 10MB</span>
-                                     </label>
-                                    
-                                <div class="custom-file file-govco">
-                                   <input type="file" accept="application/pdf"  name="archivo_planos" class="custom-file-input input-file-govco" id="archivo_planos" onchange="uploadHandler(event,'archivo_planos')" required/>
-                                   <label class="custom-file-label label-file-govco @error('archivo_planos') is-invalid @enderror"  ondrop="dropHandler(event, 'archivo_planos')" ondragover="dragOverHandler(event, 'archivo_planos')"  for="archivo_planos"><span class="govco-icon govco-icon-attached-n size-2x"></span>
-                                    Arrastre aquí su archivo o haga click para añadir.</label>
-                                   @error('archivo_planos')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong class="text-danger">{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                             </div>                               
-                        </div>
-
-
-                            <div class="col-md-12 pl-1 pr-1 pt-3">
-
-                                <div class="form-group">                                  
-                                    <label for="input-file-simple-label">
-                                        <strong>Archivo de licencia de construcción:* </strong> <br />
-                                        <span>Tipo de archivo permitido .PDF hasta de 10MB</span>
-                                     </label>
-                                    
-                                <div class="custom-file file-govco">
-                                   <input type="file" accept="application/pdf"  name="archivo_licencia" class="custom-file-input input-file-govco" id="archivo_licencia" onchange="uploadHandler(event,'archivo_licencia')" required/>
-                                   <label class="custom-file-label label-file-govco @error('archivo_licencia') is-invalid @enderror"  ondrop="dropHandler(event, 'archivo_licencia')" ondragover="dragOverHandler(event, 'archivo_licencia')"  for="archivo_licencia"><span class="govco-icon govco-icon-attached-n size-2x"></span>
-                                    Arrastre aquí su archivo o haga click para añadir.</label>
-                                   @error('archivo_licencia')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong class="text-danger">{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                             </div>                                
-                        </div>
+                            </div> --}}
+                            <div class="col-md-12">
+                            <h3 class="headline-l-govco mt-3 pl-0">2. Datos Especificos</h3>
+                           </div>
+                           <div class="col-md-6 pl-1 pr-1 pt-3">
+                            <label for="numero_mujeres_empresa" class="form-label">Numero de mujeres que trabajan en la empresa * </label>
+                            <input value="{{ old('numero_mujeres_empresa') }}" type="text"
+                                class="form-control  @error('numero_mujeres_empresa') is-invalid @enderror"
+                                name="numero_mujeres_empresa" id="numero_mujeres_empresa" maxlength="4" required
+                                onkeypress="return Numeros(event)">
+                            @error('numero_mujeres_empresa')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>   
+                        
+                        <div class="col-md-6 pl-1 pr-1 pt-3">
+                            <label for="numero_mujeres_gestantes" class="form-label">Numero de mujeres gestantes en la empresa* </label><br><br>
+                            <input value="{{ old('numero_mujeres_gestantes') }}" type="text"
+                                class="form-control  @error('numero_mujeres_gestantes') is-invalid @enderror"
+                                name="numero_mujeres_gestantes" id="numero_mujeres_gestantes" maxlength="4" required
+                                onkeypress="return Numeros(event)">
+                            @error('numero_mujeres_gestantes')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>   
+                        
+                        <div class="col-md-6 pl-1 pr-1 pt-3">
+                            <label for="numero_mujeres_lactantes" class="form-label">Numero de mujeres lactantes en la empresa* </label>
+                            <input value="{{ old('numero_mujeres_lactantes') }}" type="text"
+                                class="form-control  @error('numero_mujeres_lactantes') is-invalid @enderror"
+                                name="numero_mujeres_lactantes" id="numero_mujeres_lactantes" maxlength="4" required
+                                onkeypress="return Numeros(event)">
+                            @error('numero_mujeres_lactantes')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div> 
 
                             {{-- por definir cuarto documento --}}
                             <div class="col-md-12 pl-1 pt-3">
@@ -364,8 +362,8 @@
                                 <a class="btn btn-low px-0"
                                     href="https://www.bucaramanga.gov.co/Inicio/autorizacion-de-tratamiento-de-datos-personales/"
                                     target="_blank">Autorizo el tratamiento de datos personales</a>
-                                <label class="d-inline">
-                                    <input class="check-style" type="checkbox" id="AT00" name="tratamiento_datos" value="SI" required/>
+                                <label class="checkbox-govco d-inline">
+                                    <input type="checkbox" id="AT00" name="tratamiento_datos" value="SI" />
                                     <label for="AT00"> </label>
                                 </label><br>
 
@@ -397,14 +395,14 @@
                                     </span>
                                 @enderror
                                 <div class="form-check-inline">
-                                    <label class="">
-                                        <input class="radio-per-gov" type="radio" name="compartir_informacion" id="rb_si" value="SI"/>
+                                    <label class="radiolist-govco radiobutton-govco">
+                                        <input type="radio" name="compartir_informacion" id="rb_si" value="SI" checked />
                                         <label for="rb_si">SI</label>
                                     </label>
                                 </div>
                                 <div class="form-check-inline">
-                                    <label class="">
-                                        <input class="radio-per-gov" type="radio" name="compartir_informacion" id="rb_no" value="NO" />
+                                    <label class="radiolist-govco radiobutton-govco">
+                                        <input type="radio" name="compartir_informacion" id="rb_no" value="NO" />
                                         <label for="rb_no">NO</label>
                                     </label>
                                 </div>
@@ -423,7 +421,6 @@
                         </div>
                     </form>
                 </div>
-                </div>
 
 
 
@@ -435,10 +432,10 @@
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <!---contenido de cajas -->
 
-                    <div class="accordion accordion-govco" id="EjemploAccordion-2" tabindex="5">
+                    <div class="accordion accordion-govco" id="EjemploAccordion-2">
                         <div class="card mb-0">
                             <div class="card-header row no-gutters" id="headingUno">
-                                <button class="btn-link row no-gutters collapsed" tabindex="5" type="button" data-toggle="collapse"
+                                <button class="btn-link row no-gutters collapsed" type="button" data-toggle="collapse"
                                     data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
                                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                         <span class="title">¿Tienes dudas?</span>
@@ -467,10 +464,10 @@
                         </div>
                     </div>
 
-                    <div class="accordion accordion-govco" id="acc4" tabindex="6">
+                    <div class="accordion accordion-govco" id="acc4">
                         <div class="card">
                             <div class="card-header row no-gutters" id="c4">
-                                <button class="btn-link row no-gutters collapsed" tabindex="6" type="button" data-toggle="collapse"
+                                <button class="btn-link row no-gutters collapsed" type="button" data-toggle="collapse"
                                     data-target="#coll4" aria-expanded="false" aria-controls="coll4" id="btn_colapse">
                                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                                         <span class="title">¿Como fue tu experiencia durante el proceso?</span>
@@ -506,7 +503,7 @@
                                     </div>
                                     {{-- modulo tramites --}}
                                     <input id="modulo" type="hidden" class="form-control modulo"
-                                        value="CATEGORIZACION DE PARQUEADEROS">
+                                        value="FAMILIA LACTANTE">
 
 
                                     <div class="container text-center">
@@ -536,7 +533,7 @@
 
                     {{-- tercer acordion --}}
 
-                    <div class="accordion accordion-govco pt-0" id="acc3">
+                    {{-- <div class="accordion accordion-govco pt-0" id="acc3">
                         <div class="card">
                             <div class="card-header row no-gutters" id="c3">
                                 <button class="btn-link row no-gutters collapsed" type="button" data-toggle="collapse"
@@ -562,7 +559,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>

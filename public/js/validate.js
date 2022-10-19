@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    
     /*============================================================================
     =            input de usuarios
                 id = "user_validate"        maxlength =60
@@ -648,16 +649,16 @@ $(document).ready(function () {
         maxFileSize: 10000,
     });
 
-    $("#archivo_planos").fileinput({
-        theme: "fas",
-        language: "es",
-        browseClass: "btn btn-primary",
-        browseLabel: "Examinar",
-        removeClass: "btn btn-danger",
-        allowedFileExtensions: ["pdf"],
-        overwriteInitial: true,
-        maxFileSize: 10000,
-    });
+    // $("#archivo_planos").fileinput({
+    //     theme: "fas",
+    //     language: "es",
+    //     browseClass: "btn btn-primary",
+    //     browseLabel: "Examinar",
+    //     removeClass: "btn btn-danger",
+    //     allowedFileExtensions: ["pdf"],
+    //     overwriteInitial: true,
+    //     maxFileSize: 10000,
+    // });
 
     // file input parqueaderos
 
@@ -1019,6 +1020,7 @@ $(document).ready(function () {
 
     // parqueaderos
     $(".myFormDefault").ready(function () {
+        
         var estado_actual = $(".estado_actual").val();
 
         if (estado_actual == "ENVIADA") {
@@ -2213,6 +2215,72 @@ $(document).ready(function () {
     });
 
   });
+
+  // select autorizacion de la discapacidad
+
+  $("#estado_solicitud_discapacidad").change(function () {
+    var estado = document.getElementById("estado_solicitud_discapacidad").value;
+
+    if (estado == "PENDIENTE") {
+        $("#documento_respuesta").attr("disabled", true);
+        $("#documento_respuesta").attr("required", false);
+    } else if (estado == "APROBADA") {
+        $("#documento_respuesta").attr("disabled", false);
+        $("#documento_respuesta").attr("required", true);
+    } else if (estado == "RECHAZADA") {
+        $("#documento_respuesta").attr("disabled", true);
+        $("#documento_respuesta").attr("required", false);
+    } else {
+        $("#documento_respuesta").attr("disabled", true);
+        $("#documento_respuesta").attr("required", false);
+    }
+    $("#observaciones").focus();
+});
+
+// autorizacion de la certificacion de la discapacidad
+$(".myFormDefaultDiscapacidad").ready(function () {
+   
+    var estado_actual = $(".estado_actual").val();
+   
+
+    if (estado_actual == "ENVIADA") {
+        $("#estado_solicitud_discapacidad option[value='APROBADA']").hide();
+        // $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
+    } else if(estado_actual == "PENDIENTE") {
+        $("#estado_solicitud_discapacidad option[value='APROBADA']").hide(); 
+        $("#estado_solicitud_discapacidad option[value='PENDIENTE']").hide();    
+        $("#estado_solicitud_discapacidad option[value='RADICADA']").hide();           
+        // $("#estado_solicitud_parqueaderos option[value='RECHAZADA']").hide();
+    } else if (estado_actual == "ACTUALIZADA") {        
+        $("#estado_solicitud_discapacidad option[value='APROBADA']").hide();        
+    } else if (estado_actual == "RADICADA") {
+        $("#estado_solicitud_discapacidad option[value='PENDIENTE']").hide();
+        $("#estado_solicitud_discapacidad option[value='RADICADA']").hide();  
+        
+    } else {
+       
+        $("#btn_discapacidad").attr("disabled", true);
+        $("#estado_solicitud_discapacidad").attr("disabled", true);
+        $("#observaciones_discapacidad").attr("disabled", true);
+    }
+});
+
+$('.ir-arriba').click(function(){
+    $('body, html').animate({
+        scrollTop: '0px'
+    }, 1000);
+});
+
+$(window).scroll(function(){
+    if( $(this).scrollTop() > 0 ){
+        $('.ir-arriba').slideDown(300);
+    } else {
+        $('.ir-arriba').slideUp(300);
+    }
+});
+
+
+
 
   
 

@@ -44,15 +44,14 @@ class MetrolineaController extends Controller
     public function store(Request $request){
  
 
-
-       // validacion campos requeridos
-    if($request->tipo_poblacion=='ESTUDIANTE-COLEGIO' || $request->tipo_poblacion=='ESTUDIANTE-UNIVERSIDAD'){
-       
-      $this->validate($request, [
-        "tipo_poblacion" => "required",
-        "nombre_usuario" => "required",
-        "apellido_usuario" => "required",        
-        "fecha_nacimiento" => "required",
+        // validacion campos requeridos
+        if($request->tipo_poblacion=='ESTUDIANTE-COLEGIO' || $request->tipo_poblacion=='ESTUDIANTE-UNIVERSIDAD'){
+            
+            $this->validate($request, [
+                "tipo_poblacion" => "required",
+                "nombre_usuario" => "required",
+                "apellido_usuario" => "required",        
+                "fecha_nacimiento" => "required",
         "estado_civil" => "required",
         "nivel_estudios" => "required",
         "tipo_documento" => "required",
@@ -71,6 +70,7 @@ class MetrolineaController extends Controller
         "acepto_terminos"=> "required",
         "confirmo_mayorEdad"=> "required",
         "compartir_informacion"=> "required",
+        "entrega_tarjeta"=> "required",
         "edad"=> "required",
         "archivo_documentoIdentidad"=> "required",
         "institucion_educativa"=> "required",
@@ -98,6 +98,7 @@ class MetrolineaController extends Controller
         "ruta_frecuente" => "required",
         "estrato_socioeconomico" => "required",
         "trabaja_actualmente"=> "required",
+        "entrega_tarjeta"=> "required",
         "tratamiento_datos"=> "required",
         "acepto_terminos"=> "required",
         "confirmo_mayorEdad"=> "required",
@@ -105,12 +106,12 @@ class MetrolineaController extends Controller
         "edad"=> "required",
         "archivo_documentoIdentidad"=> "required|mimes:pdf|max:3000",
         "archivo_deportistas_artistas"=> "required|mimes:pdf|max:3000",
-       
+        
         
     ]);
-
-   }elseif($request->tipo_poblacion == 'ADULTO MAYOR'){
-
+    
+}elseif($request->tipo_poblacion == 'ADULTO MAYOR'){
+    
     $this->validate($request, [
         "tipo_poblacion" => "required",
         "nombre_usuario" => "required",
@@ -130,20 +131,21 @@ class MetrolineaController extends Controller
         "ruta_frecuente" => "required",
         "estrato_socioeconomico" => "required",
         "trabaja_actualmente"=> "required",
+        "entrega_tarjeta"=> "required",
         "tratamiento_datos"=> "required",
         "acepto_terminos"=> "required",
         "confirmo_mayorEdad"=> "required",
         "compartir_informacion"=> "required",
         "edad"=> "required",
         "archivo_documentoIdentidad"=> "required|mimes:pdf|max:3000"      
-       
+        
         
     ]);
-
-
-
-   }elseif($request->tipo_poblacion == 'PERSONAS CON DISCAPACIDAD'){
-
+    
+    
+    
+}elseif($request->tipo_poblacion == 'PERSONAS CON DISCAPACIDAD'){
+    
     $this->validate($request, [
         "tipo_poblacion" => "required",
         "nombre_usuario" => "required",
@@ -164,6 +166,7 @@ class MetrolineaController extends Controller
         "ruta_frecuente" => "required",
         "estrato_socioeconomico" => "required",
         "trabaja_actualmente"=> "required",
+        "entrega_tarjeta"=> "required",
         "tratamiento_datos"=> "required",
         "acepto_terminos"=> "required",
         "confirmo_mayorEdad"=> "required",
@@ -176,28 +179,28 @@ class MetrolineaController extends Controller
 
 
    }
-
+   
    // validacion sisben Y/O VECINDAD
-    
+   
    if($request->tiene_sisben == 'SI'){
-        $this->validate($request, [
-            "archivo_docSisben" => "required|mimes:pdf|max:3000"
+       $this->validate($request, [
+           "archivo_docSisben" => "required|mimes:pdf|max:3000"
         ]);
-   }else{
-    $this->validate($request, [
-        "archivo_certiVencidad" => "required|mimes:pdf|max:3000"
-    ]);
-   }
-
-   // validacion menor de edad
+    }else{
+        $this->validate($request, [
+            "archivo_certiVencidad" => "required|mimes:pdf|max:3000"
+        ]);
+    }
     
-        if($request->edad < 18){
-            $this->validate($request, [
-                "archivo_docAcudiente" => "required|mimes:pdf|max:3000"
-            ]);
-          }
-
-
+    // validacion menor de edad
+    
+    if($request->edad < 18){
+        $this->validate($request, [
+            "archivo_docAcudiente" => "required|mimes:pdf|max:3000"
+        ]);
+    }
+    
+    
     $ultimo_id = Metrolinea::latest('id')->first();
     // return $ultimo_id;
     if (!$ultimo_id) {
@@ -206,9 +209,10 @@ class MetrolineaController extends Controller
         $idRadicado = $ultimo_id->id + 1;
     }
     $radicado = $request->documento_usuario . $idRadicado; // numero de solicitud
-
+    
+    // return $request->file('archivo_documentoIdentidad');
     $adjunto1 = $request->file('archivo_documentoIdentidad')->storeAs('documentos_metrolinea/' . $radicado, 'documento-de-identidad-' . $radicado . '.pdf');
-
+    
     if($request->archivo_certiVencidad || $request->archivo_certiVencidad != null){  
     $adjunto2 = $request->file('archivo_certiVencidad')->storeAs('documentos_metrolinea/' . $radicado, 'certificado-vecindad-' . $radicado . '.pdf');
     }else{

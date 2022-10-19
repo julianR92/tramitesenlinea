@@ -85,6 +85,7 @@ Route::get('/planeacion/encuesta-pot/confirmacion','PlaneacionController@confirm
 
 
 
+
 // RUTAS DE PUBLICIDAD EXTERIOR
 
 Route::get('/publicidad-exterior', 'PublicidadController@index')->name('publicidad.index');
@@ -102,11 +103,27 @@ Route::get('/espectaculos-publicos/cancelar/{id}', 'EspectaculosController@cance
 Route::post('/espectaculos-publicos/cancelarSolicitud/', 'EspectaculosController@cancelarSolicitud')->name('espectaculos.cancelarSolicitud');
 
 
+// RUTAS CERTIFICADO DE DISCAPACIDAD
+Route::get('/certificado-discapacidad', 'DiscapacidadController@index')->name('discapacidad.index');
+Route::post('/certificado-discapacidad/store', 'DiscapacidadController@store')->name('discapacidad.store');
+Route::get('/certificado-discapacidad/confirmacion', 'DiscapacidadController@confirmacion')->name('discapacidad.confirmacion');
+Route::get('/certificado-discapacidad/finalizar', 'DiscapacidadController@end')->name('discapacidad.finalizar');
+Route::post('/certificado-discapacidad/consulta','DiscapacidadController@consulta')->name('discapacidad.consulta');
+Route::get('/certificado-discapacidad/detalle/{id}', 'DiscapacidadController@detalle')->name('discapacidad.detalle');
+Route::post('/certificado-discapacidad/updateDocs', 'DiscapacidadController@updateDocs')->name('discapacidad.updateDocs');
 
 
+//RUTAS FAMILIA Familia
+Route::get('/familia-lactante','SaludController@indexFamilia')->name('familia.index');
+Route::post('/familia-lactante/store','SaludController@storeFamilia')->name('familia.store');
+Route::get('/familia-lactante/confirmacion', 'SaludController@confirmacion')->name('familia.confirmacion');
+Route::get('/familia-lactante/finalizar', 'SaludController@end')->name('familia.finalizar');
 
-//PRUEBAS
+
 Route::get('/pruebas', 'EspectaculosController@pruebas')->name('pruebas.pruebas');
+Route::get('/pruebas-estilos', function() {
+    return view('pruebas');
+});
 
 
 
@@ -226,7 +243,13 @@ Route::group(['middleware' => ['role:SUPER-ADMIN|SALUD|SEC SALUD']], function ()
      Route::get('/tramites/salud/pgirh','SaludController@indexEmpresas')->name('salud.pgirh.index');
      Route::get('/tramites/salud/pgirh/reportes/{id}','SaludController@reportesEmpresas')->name('salud.pgirh.reportes');
      Route::get('/tramites/salud/pgirh/excel/{id}/{empresa}/{nit}/{gestor}','SaludController@excelDetalle')->name('salud.pgirh.detalle');
+   
+    //AUTORIZACION DE LA CERTIFICACION DE DISCAPCIDAD
 
+    Route::get('/tramites/salud/discapacidad','SaludController@indexDiscapacidad')->name('salud.discapacidad.index');
+    Route::get('/tramites/salud/discapacidad/{id}','SaludController@discapacidadDetalle')->name('salud.discapacidad.detalle');
+    Route::post('tramites/salud/discapacidad/update/', 'SaludController@discapacidadUpdate' )->name('salud.discapacidad.update');
+    
      
 
  });
