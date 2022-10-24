@@ -260,14 +260,7 @@
                         </td>
                     </tr>
                     </form>
-                    {{-- fin del form --}}
-
-
-
-
-
-
-                     
+                    {{-- fin del form --}}             
                    
                       
                    

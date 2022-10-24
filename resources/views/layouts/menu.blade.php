@@ -16,6 +16,7 @@
    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
    <link rel="stylesheet" type="text/css" href="{{asset('css/step.css')}}">
+   <link rel="stylesheet" type="text/css" href="{{asset('css/input-file-multiple.css')}}">
    
    {{-- responsive tables --}}
    <link rel="styleshert" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.3.2/css/fixedColumns.dataTables.min.css">
@@ -42,8 +43,8 @@
     {{-- DATATABLES --}}
     <!-- js jquery datatable -->
    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-   <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
-   <script src="https://cdn.datatables.net/fixedcolumns/3.3.2/js/dataTables.fixedColumns.min.js"></script>
+
+   
 
    {{-- buttons datatable --}}
    <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
@@ -67,7 +68,7 @@
     <!--- cdn  GOV.CO --->
     <script type="text/javascript"  src="{{ asset('js/funciones.js') }}"></script>
     <script type="text/javascript"  src="{{ asset('js/validate.js') }}"></script>
-   <script type="text/javascript"  src="https://cdn.www.gov.co/v2/assets/js/utils.js"></script>
+    <script type="text/javascript"  src="{{ asset('js/utils.js') }}"></script>
 
 
    
@@ -137,9 +138,14 @@
                  </li> 
                  @endrole
                  
-                 @hasrole('ADMINISTRATIVA|SUPER-ADMIN')
+                 {{-- @hasrole('ADMINISTRATIVA|SUPER-ADMIN')
                  <li class="nav-item">
                   <a href="#" class="nav-link">ADMINISTRATIVA</a>
+                 </li> 
+                 @endrole --}}
+                 @hasrole('JURIDICA|SUPER-ADMIN')
+                 <li class="nav-item">
+                  <a href="{{route('juridica.index')}}" class="nav-link">JURIDICA</a>
                  </li> 
                  @endrole
                  @hasrole('SEC_GOBIERNO|SUPER-ADMIN')
@@ -237,8 +243,10 @@
       </div>
    </div>
    </footer>
+   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   @stack('rita-js')
+   
 
-  
    
 </body>
 </html>

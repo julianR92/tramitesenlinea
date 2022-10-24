@@ -226,6 +226,17 @@ Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|HACIENDA-SFI|edit
     
 });
 
+// RUTAS DE JURIDICA PARA VER TRAMITES
+Route::group(['middleware' => ['role:SUPER-ADMIN|JURIDICA']], function () {
+    Route::get('/tramites/juridica','JuridicaController@index')->name('juridica.index');
+});
+Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|canal-denuncia']], function () {
+    Route::get('/tramites/juridica/rita','JuridicaController@main')->name('juridica.rita.main');
+    Route::get('/tramites/juridica/rita/denuncias','JuridicaController@denuncias')->name('juridica.rita.index');
+    Route::get('/tramites/juridica/rita/{id}','JuridicaController@denunciasDetalle')->name('juridica.rita.detalle');
+    Route::post('/tramites/juridica/rita','JuridicaController@updateDenuncia')->name('juridica.rita.update');
+});
+
 
 //RUTAS PARA SALUD
 //publicidad parte salud
