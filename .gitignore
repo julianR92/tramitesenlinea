@@ -1,0 +1,11 @@
+/vendor
+.env
+/node_modules
+/public/storage
+/storage/*.key
+/tests/Feature/.DS_Store
+/tests/Unit/.DS_Store
+.editorconfig
+.phpunit.result.cache
+.env.*.backup
+
