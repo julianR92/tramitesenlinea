@@ -163,7 +163,7 @@ Route::get('/publicidad-exterior/cargar-documentos/{modalidad}', 'PublicidadCont
 
 Route::get('/publicidad-exterior/inicio', 'PublicidadController@inicio')->name('publicidad.inicio');
 Route::post('/publicidad-exterior/solicitud', 'PublicidadController@solicitud')->name('publicidad.solicitud');
-Route::post('/publicidad-exterior/finalizar', 'PublicidadController@finalizar')->name('publicidad.finalizar');
+Route::post('/publicidad-exterior/finalizar', 'PublicidadController@procesarRequest')->name('publicidad.finalizar');
 Route::get('/publicidad-exterior/confirmacion', 'PublicidadController@confirmacion')->name('publicidad.confirmacion');
 Route::get('/publicidad-exterior/finalizar', 'PublicidadController@end')->name('publicidad.finalizar');
 Route::get('/publicidad-exterior/DocConsulta', 'PublicidadController@DocConsulta')->name('publicidad.DocConsulta');
@@ -261,6 +261,11 @@ Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|SEC_GOBIERNO|edit
 	Route::post('/tramites/interior/publicidad/', 'PublicidadAdmin@AgregarNovedad')->name('interior.publicidad.update');
 	Route::post('/tramites/interior/publicidad/liquidacion', 'PublicidadAdmin@Liquidacion')->name('interior.publicidad.liquidacion');
 	Route::get('/tramites/interior/publicidad/detalle/downoadPdf/{id}/{consecutivo}/{fecha}/{total}/{fecha_inicial}/{fecha_final}', 'PublicidadAdmin@downloadPdf')->name('interior.publicidad.donwloadPdf');
+
+    //publicidad exterior
+    Route::get('/avisos-comerciales/getData/{modalidad}/{dependencia}', 'PublicidadAdmin@getDataPublicidad')->name('publicidad.getData');
+
+
 });
 
 // RUTAS AREAS DE CESION TIPO A

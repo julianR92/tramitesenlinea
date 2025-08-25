@@ -37,7 +37,7 @@
                 $valor_m2 = round(($salario * 4) / 48, 2);
                 $numero_m2 = str_replace(',', '.', $valor_m2);
                 $metro_formateado = number_format($numero_m2, 2, ',', '.');
-                $area = $detalle->area_total_elemento;
+                $area = $area_total_elementos;
                 // _______________________________________________________
                 $valor_mensual = round(($area * $valor_m2) / 12, 2);
                 $numero_mensual = str_replace(',', '.', $valor_mensual);

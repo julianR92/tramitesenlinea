@@ -9,24 +9,26 @@ class Persona extends Model
 {
     protected $table = 'personas';
     protected $primaryKey = 'PersonaId';
-    
- 
+
+
     protected $fillable=[
         "PersonaTip",
-        "PersonaTipDoc",  
-        "PersonaDoc",    
+        "PersonaTipDoc",
+        "PersonaDoc",
         "PersonaNombre",
+        "PersonaRazon",
         "PersonaApe",
         "PersonaTel",
         "PersonaMail",
-        "PersonaDir"
-       
+        "PersonaDir",
+        "PersonaBarrio"
+
     ];
 
-    public function documentos(){     
+    public function documentos(){
 
         return $this->hasOne(DocUpdate::class); //relacion 1  a 1
 
     }
-    
+
 }

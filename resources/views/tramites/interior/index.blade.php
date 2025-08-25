@@ -31,11 +31,11 @@
 
       <div class="col-md-12 pt-4" style="padding-left: 10px!important">
          <h1 class="headline-xl-govco">Tramites Secretaria de Interior</h1>
-         <div class="row pt-5">
+         <div class="row pt-5 d-flex align-items-stretch">
 
             {{-- INICIO CARD  --}}
             <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-               <div class="card govco-card animate__animated animate__flipInX" style="max-height: 500px!important">
+               <div class="card govco-card animate__animated animate__flipInX h-100">
                   <div class="card-header govco-card-header">
                      <h4>
                         Categorización de parqueaderos</h4>
@@ -61,7 +61,7 @@
 
             {{-- INICIO CARD  --}}
             <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-               <div class="card govco-card animate__animated animate__flipInX" style="max-height: 500px!important">
+               <div class="card govco-card animate__animated animate__flipInX h-100">
                   <div class="card-header govco-card-header">
                      <h4>
                         Permiso para espectáculos públicos diferentes a las artes escénicas</h4>
@@ -85,7 +85,7 @@
             {{-- </ FIN CARD --}}
             {{-- INICIO CARD --}}
             <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
-               <div class="card govco-card animate__animated animate__flipInX" style="max-height: 500px!important">
+               <div class="card govco-card animate__animated animate__flipInX h-100">
                   <div class="card-header govco-card-header">
                      <h4>
                         Publicidad Exterior</h4>

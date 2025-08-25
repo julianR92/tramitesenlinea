@@ -76,28 +76,31 @@ class PublicidadAdmin extends Controller
 
    public function interior($modalidad)
    {
-      $solicitudes = DB::select(Publicidad::getRadicados($modalidad, 'interior'));
-      return view('tramites.interior.publicidad.index1', compact('solicitudes', 'modalidad'));
-
+      $modalidad = $modalidad;
+      $dependencia = 'interior';
+      return view('tramites.interior.publicidad.index1', compact('modalidad', 'dependencia'));
       // return $this->Administrar($modalidad, $dependencia);
    }
 
    public function planeacion()
    {
-      $solicitudes = DB::select(Publicidad::getRadicados('TODAS', 'planeacion'));
-      return view('tramites.interior.publicidad.index1', compact('solicitudes'));
+      $modalidad = 'TODAS';
+      $dependencia = 'planeacion';
+      return view('tramites.interior.publicidad.index1', compact('modalidad', 'dependencia'));
    }
 
    public function salud(Request $r)
    {
-      $solicitudes = DB::select(Publicidad::getRadicados('TODAS', 'salud'));
-      return view('tramites.interior.publicidad.index1', compact('solicitudes'));
+      $modalidad = 'TODAS';
+      $dependencia = 'salud';
+      return view('tramites.interior.publicidad.index1', compact('modalidad', 'dependencia'));
    }
 
    public function hacienda(Request $r)
    {
-      $solicitudes = DB::select(Publicidad::getRadicados('TODAS', 'hacienda'));
-      return view('tramites.interior.publicidad.index1', compact('solicitudes'));
+      $modalidad = 'TODAS';
+      $dependencia = 'hacienda';
+      return view('tramites.interior.publicidad.index1', compact('modalidad', 'dependencia'));
    }
 
    public function transito(Request $r)
@@ -130,9 +133,12 @@ class PublicidadAdmin extends Controller
          ->get()
          ->first();
 
-      $detalle = PublicidadDetalle::where('publicidad_id', $id)
-         ->get()
-         ->first();
+      $detalles = PublicidadDetalle::where('publicidad_id', $id)
+         ->get();
+
+      $area_total_elementos = PublicidadDetalle::where('publicidad_id', $id)
+      ->sum('area_total_elemento');
+
 
       $vista = $this->vistas($solicitud->dependencia, $solicitud->modalidad);
       $vista = "tramites.interior.publicidad.detalle";
@@ -146,13 +152,14 @@ class PublicidadAdmin extends Controller
       WHERE estado_id=(SELECT id FROM publicidad_config_estados WHERE modalidad='$solicitud->modalidad' AND estado='$solicitud->estado_solicitud')AND dependencia='$solicitud->dependencia'");
       $fecha_limite = Carbon::now()->addDays(60)->format('Y-m-d');
       $salario_minimo =  Config::get('global.salario_minimo.' . date('Y'));
-      return view($vista, compact('persona', 'solicitud', 'detalle', 'adjunto', 'novedades', 'documentos', 'config_novedades', 'fecha_limite', 'salario_minimo'));
+      return view($vista, compact('persona', 'solicitud', 'detalles', 'adjunto', 'novedades', 'documentos', 'config_novedades', 'fecha_limite', 'salario_minimo', 'area_total_elementos'));
    }
 
    public function AgregarNovedad(Request $req)
    {
       $solicitud = Publicidad::Find($req->SolicitudId);
-
+      $dependencia   = $solicitud->dependencia;
+      //dd($dependencia);
 
       if (!empty($solicitud)) {
 
@@ -245,8 +252,25 @@ class PublicidadAdmin extends Controller
             throw $e;
          }
       }
+       switch ($dependencia) {
+        case 'interior':
+        return redirect("/tramites/interior/publicidad/{$solicitud->modalidad}");
+            break;
+        case 'hacienda':
+            return redirect('/tramites/hacienda/publicidad');
+            break;
+        case 'planeacion':
+            return redirect('/tramites/planeacion/publicidad');
+            break;
+        case 'salud':
+            return redirect('/tramites/salud/publicidad');
+            break;
+        default:
+            return redirect('/dashboard');
+            break;
+       }
+    //   return redirect('/tramites/hacienda/publicidad/');
 
-      return redirect('/tramites/hacienda/publicidad/');
    }
 
    public function downloadPdf($id, $consecutivo, $fecha, $total, $fecha_inicial, $fecha_final)
@@ -570,7 +594,8 @@ class PublicidadAdmin extends Controller
          'comentarios' => $comentarios
       ];
 
-      $correo_funcionario = ['interior-publicidad@bucaramanga.gov.co'];
+      $correo_funcionario = ['ojrincon@bucaramanga.gov.co'];
+    //   $correo_funcionario = ['interior-publicidad@bucaramanga.gov.co'];
 
       if ($publicidad->dependencia == 'planeacion') {
          $correo_funcionario[] = 'planeacion-publicidad@bucaramanga.gov.co';
@@ -616,4 +641,15 @@ class PublicidadAdmin extends Controller
 
     return implode(' y ', $resultado);
 }
+
+//avisos comerciales
+
+public function getDataPublicidad($modalidad, $dependencia)
+   {
+      $solicitudes = DB::select(Publicidad::getRadicados($modalidad, $dependencia));
+      return $solicitudes;
+
+   }
+
+
 }

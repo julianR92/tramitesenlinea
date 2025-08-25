@@ -85,7 +85,7 @@
                                 </td>
                                 @if ($solicitud->modalidad == 'vallas')
                                     <td><strong>Tipo de valla</strong>
-                                        <br>{{ $detalles[0]->tipo_valla }}
+                                        <br>{{ $detalle->tipo_valla }}
                                     </td>
                                 @endif
                                 <td><strong>Tipo de publicidad</strong>
@@ -117,35 +117,34 @@
                                     <td colspan="3"><strong>Elemento {{ $index + 1 }}</strong></td>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <strong>Alto de la publicidad</strong><br>
-                                        {{ $detalle->alto_elemento !== null ? $detalle->alto_elemento . ' mts' : 'N/A' }}
+                                    <td><strong>Alto de la publicidad</strong><br>
+                                        {{ $detalle->alto_elemento }} mts
+
                                     </td>
-                                    <td>
-                                        <strong>Ancho de la publicidad</strong><br>
-                                        {{ $detalle->ancho_elemento !== null ? $detalle->ancho_elemento . ' mts' : 'N/A' }}
+                                    <td><strong>Ancho de la publicidad</strong><br>
+                                        {{ $detalle->ancho_elemento }} mts
+
                                     </td>
-                                    <td>
-                                        <strong>Área total</strong><br>
-                                        {{ $detalle->area_total_elemento !== null ? $detalle->area_total_elemento . ' mts' : 'N/A' }}{!! $detalle->area_total_elemento !== null ? '<sup>2</sup>' : '' !!}
+                                    <td><strong>Área total</strong><br>
+                                        {{ $detalle->area_total_elemento }} mts<sup>2</sup>
+
                                     </td>
+
                                 </tr>
                                 <tr>
-                                    <td>
-                                        <strong>Alto Fachada</strong><br>
-                                        {{ $detalle->alto_fachada !== null ? $detalle->alto_fachada . ' mts' : 'N/A' }}
+
+                                    <td><strong>Alto Fachada</strong><br>
+                                        {{ $detalle->alto_fachada }} mts
                                     </td>
-                                    <td>
-                                        <strong>Ancho de la Fachada </strong><br>
-                                        {{ $detalle->ancho_fachada !== null ? $detalle->ancho_fachada . ' mts' : 'N/A' }}
+                                    <td><strong>Ancho de la Fachada </strong><br>
+                                        {{ $detalle->ancho_fachada }} mts
                                     </td>
-                                    <td>
-                                        <strong>Área total</strong><br>
-                                        {{ $detalle->area_total_fachada !== null ? $detalle->area_total_fachada . ' mts' : 'N/A' }}{!! $detalle->area_total_fachada !== null ? '<sup>2</sup>' : '' !!}
+                                    <td><strong>Area total Fachada </strong><br>
+                                        {{ $detalle->area_total_fachada }} mts<sup>2</sup>
+
                                     </td>
                                 </tr>
                             @endforeach
-
 
 
                             <tr style="background-color:#004884">
@@ -197,7 +196,7 @@
                         $valor_m2 = round(($salario * 4) / 48, 2);
                         $numero_m2 = str_replace(',', '.', $valor_m2);
                         $metro_formateado = number_format($numero_m2, 2, ',', '.');
-                        $area = $area_total_elementos;
+                        $area = 0;
                         // _______________________________________________________
                         $valor_mensual = round(($area * $valor_m2) / 12, 2);
                         $numero_mensual = str_replace(',', '.', $valor_mensual);
@@ -306,6 +305,7 @@
     <script>
         var valor_total_parcial = 0;
         var estado = '{{ $solicitud->estado_solicitud }}';
+        console.log(estado);
 
 
         function cargarLiquidacion() {
