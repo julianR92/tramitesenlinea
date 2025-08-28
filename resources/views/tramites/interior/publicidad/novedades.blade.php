@@ -213,13 +213,12 @@
     <tr>
         <td>
             <div class="form-group">
-                <button type="submit" id="myBtnEspacio" class="btn btn-round btn-middle btn-outline-info"
-                    id="Boton">Actualizar
-                </button>
+                <button type="submit" id="myBtnEspacio" class="btn btn-round btn-middle btn-outline-info">Actualizar</button>
             </div>
         </td>
         <td>
             <a href="/tramites/interior/publicidad/{{ $solicitud->modalidad }}"
+                id="btnVolver"
                 class="btn btn-round btn-high">Volver</a>
         </td>
         <td></td>
@@ -230,4 +229,30 @@
 
 </form>
 </tr>
+<script>
+document.getElementById("myForm1").addEventListener("submit", function() {
+    let btn = document.getElementById("myBtnEspacio");
+    let btnVolver = document.getElementById("btnVolver");
+
+    // Guardar el texto original del botón
+    let originalText = btn.innerHTML;
+
+    // Crear el spinner dinámicamente
+    let spinner = document.createElement("span");
+    spinner.className = "spinner-border spinner-border-sm mr-2";
+    spinner.setAttribute("role", "status");
+    spinner.setAttribute("aria-hidden", "true");
+
+    // Limpiar el botón y agregar spinner + texto
+    btn.innerHTML = "";
+    btn.appendChild(spinner);
+    btn.appendChild(document.createTextNode("Actualizando..."));
+
+    // Deshabilitar botones
+    btn.disabled = true;
+    btnVolver.classList.add("disabled");
+    btnVolver.setAttribute("aria-disabled", "true");
+    btnVolver.style.pointerEvents = "none";
+});
+</script>
 {{-- fin del form --}}
