@@ -158,6 +158,7 @@
     @endif
     <tr>
         <td>
+            @if($solicitud->tipo_publicidad == 'PRIMERA VEZ'  || ($solicitud->tipo_publicidad == 'RENOVACION' && $config_novedades[0]->estado != 'cargue_conceptos'))
             <div class="form-group">
                 <label for="documento_respuesta">Cargar Respuesta</label>
                 <input type="file" accept="application/pdf" name="documento_respuesta" id="documento_respuesta"
@@ -170,6 +171,33 @@
                     </span>
                 @enderror
             </div>
+
+            @elseif($solicitud->tipo_publicidad == 'RENOVACION' && $config_novedades[0]->estado == 'cargue_conceptos')
+             <div class="row">
+                <div class="col-md-6">
+                    <label for="concepto_planeacion">Concepto Planeacion*</label>
+                    <input type="file" accept="application/pdf" name="concepto_planeacion" id="concepto_planeacion"
+                        class="form-control @error('concepto_planeacion') is-invalid @enderror" required>
+                    @error('concepto_planeacion')
+                        <span class="invalid-feedback" role="alert">
+                            <strong class="text-danger">{{ $message }}</strong>
+                        </span>
+                    @enderror
+
+                </div>
+
+             <div class="col-md-6" >
+                <label for="concepto_salud">Concepto Salud*</label>
+                <input type="file" accept="application/pdf" name="concepto_salud" id="concepto_salud"
+                    class="form-control @error('concepto_salud') is-invalid @enderror" required>
+                @error('concepto_salud')
+                    <span class="invalid-feedback" role="alert">
+                        <strong class="text-danger">{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+            </div>
+            @endif
         </td>
         @if ($config_novedades[0]->finaliza == 1 && $solicitud->dependencia == 'interior')
             <td>

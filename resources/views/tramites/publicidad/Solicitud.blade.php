@@ -169,6 +169,29 @@
 <script type="text/javascript" src="{{ asset('js/publicidad_comerciales.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/publicidad_colombina.js') }}"></script>
 @endpush --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("frmSolicitud");
+    const btnEnviar = document.getElementById("btn_enviar_solicitud");
+    const btnCarga = document.querySelector(".btn_carga");
+
+    form.addEventListener("submit", function(e) {
+        // Ocultar botón enviar y mostrar spinner
+        btnEnviar.classList.add("d-none");
+        btnCarga.classList.remove("d-none");
+
+        // Prevención por si falla (ejemplo: error de red, validaciones del backend)
+        // Cuando la página termine de cargar de nuevo, volvemos a mostrar botón enviar
+        window.addEventListener("pageshow", function(event) {
+            // Si es una recarga desde caché o error de validación
+            if (event.persisted || performance.navigation.type === 2) {
+                  btnEnviar.classList.remove("d-none");
+                  btnCarga.classList.add("d-none");
+            }
+        });
+    });
+});
+</script>
 
 
 @endsection

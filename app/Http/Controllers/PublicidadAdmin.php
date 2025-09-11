@@ -145,11 +145,10 @@ class PublicidadAdmin extends Controller
 
       $fecha_actual = date('d-m-Y');
       // $fecha_limite = date('d-m-Y', strtotime($fecha_actual . '+ 2 month'));
-
       $config_novedades = DB::select("SELECT estado_id AS estado_id,nov.id AS novedad_id,estado,titulo_estado,novedad,opcion,estado_sig,finaliza
       FROM publicidad_config_novedades AS nov
       INNER JOIN publicidad_config_estados AS est ON nov.estado_id=est.id
-      WHERE estado_id=(SELECT id FROM publicidad_config_estados WHERE modalidad='$solicitud->modalidad' AND estado='$solicitud->estado_solicitud')AND dependencia='$solicitud->dependencia'");
+      WHERE estado_id=(SELECT id FROM publicidad_config_estados WHERE modalidad='$solicitud->modalidad' AND estado='$solicitud->estado_solicitud' AND tipo_publicidad='$solicitud->tipo_publicidad') AND dependencia='$solicitud->dependencia' ");
       $fecha_limite = Carbon::now()->addDays(60)->format('Y-m-d');
       $salario_minimo =  Config::get('global.salario_minimo.' . date('Y'));
       return view($vista, compact('persona', 'solicitud', 'detalles', 'adjunto', 'novedades', 'documentos', 'config_novedades', 'fecha_limite', 'salario_minimo', 'area_total_elementos'));
@@ -159,20 +158,19 @@ class PublicidadAdmin extends Controller
    {
       $solicitud = Publicidad::Find($req->SolicitudId);
       $dependencia   = $solicitud->dependencia;
-      //dd($dependencia);
 
       if (!empty($solicitud)) {
 
          DB::beginTransaction();
 
          try {
-            $config_novedad = DB::select("SELECT estado,titulo_estado,dependencia,novedad,opcion,estado_sig,finaliza FROM publicidad_config_estados pce
-            INNER JOIN publicidad_config_novedades AS pcn ON pce.id=pcn.estado_id  WHERE pcn.id=$req->novedad LIMIT 1;");
+            $config_novedad = DB::select("SELECT estado,titulo_estado,dependencia,novedad,opcion,estado_sig,finaliza FROM publicidad_config_estados pce INNER JOIN publicidad_config_novedades AS pcn ON pce.id=pcn.estado_id  WHERE pcn.id=$req->novedad and tipo_publicidad ='$solicitud->tipo_publicidad' LIMIT 1;");
+
 
             $estado_sig = $config_novedad[0]->estado_sig;
 
             $estado_siguiente = DB::select("SELECT estado,titulo_estado,dependencia,novedad,opcion,estado_sig FROM publicidad_config_estados pce
-            INNER JOIN publicidad_config_novedades AS pcn ON pce.id=pcn.estado_id  WHERE pce.id=$estado_sig LIMIT 1;");
+            INNER JOIN publicidad_config_novedades AS pcn ON pce.id=pcn.estado_id  WHERE pce.id=$estado_sig and tipo_publicidad='$solicitud->tipo_publicidad'    LIMIT 1;");
 
             $novedad = new PublicidadNovedad();
             $novedad->NovedadTipo = $config_novedad[0]->opcion;
@@ -227,9 +225,32 @@ class PublicidadAdmin extends Controller
                      $generar_liquidacion = $this::generarLiquidacion($personas, $solicitud, $req);
                      $liquidacion = $generar_liquidacion;
                   } else {
-                     $documento->codigo_adjunto = $config_novedad[0]->estado;
-                     $documento->nombre_adjunto = $config_novedad[0]->titulo_estado;
-                     $documento->ruta = $folder . '/' . $config_novedad[0]->estado . ".pdf";
+                    if($config_novedad[0]->estado == "cargue_conceptos" && $solicitud->tipo_publicidad == "RENOVACION"){
+                        switch ($key) {
+                            case 'concepto_planeacion':
+                                $nombre_archivo = $key;
+                                $documento->codigo_adjunto = $key;
+                                $documento->nombre_adjunto = "Solicitud concepto planeación";
+                                $documento->ruta = $folder . '/' . $key . ".pdf";
+                                break;
+                            case 'concepto_salud':
+                                $nombre_archivo = $key;
+                                $documento->codigo_adjunto = $key;
+                                $documento->nombre_adjunto = "Solicitud concepto salud";
+                                $documento->ruta = $folder . '/' . $key . ".pdf";
+                                break;
+
+                            default:
+                                # code...
+                                break;
+                        }
+
+                    }else{
+                        $documento->codigo_adjunto = $config_novedad[0]->estado;
+                        $documento->nombre_adjunto = $config_novedad[0]->titulo_estado;
+                        $documento->ruta = $folder . '/' . $config_novedad[0]->estado . ".pdf";
+
+                    }
                   }
 
                   $documento->radicado = $solicitud->radicado;
