@@ -83,7 +83,7 @@
                <div class="card-footer govco-card-footer govco-center">
 
                   <a class="btn-low-mix-govco align-column-govco"
-                     href="{{ route('interior.publicidad.listarSolicitudes', 'comerciales') }}">
+                     href="{{ route('interior.publicidad.listarSolicitudes', 'comerciales-establecimientos') }}">
                      <span class="btn-mix-govco__title">Ver más detalles</span>
                      <span class="btn-mix-govco__icon govco-icon govco-icon-simpled-arrow"></span>
                   </a>

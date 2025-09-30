@@ -171,7 +171,6 @@
                     </span>
                 @enderror
             </div>
-
             @elseif($solicitud->tipo_publicidad == 'RENOVACION' && $config_novedades[0]->estado == 'cargue_conceptos')
              <div class="row">
                 <div class="col-md-6">
@@ -203,7 +202,7 @@
             <td>
                 <div class="form-group">
                     <label for="fecha_inicio">Fecha de inicio</label>
-                    <input type="date" name="fecha_inicio" id="fecha_inicio"
+                    <input type="date" name="fecha_inicio" id="fecha_inicio" onchange="calcularDias()"
                         class="form-control @error('fecha_inicio') is-invalid @enderror"
                         @if ($config_novedades[0]->finaliza == 1) required @endif>
                     @error('fecha_inicio')
@@ -217,7 +216,7 @@
                 <div class="row">
                     <div class="col">
                         <label for="fecha_fin">Fecha final</label>
-                        <input type="date" name="fecha_fin" id="fecha_fin"
+                        <input type="date" name="fecha_fin" id="fecha_fin" onchange="calcularDias()"
                             class="form-control @error('fecha_fin') is-invalid @enderror"
                             @if ($config_novedades[0]->finaliza == 1) required @endif>
                         @error('fecha_fin')

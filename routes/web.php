@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Planeacion\LicenciasController;
 use App\Http\Controllers\PlaneacionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -262,10 +263,8 @@ Route::group(['middleware' => ['role_or_permission:SUPER-ADMIN|SEC_GOBIERNO|edit
 	Route::post('/tramites/interior/publicidad/liquidacion', 'PublicidadAdmin@Liquidacion')->name('interior.publicidad.liquidacion');
 	Route::get('/tramites/interior/publicidad/detalle/downoadPdf/{id}/{consecutivo}/{fecha}/{total}/{fecha_inicial}/{fecha_final}', 'PublicidadAdmin@downloadPdf')->name('interior.publicidad.donwloadPdf');
 
-    //publicidad exterior
-    Route::get('/avisos-comerciales/getData/{modalidad}/{dependencia}', 'PublicidadAdmin@getDataPublicidad')->name('publicidad.getData');
-
-
+	//publicidad exterior -avisos
+	Route::get('/avisos-comerciales/getData/{modalidad}/{dependencia}', 'PublicidadAdmin@getDataPublicidad')->name('publicidad.getData');
 });
 
 // RUTAS AREAS DE CESION TIPO A
@@ -448,6 +447,37 @@ Route::group(['middleware' => ['role:SUPER-ADMIN|PLANEACION']], function () {
 	Route::post('/tramites/planeacion/prestamo-planos/update', 'PlaneacionController@planosUpdate')->name('tramites.planeacion.prestamo-planos.update');
 	// Route::get('/tramites/planeacion/prestamo-planos/destroy/{id}', 'PlaneacionController@planosDestroy')->name('tramites.planeacion.prestamo-planos.destroy');
 });
+
+Route::group(['middleware' => ['role:SUPER-ADMIN|PLANEACION']], function () {
+	Route::get('/tramites/planeacion/licencias', [LicenciasController::class, 'index'])->name('planeacion.licencias.index');
+	Route::get('/tramites/planeacion/licencias/radicar', [LicenciasController::class, 'radicarLicencia'])->name('planeacion.licencias.radicar');
+	Route::post('/tramites/planeacion/licencias/store', [LicenciasController::class, 'store'])->name('planeacion.licencias.store');
+	Route::get('/tramites/planeacion/licencias/{licencia}/actuacion', [LicenciasController::class, 'actuacion'])->name('planeacion.licencias.actuacion');
+	Route::post('/tramites/planeacion/licencias/storeActuacion', [LicenciasController::class, 'storeActuacion'])->name('planeacion.licencias.storeActuacion');
+	Route::get('/tramites/planeacion/licencias/{licencia}/asignar', [LicenciasController::class, 'asignar'])->name('planeacion.licencias.asignar');
+	Route::post('/tramites/planeacion/licencias/storeAsignacion', [LicenciasController::class, 'storeAsignacion'])->name('planeacion.licencias.storeAsignacion');
+
+	//configuracion de usuarios y roles de licencias de intervencion
+	Route::get('/tramites/planeacion/licencias/rol/index', [LicenciasController::class, 'rolesIndex'])->name('planeacion.licencias.roles.index');
+	Route::get('/tramites/planeacion/licencias/rol/crear', [LicenciasController::class, 'rolesCrear'])->name('planeacion.licencias.roles.crear');
+	Route::get('/tramites/planeacion/licencias/rol/{id}/editar', [LicenciasController::class, 'rolesEditar'])->name('planeacion.licencias.roles.editar');
+	Route::post('/tramites/planeacion/licencias/roles/store', [LicenciasController::class, 'rolesStore'])->name('planeacion.licencias.roles.store');
+	Route::post('/tramites/planeacion/licencias/roles/update/{id}', [LicenciasController::class, 'rolesUpdate'])->name('planeacion.licencias.roles.update');
+
+	Route::get('documento/descargar/{id}', [LicenciasController::class, 'descargarDocumento'])
+		->name('documento.descargar');
+});
+
+
+Route::get('/clear', function () {
+	Artisan::call('config:clear');
+	Artisan::call('cache:clear');
+	Artisan::call('view:clear');
+	return "Caché de configuración y de la aplicación limpiada.";
+});
+
+
+
 
 //phpinfo
 

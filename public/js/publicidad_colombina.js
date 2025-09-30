@@ -70,6 +70,7 @@ function limpiarElementos2(required = false) {
    doc.getElementById('colombina_alto_fachada2').value = '';
    doc.getElementById('colombina_ancho_fachada2').value = '';
    doc.getElementById('colombina_area_total_fachada2').value = '';
+   doc.getElementById("colombina_numero_caras2").value = "";
 
    doc.getElementById('colombina_alto_elemento2').required = required;
    doc.getElementById('colombina_ancho_elemento2').required = required;
@@ -79,6 +80,9 @@ function limpiarElementos2(required = false) {
    doc.getElementById('colombina_alto_fachada2').required = required;
    doc.getElementById('colombina_ancho_fachada2').required = required;
    doc.getElementById('colombina_area_total_fachada2').required = required;
+   debugger
+   
+   doc.getElementById("colombina_numero_caras2").required = required;
 }
 
 function calcularArea(alto, ancho,caras) {

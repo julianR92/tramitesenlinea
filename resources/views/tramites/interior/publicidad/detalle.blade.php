@@ -63,7 +63,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                @if ($persona->PersonaTipo == 'Juridica')
+                                @if ($persona->PersonaTip == 'Juridica')
                                     <td><strong>Razón social:</strong><br>
                                         {{ $persona->PersonaRazon }}
                                     </td>
@@ -304,9 +304,10 @@
 
 @push('reportes')
     <script>
+        
         var valor_total_parcial = 0;
         var estado = '{{ $solicitud->estado_solicitud }}';
-
+        
 
         function cargarLiquidacion() {
             let consecutivo = document.getElementById('consecutivo').value;
@@ -330,6 +331,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('fecha_inicial_mostrar').addEventListener('change', calcularDiferenciaFechas);
             document.getElementById('fecha_fin_mostrar').addEventListener('change', calcularDiferenciaFechas);
+            // document.getElementById('fecha_inicial').addEventListener('change', calcularDias);
+            // document.getElementById('fecha_fin').addEventListener('change', calcularDias);
 
 
         });
@@ -345,7 +348,6 @@
             let resultado = fecha_final - fecha_inicial;
             let dias = resultado / (1000 * 60 * 60 * 24);
             dias = dias + 1;
-            document.getElementById('dif_dias_publicidad').value = dias;
             document.getElementById('dif_dias_publicidad').value = dias;
         }
 

@@ -383,7 +383,7 @@ class InteriorController extends Controller
 	/** PUBLICIDAD EXTERIOR */
 	public function publicidadIndex()
 	{
-		$count_comerciales = Publicidad::where('modalidad', 'comerciales')->where('estado_solicitud', '<>', 'finalizado')->count();
+		$count_comerciales = Publicidad::where('modalidad', 'comerciales-establecimientos')->where('estado_solicitud', '<>', 'finalizado')->count();
 		$count_inmobiliarios = Publicidad::where('modalidad', 'inmobiliarios')->where('estado_solicitud', '<>', 'finalizado')->count();
 		$count_colombina = Publicidad::where('modalidad', 'colombina')->where('estado_solicitud', '<>', 'finalizado')->count();
 		$count_murales = Publicidad::where('modalidad', 'murales')->where('estado_solicitud', '<>', 'finalizado')->count();

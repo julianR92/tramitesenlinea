@@ -52,9 +52,11 @@ class PublicidadController extends Controller
 
     public function validarDocumento(Request $request)
     {
+        
         $tipo_documento = $request->input('tipo_documento');
         $documento = $request->input('documento');
         $persona = Persona::where('PersonaTipDoc', $tipo_documento)->where('PersonaDoc', $documento)->first();
+        
         if ($persona) {
             return response()->json(['success' => true, 'persona' => $persona]);
         } else {
@@ -122,11 +124,18 @@ class PublicidadController extends Controller
     public function procesarRequest(Request $request)
     {
         $modalidad = $request->input('publicidad_modalidad');
+        $sub_modalidad = $request->input('pub_sub_modalidad');
+        if($sub_modalidad)
+        {
+            $modalidad = $sub_modalidad;
+        }
         switch ($modalidad) {
             case 'vallas':
                 return $this->storeVallas($request);
-            case 'comerciales':
-                return $this->storeAvisos($request);
+            case 'comerciales-establecimientos':
+                return $this->storeAvisos($request, $modalidad);
+                  case 'colombina':
+                return $this->storeColombina($request);
             default:
                 return back()->withErrors('Modalidad no encontrada');
         }
@@ -236,7 +245,7 @@ class PublicidadController extends Controller
 
         return view('tramites.publicidad.ResSol', ['radicado' => $publicidad->radicado]);
     }
-    public function storeAvisos(Request $request)
+    public function storeAvisos(Request $request, $mod)
     {
 
 
@@ -341,7 +350,7 @@ class PublicidadController extends Controller
 
             $publicidad->radicado = $id;
             $publicidad->PersonaId = $personas->PersonaId;
-            $publicidad->modalidad = $modalidad;
+            $publicidad->modalidad = $mod;
             $publicidad->tipo_publicidad =  $request->tipo_publicidad;
             $publicidad->fecha_renovacion =  $request->fecha_renovacion;
             $publicidad->fecha_vencimiento =  $request->fecha_vencimiento;
@@ -388,7 +397,7 @@ class PublicidadController extends Controller
 
             foreach ($request->allFiles() as $key => $file) {
                 $documentos = PublicidadAdjunto::where('radicado', $publicidad->radicado)->where('codigo_adjunto', $key)->get();
-                $nombre_adjunto = PublicidadParamAdjuntos::where('codigo_adjunto', $key)->where('modalidad', $modalidad)->first();
+                $nombre_adjunto = PublicidadParamAdjuntos::where('codigo_adjunto', $key)->where('modalidad', $mod)->first();
 
                 if ($documentos->count() == 0) {
                     $documento = new PublicidadAdjunto;
@@ -488,7 +497,7 @@ class PublicidadController extends Controller
             $estado = DB::select("SELECT pce.id AS estado_id,pcn.id AS novedad_id,titulo_estado,adj_ciudadano,estado_sig
          FROM publicidad_config_estados AS pce
          INNER JOIN publicidad_config_novedades AS pcn ON pce.id=pcn.estado_id
-         WHERE modalidad='$Solicitud->modalidad' AND estado='$Solicitud->estado_solicitud'; ");
+         WHERE modalidad='$Solicitud->modalidad' AND estado='$Solicitud->estado_solicitud' and tipo_publicidad='$Solicitud->tipo_publicidad'; ");
 
             $adjuntos = [];
             if ($estado[0]->adj_ciudadano == 1) {
@@ -523,12 +532,12 @@ class PublicidadController extends Controller
             try {
 
                 $config_novedad = DB::select("SELECT estado,titulo_estado,dependencia,novedad,opcion,estado_sig FROM publicidad_config_estados pce
-            INNER JOIN publicidad_config_novedades AS pcn ON pce.id=pcn.estado_id  WHERE pcn.id=$req->novedad_id LIMIT 1;");
+            INNER JOIN publicidad_config_novedades AS pcn ON pce.id=pcn.estado_id  WHERE pcn.id=$req->novedad_id and tipo_publicidad ='$solicitud->tipo_publicidad' LIMIT 1;");
 
                 $estado_sig = $config_novedad[0]->estado_sig;
 
                 $estado_siguiente = DB::select("SELECT estado,titulo_estado,dependencia,novedad,opcion,estado_sig FROM publicidad_config_estados pce
-            INNER JOIN publicidad_config_novedades AS pcn ON pce.id=pcn.estado_id  WHERE pce.id=$estado_sig LIMIT 1;");
+            INNER JOIN publicidad_config_novedades AS pcn ON pce.id=pcn.estado_id  WHERE pce.id=$estado_sig and tipo_publicidad ='$solicitud->tipo_publicidad' LIMIT 1;");
 
                 $novedad = new PublicidadNovedad();
                 $novedad->NovedadTipo = $config_novedad[0]->opcion;

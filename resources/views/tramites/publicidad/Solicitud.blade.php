@@ -32,10 +32,8 @@
                         <div class="col-md-12  text-right" style="font-size: 16px;">
                             @if ($datos->PersonaTip == 'Natural')
                                 <p class="mb-0"><b>Solicitante:</b> {{ $datos->PersonaDoc }} -
-                                    {{ $datos->PersonaNombre .
-                                        '
-                                                         ' .
-                                        $datos->PersonaApe }}
+                                    {{ $datos->PersonaNombre . ' ' .$datos->PersonaApe   }}               
+                                        
                                 </p>
                             @else
                                 <p class="mb-0"><b>Solicitante:</b> {{ $datos->PersonaDoc }} - {{ $datos->PersonaRazon }}
@@ -58,8 +56,7 @@
                             <label for="publicidad_modalidad" class="form-label">Modalidad de publicidad * </label>
                             <select class="form-control " name="publicidad_modalidad" id="publicidad_modalidad" required>
                                 <option value="">Seleccione</option>
-                                <option value="comerciales" data-modalidad="comerciales">AVISOS DE IDENTIFICACIÓN DE
-                                    ESTABLECIMIENTOS COMERCIALES</option>
+                                <option value="comerciales" data-modalidad="comerciales">AVISOS PUBLICITARIOS</option>
                                 {{-- <option value="inmobiliarios" data-modalidad="inmobiliarios">AVISOS DE IDENTIFICACIÓN DE PROYECTOS
                         INMOBILIARIOS</option>
                      <option value="colombina" data-modalidad="colombina">AVISOS TIPO COLOMBINA</option>
@@ -77,6 +74,28 @@
                                 </span>
                             @enderror
                         </div>
+
+                        <div class="col-md-12 mt-2 d-none" id="divSubModalidad">
+                            <label for="pub_sub_modalidad" class="form-label">Sub-Modalidad * </label>
+                            <select class="form-control " name="pub_sub_modalidad" id="pub_sub_modalidad">
+                                <option value="">Seleccione</option>
+                                <option value="comerciales-establecimientos" data-modalidad="comerciales-establecimientos">Avisos de
+                                    identificación de establecimientos de comercio</option>
+                                <option value="comerciales" data-modalidad="comerciales-inmobiliarios">Avisos de
+                                    identificación de proyectos inmobiliarios</option>
+                                <option value="colombina" data-modalidad="comerciales-colombina">Avisos de identificación
+                                    tipo colombina</option>
+                                <option value="comerciales" data-modalidad="comerciales-led">Avisos de identificación tipo
+                                    Led en grandes superficies</option>
+                                <option value="comerciales" data-modalidad="comerciales-movil">Avisos de identificación tipo
+                                    publicidad movil</option>
+                            </select>
+                            @error('pub_sub_modalidad')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong class="text-danger">{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="row mb-3">
@@ -88,7 +107,8 @@
                                 <option value="RENOVACION" {{ old('tipo_publicidad') == 'RENOVACION' ? 'selected' : '' }}>
                                     RENOVACIÓN
                                 </option>
-                                <option value="PRIMERA VEZ" {{ old('tipo_publicidad') == 'PRIMERA VEZ' ? 'selected' : '' }}>
+                                <option value="PRIMERA VEZ"
+                                    {{ old('tipo_publicidad') == 'PRIMERA VEZ' ? 'selected' : '' }}>
                                     PRIMERA VEZ
                                 </option>
                             </select>
@@ -145,8 +165,8 @@
                     <div class="col-md-12  pl-1 pr-1 pt-3 text-left mt-4" style="padding-left: 0px!important">
                         {{-- <div class="g-recaptcha" data-sitekey="6LdzXDwcAAAAAOgw8LzMLMjgnI2spGFhuCoMYlGc"></div> --}}
 
-                        <button style="font-size:15px;" type="submit" class="btn btn-round btn-middle btn_enviar_solicitud"
-                            id="btn_enviar_solicitud">Enviar
+                        <button style="font-size:15px;" type="submit"
+                            class="btn btn-round btn-middle btn_enviar_solicitud" id="btn_enviar_solicitud">Enviar
                             Solicitud</button>
 
                         <button style="font-size:15px;" class="btn btn-round btn-middle btn_carga d-none" type="button"
@@ -192,6 +212,5 @@
     });
 });
 </script>
-
 
 @endsection
